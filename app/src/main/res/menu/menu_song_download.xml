@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/ico_download"
+        android:orderInCategory="100"
+        android:title="下载"
+        app:showAsAction="always" />
+    <item
+        app:showAsAction="never"
+        android:id="@+id/share"
+        android:orderInCategory="70"
+        android:title="分享" />
+</menu>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_appbar_toolbar"/>
+
+
+    <ImageView
+        android:id="@+id/launcher_iv"
+        android:layout_width="@dimen/ico_launcher_64dp"
+        android:layout_height="@dimen/ico_launcher_64dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ico_tag" />
+
+    <TextView
+        android:id="@+id/version_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp"
+        tools:text="当前版本：" />
+
+    <View style="@style/SettingDivider" />
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/update_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_setting_update"
+        app:itemTitleText="检测新版本" />
+
+
+    <View style="@style/SettingDivider" />
+
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/grade_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_setting_pingfen"
+        app:itemTitleText="评个分吧！" />
+
+    <View style="@style/SettingDivider" />
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/help_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_setting_help"
+        app:itemTitleText="帮助" />
+
+    <View style="@style/SettingDivider" />
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/share_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_setting_share"
+        app:itemTitleText="分享小口袋" />
+
+    <View style="@style/SettingDivider" />
+
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/logout_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_setting_logout"
+        app:itemTitleText="退出登录" />
+
+    <View style="@style/SettingDivider" />
+
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="By Fortune" />
+</LinearLayout>

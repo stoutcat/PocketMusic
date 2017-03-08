@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_appbar_toolbar"/>
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/title_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="请输入标题"
+        app:itemInputText="标题：" />
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/content_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="请输入描述"
+        app:itemInputText="描述：" />
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/item_padding_16dp"
+        android:layout_marginRight="@dimen/item_padding_16dp"
+        android:background="@drawable/bg_button"
+        android:text="确定" />
+
+
+</LinearLayout>

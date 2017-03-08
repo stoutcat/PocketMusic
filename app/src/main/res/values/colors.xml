@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="colorPrimary">#FFEE58</color>
+    <color name="colorPrimaryDark">#FBC02D</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="colorPrimaryLight">#FFF9C4</color>
+    <color name="colorTitle">@color/Text</color>
+    <color name="textIcons">#212121</color>
+    <color name="textPrimary">#212121</color>
+    <color name="secondaryText">#757575</color>
+    <color name="dividerColor">#BDBDBD</color>
+
+    <!--透明-->
+    <color name="colorTranslate">#00000000</color>
+    <!--灰色背景-->
+    <color name="background">#f2f2f2</color>
+
+    <!--纸屑颜色-->
+    <color name="confetti_red">#FF5252</color>
+    <color name="confetti_orange">#FF5722</color>
+    <color name="confetti_yellow">#FFEB3B</color>
+    <color name="confetti_green">#4CAF50</color>
+    <color name="confetti_qing">#CDDC39</color>
+    <color name="confetti_blue">#03A9F4</color>
+    <color name="confetti_zi">#9C27B0</color>
+
+    <color name="Text">#333333</color>
+    <color name="TextGray">#bebebe</color>
+    <color name="TabTextGray">#b3b3b3</color>
+
+    <color name="upload_name">#F44336</color>
+
+
+    <color name="item_divider">#f0f0f0</color>
+    <color name="setting_big_divider">#eeeeee</color>
+    <color name="setting_divider">#bebebe</color>
+
+    <color name="TabBottomText">@color/upload_name</color>
+
+    <color name="textPressAttention">@color/upload_name</color>
+
+</resources>

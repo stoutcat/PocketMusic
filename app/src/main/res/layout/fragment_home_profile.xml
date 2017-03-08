@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/head_iv"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@mipmap/ico_launcher" />
+
+        <TextView
+            android:id="@+id/user_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+    <View style="@style/SettingBigDivider" />
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/email_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_profile_email"
+        app:itemTitleText="反馈意见" />
+
+    <View style="@style/SettingBigDivider" />
+
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/instrument_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_profile_instrument"
+        app:itemTitleText="钟爱乐器" />
+
+    <View style="@style/SettingDivider" />
+
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/contribution_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_profile_contribution"
+        app:itemTitleText="我的贡献值" />
+
+    <View style="@style/SettingDivider" />
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/collection_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_profile_collection"
+        app:itemTitleText="我的收藏" />
+
+
+    <View style="@style/SettingBigDivider" />
+
+
+    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+        android:id="@+id/setting_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitleIco="@drawable/ico_profile_setting"
+        app:itemTitleText="设置" />
+
+    <View style="@style/SettingBigDivider" />
+
+
+
+</LinearLayout>

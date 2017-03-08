@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_appbar_toolbar"/>
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/account_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="请输入邮箱"
+        app:itemInputText="账号：" />
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/nick_name_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="请输入昵称"
+        app:itemInputText="昵称：" />
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/password_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="请输入密码"
+        app:itemInputPassword="true"
+        app:itemInputText="密码：" />
+
+    <com.example.q.pocketmusic.view.widget.view.TextEdit
+        android:id="@+id/confirm_password_tet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemInputHint="再次输入密码"
+        app:itemInputPassword="true"
+        app:itemInputText="确认：" />
+
+    <TextView
+        style="@style/TextPress"
+        android:id="@+id/ok_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_padding_16dp"
+        android:layout_marginRight="@dimen/item_padding_16dp"
+        android:background="@drawable/bg_text_press"
+        android:text="确定" />
+
+
+</LinearLayout>

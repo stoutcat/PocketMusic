@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/head_tv"
+        android:padding="@dimen/item_padding_16dp"
+        style="@style/TextPressAttention"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="有什么意见都可以提出来哦~" />
+
+    <View style="@style/SettingDivider"/>
+</LinearLayout>

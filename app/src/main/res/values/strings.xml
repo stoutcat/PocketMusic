@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">口袋乐谱</string>
+    <string name="load_more">正在加载更多曲谱信息</string>
+    <string name="local_song_empty">快去添加自己喜欢的乐谱吧~</string>
+    <string name="not_found_empty">啊哦，没有数据~</string>
+    <string name="no_more">(*￣ω￣) 没有更多了</string>
+    <string name="loading_wait">请稍等~</string>
+    <bool name="VISIBLE">true</bool>
+    <bool name="INVISIBLE">false</bool>
+
+</resources>

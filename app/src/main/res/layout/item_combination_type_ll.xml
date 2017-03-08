@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="@dimen/item_padding_16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_0_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_quanbu"
+            app:itemName="全部" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_1_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_hulu"
+            app:itemName="葫芦丝" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_2_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_jita"
+            app:itemName="吉他" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_3_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_gangqin"
+            app:itemName="钢琴" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_4_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_sakesi"
+            app:itemName="萨克斯" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_5_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_erhu"
+            app:itemName="二胡" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_6_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_guzheng"
+            app:itemName="古筝" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_7_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_dianziqin"
+            app:itemName="电子琴" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_8_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_pipa"
+            app:itemName="琵琶" />
+
+        <com.example.q.pocketmusic.view.widget.view.TypeView
+            android:id="@+id/type_9_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:itemIco="@drawable/ico_kouqin"
+            app:itemName="口琴" />
+    </LinearLayout>
+</LinearLayout>

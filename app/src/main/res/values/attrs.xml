@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SwitchSettingItem">
+        <attr name="itemTitle" format="string" />
+        <attr name="itemSubtitleIsTrue" format="string" />
+        <attr name="itemSubtitleIsFalse" format="string" />
+        <attr name="itemCbVisible" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="IcoTextItem">
+        <attr name="itemTitleIco" format="integer" />
+        <attr name="itemTitleText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="TabView">
+        <attr name="itemTabNoSelectIco" format="reference"/>
+        <attr name="itemTabSelectIco" format="reference" />
+        <attr name="itemTabName" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="TypeView">
+        <attr name="itemIco" format="reference" />
+        <attr name="itemName" format="string" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TextEdit">
+        <attr name="itemInputPassword" format="boolean" />
+        <attr name="itemInputText" format="string" />
+        <attr name="itemInputHint" format="string" />
+    </declare-styleable>
+</resources>
