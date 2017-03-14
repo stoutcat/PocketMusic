@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.callback;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.CrashHandler;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.util.CheckUserUtil;
@@ -39,7 +40,7 @@ public abstract class ToastUpdateListener extends UpdateListener {
 
     public void onFail(BmobException e) {
         baseView.showLoading(false);
-        MyToast.showToast(context, "发生错误：" + e.getMessage());
+        MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
         e.printStackTrace();
         if (e.getErrorCode() == 206) {//在其他地方已经登录
             MyUser.logOut();

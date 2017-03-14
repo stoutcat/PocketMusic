@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.home.HomeActivity;
@@ -75,10 +76,17 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_song);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_song;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         //屏幕不灭
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //根据来自搜索和乐器类型，得到不同的song的IvUrls
@@ -124,7 +132,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
     @Override
     public void loadFail() {
-        MyToast.showToast(this, "啊哦~可能网络不太好");
+        MyToast.showToast(this, CommonString.STR_NOT_NET);
         finish();
     }
 

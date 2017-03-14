@@ -41,10 +41,17 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         presenter = new LoginPresenter(this, this);
         initToolbar(toolbar, "用户登录");
     }

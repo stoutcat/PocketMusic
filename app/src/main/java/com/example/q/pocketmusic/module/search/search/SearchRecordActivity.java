@@ -14,7 +14,6 @@ import com.example.q.pocketmusic.model.flag.Divider;
 import com.example.q.pocketmusic.model.flag.Tag;
 import com.example.q.pocketmusic.model.flag.Text;
 import com.example.q.pocketmusic.module.common.BaseActivity;
-import com.example.q.pocketmusic.util.LogUtils;
 import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.view.widget.net.FireworkView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -25,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SearchRecordActivity extends BaseActivity implements SearchRecordActivityPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class SearchRecordActivity extends BaseActivity implements SearchRecordActivityPresenter.IView, SwipeRefreshLayout.OnRefreshListener, View.OnKeyListener, SearchRecordActivityAdapter.OnSelectListener, View.OnClickListener {
     @BindView(R.id.search_edt)
     EditText searchEdt;
     @BindView(R.id.fire_work)
@@ -39,81 +38,32 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
 
 
     @Override
+    public int setContentResource() {
+        return R.layout.activity_search_record;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_record);
-        ButterKnife.bind(this);
-        presenter = new SearchRecordActivityPresenter(this, this);
+
+    }
+
+    public void setListener() {
         adapter = new SearchRecordActivityAdapter(this);
-        initView();
-    }
-
-    private void initView() {
-        setRecycler();
-        fireWork.bindEditText(searchEdt);
-        //回车键监听
-        searchEdt.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    String temp = searchEdt.getText().toString().trim();
-                    presenter.enterSearchListActivity(temp);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        //搜索键的监听
-        searchIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String temp = searchEdt.getText().toString().trim();
-                presenter.enterSearchListActivity(temp);
-            }
-        });
-    }
-
-
-    //recycler和adapter
-    private void setRecycler() {
-        initRecyclerView(recycler, adapter);
-        recycler.setEmptyView(R.layout.view_not_found);
-        //adapter监听
-        adapter.setOnSelectListener(new SearchRecordActivityAdapter.OnSelectListener() {
-
-            //进入RecommendListActivity
-            @Override
-            public void onSelectMore() {
-                presenter.enterRecommendListActivity();
-            }
-
-
-            //选择某一个Tag
-            @Override
-            public void onSelectTag(int tagPosition) {
-                Song song = presenter.getSongs().get(tagPosition);
-                presenter.enterSongActivityByTag(song);
-            }
-
-
-            //点击某一个记录
-            @Override
-            public void onSelectRecord(int position) {
-                Record record = (Record) adapter.getItem(position);
-                presenter.enterSearchListActivityByRecord(record);
-            }
-
-            @Override
-            public void onSelectDeleteRecord() {
-                presenter.deleteAllRecord();
-                onRefresh();
-            }
-
-        });
+        searchEdt.setOnKeyListener(this);
+        adapter.setOnSelectListener(this);
         recycler.setRefreshListener(this);
+        searchIv.setOnClickListener(this);
+    }
+
+    @Override
+    public void init() {
+        presenter = new SearchRecordActivityPresenter(this, this);
+        initRecyclerView(recycler, adapter);
+        fireWork.bindEditText(searchEdt);
         onRefresh();
     }
+
 
     //presenter从网络上得到数据
     @Override
@@ -140,5 +90,48 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
     @Override
     public void onRefresh() {
         presenter.getList();
+    }
+
+    //Enter键
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            String temp = searchEdt.getText().toString().trim();
+            presenter.enterSearchListActivity(temp);
+            return true;
+        }
+        return false;
+    }
+
+
+    //查看更多推荐
+    @Override
+    public void onSelectMore() {
+        presenter.enterRecommendListActivity();
+    }
+
+    //选择Tag
+    @Override
+    public void onSelectTag(int tagPosition) {
+        Song song = presenter.getSongs().get(tagPosition);
+        presenter.enterSongActivityByTag(song);
+    }
+
+    @Override
+    public void onSelectRecord(int position) {
+        Record record = (Record) adapter.getItem(position);
+        presenter.enterSearchListActivityByRecord(record);
+    }
+
+    @Override
+    public void onSelectDeleteRecord() {
+        presenter.deleteAllRecord();
+        onRefresh();
+    }
+
+    @Override
+    public void onClick(View v) {
+        String temp = searchEdt.getText().toString().trim();
+        presenter.enterSearchListActivity(temp);
     }
 }

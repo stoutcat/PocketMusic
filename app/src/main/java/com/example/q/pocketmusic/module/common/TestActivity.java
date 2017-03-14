@@ -9,7 +9,9 @@ import android.util.Log;
  * Created by YQ on 2016/10/11.
  */
 //用于测试Activity生命周期
-public  class TestActivity extends BaseActivity {
+public  abstract class TestActivity extends BaseActivity {
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

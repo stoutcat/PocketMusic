@@ -18,7 +18,7 @@
     <dimen name="item_two_txt_second_14sp">14sp</dimen>
     <dimen name="item_two_txt_right_margin_16dp">16dp</dimen>
     <dimen name="item_two_txt_height_72dp">72dp</dimen>
-    
+
     <dimen name="item_head">48dp</dimen>
     <dimen name="item_number">24dp</dimen>
 
@@ -29,6 +29,9 @@
 
     <dimen name="button_send_width">48dp</dimen>
     <dimen name="button_send_height">32dp</dimen>
+
+    <dimen name="button_sign_width">48dp</dimen>
+    <dimen name="button_sign_height">32dp</dimen>
 
     <dimen name="edit_send_height">@dimen/button_send_height</dimen>
 

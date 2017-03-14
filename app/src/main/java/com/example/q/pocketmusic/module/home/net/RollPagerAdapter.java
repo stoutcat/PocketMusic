@@ -1,6 +1,7 @@
 package com.example.q.pocketmusic.module.home.net;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,8 @@ import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 
 //最好能设定成后台自定义图片
 public class RollPagerAdapter extends LoopPagerAdapter {
-    private static int[] picList = new int[]{R.drawable.iv_banner_nidemingzi,
-            R.drawable.iv_banner_tiankongzhicheng, R.drawable.iv_banner_weiwenhuaming};
+    private static int[] picList = new int[]{R.drawable.banner_1,
+            R.drawable.banner_2, R.drawable.banner_3};
 
 
     public RollPagerAdapter(RollPagerView viewPager) {

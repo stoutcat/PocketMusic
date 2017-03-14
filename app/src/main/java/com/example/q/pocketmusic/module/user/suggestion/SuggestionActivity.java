@@ -42,17 +42,22 @@ public class SuggestionActivity extends AuthActivity implements SuggestionPresen
     private SuggestionAdapter adapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestion);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_suggestion;
+    }
+
+    @Override
+    public void setListener() {
+        recycler.setRefreshListener(this);
+    }
+
+    @Override
+    public void init() {
         presenter = new SuggestionPresenter(this, this, user);
         adapter = new SuggestionAdapter(this);
         initToolbar(toolbar, "反馈意见");
         initRecycler();
         adapter.addHeader(new SuggestionHeader(context));
-        recycler.setRefreshing(true);
-        recycler.setRefreshListener(this);
         onRefresh();
     }
 

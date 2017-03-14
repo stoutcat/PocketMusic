@@ -18,8 +18,17 @@ public class MyUser extends BmobUser {
     private String nickName;//昵称
     private String instrument;//乐器
     private String headImg;//头像
+    private String lastSignInDate;//最后一次签到时间
     private Integer contribution;//贡献值
     private BmobRelation collections;//某个用户收藏的所有曲谱
+
+    public String getLastSignInDate() {
+        return lastSignInDate;
+    }
+
+    public void setLastSignInDate(String lastSignInDate) {
+        this.lastSignInDate = lastSignInDate;
+    }
 
     public MyUser() {
         this.nickName = "匿名";

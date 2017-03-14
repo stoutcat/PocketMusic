@@ -78,6 +78,7 @@ public class HomeLocalFragmentPresenter  extends BasePresenter {
         LocalSong localSong = new LocalSong();
         localSong.setName(name);
         localSong.setDate(dateFormat.format(new Date()));
+        localSong.setSort(Constant.getSort());
         localSongDao.add(localSong);
 
         for (int i = 0; i < list.size(); i++) {

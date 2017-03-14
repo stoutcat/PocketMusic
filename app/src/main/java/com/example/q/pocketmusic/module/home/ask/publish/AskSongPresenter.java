@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
@@ -30,11 +31,11 @@ public class AskSongPresenter extends BasePresenter {
 
     public void askForSong(String title, final String content, final MyUser user) {
         if (TextUtils.isEmpty(content) || TextUtils.isEmpty(title)) {
-            MyToast.showToast(context, "请将信息填完整~");
+            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
             return;
         }
         if (!CheckUserUtil.checkUserContribution((BaseActivity) context, Constant.REDUCE_CONTRIBUTION_ASK)) {
-            MyToast.showToast(context,"贡献度不够哦~");
+            MyToast.showToast(context,CommonString.STR_NOT_ENOUGH_CONTRIBUTION);
             return;
         }
         activity.showLoading(true);
@@ -46,7 +47,7 @@ public class AskSongPresenter extends BasePresenter {
                 user.update(new ToastUpdateListener(context,activity) {
                     @Override
                     public void onSuccess() {
-                        MyToast.showToast(context, Constant.REDUCE_CONTRIBUTION_BASE + Constant.REDUCE_CONTRIBUTION_ASK);
+                        MyToast.showToast(context, CommonString.REDUCE_CONTRIBUTION_BASE + Constant.REDUCE_CONTRIBUTION_ASK);
                         activity.showLoading(false);
                         activity.setAskResult(Constant.SUCCESS);
                         activity.finish();

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  */
 
 //测试生命周期Fragment
-public class TestFragment extends BaseFragment {
+public abstract class TestFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         Log.e(getClass().getSimpleName(), "onAttach");

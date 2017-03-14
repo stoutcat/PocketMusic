@@ -43,14 +43,22 @@ public class HomeActivity extends BaseActivity implements HomePresenter.IView {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         presenter = new HomePresenter(this, this, getSupportFragmentManager());
         presenter.checkVersion();
         presenter.clickLocal();
     }
+
 
 
     //触发SingleTask

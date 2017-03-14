@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.module.common.BaseActivity;
-import com.example.q.pocketmusic.util.LogUtils;
 import com.example.q.pocketmusic.util.MyToast;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -22,7 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SearchListActivity extends BaseActivity implements SearchListActivityPresenter.IView, RecyclerArrayAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class SearchListActivity extends BaseActivity implements SearchListActivityPresenter.IView, RecyclerArrayAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener
+,RecyclerArrayAdapter.OnMoreListener{
     public final static String PARAM_QUERY = "query";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,46 +41,35 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_list);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_search_list;
+    }
+
+
+    public void setListener() {
         adapter = new SearchListActivityAdapter(this);
+        adapter.setMore(R.layout.view_more,this);
+        adapter.setOnItemClickListener(this);
+        recycler.setRefreshListener(this);
+    }
+
+    @Override
+    public void init() {
         presenter = new SearchListActivityPresenter(this, this);
         query = getIntent().getStringExtra(PARAM_QUERY);
         initToolbar(toolbar, "搜索结果");
-        initRecyclerView(recycler, adapter, 1);
-        initView();
-    }
-
-    private void initView() {
-        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
-            @Override
-            public void onMoreShow() {
-                presenter.loadMore(query);
-            }
-
-            @Override
-            public void onMoreClick() {
-
-            }
-        });
-        //点击事件监听
-        adapter.setOnItemClickListener(this);
-        recycler.setRefreshListener(this);
-        //初始化
+        initRecyclerView(recycler, adapter, 1,true);
         onRefresh();
     }
-
 
     //搜索结束
     @Override
     public void setList(List<Song> lists) {
         recycler.setRefreshing(false);
         if (lists == null) {
-            MyToast.showToast(context, "未找到相关曲谱或者已经到底了，╮(╯▽╰)╭~ ");
+            MyToast.showToast(context, CommonString.STR_NOT_MORE);
         } else {
-            LogUtils.e(TAG, "获得搜索条目:" + String.valueOf(lists.size()));
+           // LogUtils.e(TAG, "获得搜索条目:" + String.valueOf(lists.size()));
             adapter.addAll(lists);
         }
     }
@@ -96,5 +86,15 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
         adapter.clear();
         presenter.setPage(0);
         presenter.loadInit(query);
+    }
+
+    @Override
+    public void onMoreShow() {
+        presenter.loadMore(query);
+    }
+
+    @Override
+    public void onMoreClick() {
+
     }
 }

@@ -6,8 +6,10 @@ import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.IBasePresenter;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
+import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.local.Img;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
@@ -94,29 +97,59 @@ public class SharePresenter extends BasePresenter {
         if ((!TextUtils.isEmpty(name)) && (!TextUtils.isEmpty(author)) && (!TextUtils.isEmpty(content)) && (mNumberPic > 0)) {
             //上传服务器,弹出Dialog，成功后finish，弹出Toast;
             activity.showLoading(true);
-            //先批量上传图片
-            BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
-                @Override
-                public void onSuccess(List<BmobFile> list, List<String> list1) {
-                    //文件成功之后再添加数据
-                    if (filePaths.length == list1.size()) {
-                        shareSong(name, content, list1);
+            //先检查是否已经存在相同的曲谱
+            checkHasSong(name, content);
+        } else {
+            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
+        }
+    }
+
+    //检查是否已经存在
+    private void checkHasSong(final String name, final String content) {
+        BmobQuery<ShareSong> query = new BmobQuery<>();
+        query.findObjects(new ToastQueryListener<ShareSong>(context, activity) {
+            @Override
+            public void onSuccess(List<ShareSong> list) {
+                Boolean flag = false;
+                for (ShareSong shareSong : list) {
+                    if (shareSong.getName().equals(name)) {
+                        flag = true;//已经存在相同名字
+                        break;
                     }
                 }
-
-                @Override
-                public void onProgress(int i, int i1, int i2, int i3) {
-                    //批量上传中
+                if (flag) {
+                    activity.showLoading(false);
+                    MyToast.showToast(context, "已经存在相同曲谱~");
+                } else {
+                    //批量上传文件
+                    uploadBatch(name, content);
                 }
+            }
+        });
+    }
 
-                @Override
-                public void onError(int i, String s) {
-                    MyToast.showToast(context, "上传图片失败了~~~~");
+    //批量上传文件
+    private void uploadBatch(final String name, final String content) {
+        BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
+            @Override
+            public void onSuccess(List<BmobFile> list, List<String> list1) {
+                //文件成功之后再添加数据
+                if (filePaths.length == list1.size()) {
+                    shareSong(name, content, list1);
                 }
-            });
-        } else {
-            MyToast.showToast(context, "请添加完整信息");
-        }
+            }
+
+            @Override
+            public void onProgress(int i, int i1, int i2, int i3) {
+                //批量上传中
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                activity.showLoading(false);
+                MyToast.showToast(context, CommonString.STR_ERROR_INFO + "第" + i + "张：" + s);
+            }
+        });
     }
 
     //上传/分享乐曲
@@ -141,7 +174,7 @@ public class SharePresenter extends BasePresenter {
                         user.update(new ToastUpdateListener(context, activity) {
                             @Override
                             public void onSuccess() {
-                                MyToast.showToast(context, Constant.ADD_CONTRIBUTION_BASE+ (Constant.ADD_CONTRIBUTION_UPLOAD));
+                                MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + (Constant.ADD_CONTRIBUTION_UPLOAD));
                                 activity.showLoading(false);
                                 activity.finish();
                             }

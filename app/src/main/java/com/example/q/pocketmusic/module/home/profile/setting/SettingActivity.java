@@ -1,9 +1,10 @@
-package com.example.q.pocketmusic.module.setting;
+package com.example.q.pocketmusic.module.home.profile.setting;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,6 +30,8 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
     @BindView(R.id.launcher_iv)
     ImageView launcherIv;
     @BindView(R.id.version_tv)
@@ -47,10 +50,17 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_setting;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         presenter = new SettingPresenter(this, this);
         initToolbar(toolbar, "设置");
         presenter.checkUpdate(false);//检测更新

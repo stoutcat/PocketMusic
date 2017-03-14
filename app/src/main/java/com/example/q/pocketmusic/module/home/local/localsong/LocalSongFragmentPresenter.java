@@ -18,6 +18,7 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.share.ShareActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
 import com.example.q.pocketmusic.util.LogUtils;
+import com.example.q.pocketmusic.util.SharedPrefsUtil;
 import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.ForeignCollection;
 
@@ -124,8 +125,20 @@ public class LocalSongFragmentPresenter extends BasePresenter {
         context.startActivity(intent);
     }
 
+    public void setTop(LocalSong item) {
+        int top_value=SharedPrefsUtil.getInt(Constant.sort_key,Constant.sort_value);
+        top_value++;
+        item.setSort(top_value);
+        SharedPrefsUtil.putInt(Constant.sort_key,top_value);//修改最高值
+        localSongDao.update(item);
+        fragment.onRefresh();
+    }
+
 
     public interface IView {
         void setList(List<LocalSong> list);
+
+
+        void onRefresh();
     }
 }

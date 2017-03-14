@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.home.local.localsong;
 import android.content.DialogInterface;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
  * Created by Cloud on 2016/11/17.
  */
 
-public class LocalSongFragment extends BaseFragment implements LocalSongFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class LocalSongFragment extends BaseFragment implements LocalSongFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnItemClickListener, LocalSongFragmentAdapter.OnItemSelectListener {
     @BindView(R.id.recycler)
     EasyRecyclerView recycler;
     private LocalSongFragmentPresenter presenter;
@@ -44,47 +45,35 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new LocalSongFragmentPresenter(getActivity(), this);
-        adapter = new LocalSongFragmentAdapter(getContext());
+    public void finish() {
+        getActivity().finish();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_local_song, container, false);
-        ButterKnife.bind(this, view);
+    public int setContentResource() {
+        return R.layout.fragment_local_song;
+    }
+
+    @Override
+    public void setListener() {
+        adapter = new LocalSongFragmentAdapter(getContext());
+        adapter.setOnItemClickListener(this);
+        adapter.setOnSelectListener(this);
+        recycler.setRefreshListener(this);
+    }
+
+    @Override
+    public void init() {
+        presenter = new LocalSongFragmentPresenter(getActivity(), this);
+        initRecyclerView(recycler, adapter, 1);
         initView();
-        return view;
     }
 
     private void initView() {
-        //Recycler
-        initRecyclerView(recycler,adapter,1);
         recycler.setEmptyView(R.layout.view_local_empty);
         if (adapter.getCount() == 0) {
             recycler.showEmpty();
         }
-        //adapter监听
-        //单击查看大图
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                LocalSong localSong = adapter.getItem(position);
-                presenter.enterPictureActivity( localSong);
-
-            }
-        });
-        recycler.setRefreshListener(this);
-        //进入上传页面
-        adapter.setOnSelectListener(new LocalSongFragmentAdapter.OnItemSelectListener() {
-            @Override
-            public void onSelected(int position) {
-                alertBottomDialog(position);
-            }
-        });
-
     }
 
     private void alertBottomDialog(final int position) {
@@ -100,6 +89,9 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
                                 break;
                             case R.id.delete://删除
                                 showDeleteDialog(position);
+                                break;
+                            case R.id.top:
+                                presenter.setTop(adapter.getItem(position));//置顶
                                 break;
                         }
                     }
@@ -121,22 +113,20 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
     public void setList(List<LocalSong> lists) {
         adapter.clear();
         adapter.addAll(lists);
-        //逆序
-        adapter.sort(new Comparator<LocalSong>() {
-            @Override
-            public int compare(LocalSong o1, LocalSong o2) {
-                return -1;
-            }
-        });
+        //置顶+逆序
+        adapter.sort(new LocalSongComparator());
         //test();
     }
+
 
     private void test() {
         LocalSongDao localSongDao = new LocalSongDao(getContext());
         List<LocalSong> list = localSongDao.queryForAll();
         Log.e("ttt", "乐谱数量" + list.size());
         for (int i = 0; i < list.size(); i++) {
-            ForeignCollection<Img> imgs = localSongDao.findBySongId(list.get(i).getId()).getImgs();
+            LocalSong localSong = localSongDao.findBySongId(list.get(i).getId());
+            Log.e("TAG", "Top:" + localSong.getSort());
+            ForeignCollection<Img> imgs = localSong.getImgs();
             Log.e("ttt", "每一首的图片数量" + imgs.size());
             CloseableIterator<Img> iterator = imgs.closeableIterator();
             try {
@@ -180,9 +170,19 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
     }
 
 
-
     @Override
     public void onRefresh() {
         presenter.synchronizedSong();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        LocalSong localSong = adapter.getItem(position);
+        presenter.enterPictureActivity(localSong);
+    }
+
+    @Override
+    public void onSelected(int position) {
+        alertBottomDialog(position);
     }
 }

@@ -18,9 +18,17 @@ public class SplashActivity extends BaseActivity {
     private Handler handler = new Handler();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    public int setContentResource() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

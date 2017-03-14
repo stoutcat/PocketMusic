@@ -14,10 +14,13 @@ import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.search.type.SongTypeActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
+import com.example.q.pocketmusic.util.ACache;
+import com.example.q.pocketmusic.util.ACacheUtil;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 
 /**
  * Created by YQ on 2016/8/29.
@@ -55,10 +58,15 @@ public class HomeNetFragmentPresenter extends BasePresenter {
         query.findObjects(new ToastQueryListener<ShareSong>(context, fragment) {
             @Override
             public void onSuccess(List<ShareSong> list) {
+                    ACacheUtil.putShareSongCache(context, list);//添加缓存
                 fragment.setList(list);
             }
 
-            ;
+            @Override
+            public void onFail(BmobException e) {
+                super.onFail(e);
+                fragment.setList(ACacheUtil.getShareSongCache(context));
+            }
         });
     }
 
@@ -84,6 +92,15 @@ public class HomeNetFragmentPresenter extends BasePresenter {
         Intent intent = new Intent(context, SongTypeActivity.class);
         intent.putExtra(SongTypeActivity.PARAM_POSITION, position);
         context.startActivity(intent);
+    }
+
+    //获取缓存
+    public void getCacheList() {
+        List<ShareSong> list = ACacheUtil.getShareSongCache(context);//先获取缓存
+        if (list == null) {
+            getShareList();
+        }
+        fragment.setList(list);
     }
 
     public interface IView extends IBaseView {

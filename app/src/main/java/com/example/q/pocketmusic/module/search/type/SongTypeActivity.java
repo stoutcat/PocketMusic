@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.module.common.BaseActivity;
@@ -26,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SongTypeActivity extends BaseActivity implements SongTypeActivityPresenter.IView {
+public class SongTypeActivity extends BaseActivity implements SongTypeActivityPresenter.IView, RecyclerArrayAdapter.OnMoreListener, RecyclerArrayAdapter.OnItemClickListener {
 
     @BindView(R.id.top_iv)
     ImageView topIv;
@@ -49,18 +50,27 @@ public class SongTypeActivity extends BaseActivity implements SongTypeActivityPr
 
 
     @Override
+    public int setContentResource() {
+        return R.layout.activity_type_song;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type_song);
-        ButterKnife.bind(this);
         presenter = new SongTypeActivityPresenter(this, this);
         presenter.setPage(1);
-
+        setListener();
         init();
     }
 
+    public void setListener() {
+        adapter = new SongTypeActivityAdapter(this);
+        adapter.setOnItemClickListener(this);
+        adapter.setMore(R.layout.view_more, this);
+    }
 
-    private void init() {
+    @Override
+    public void init() {
         //获取传过来的recycler位置信息
         Intent intent = getIntent();
         int position = intent.getIntExtra(PARAM_POSITION, 0);
@@ -78,43 +88,9 @@ public class SongTypeActivity extends BaseActivity implements SongTypeActivityPr
 
         //设置顶部图片
         topIv.setBackgroundResource(topDrawable[typeId]);
+        initRecyclerView(recycler, adapter, 1, false);
 
-        //recycler adapter
-        //layoutManager需要在代码中设置，XML中设置无效
-        adapter = new SongTypeActivityAdapter(this);
-        initRecyclerView(recycler, adapter, 1);
-        recycler.setEmptyView(R.layout.view_not_found);
 
-        //一开始显示一个加载的页面
-        recycler.showEmpty();
-
-        //设置监听
-        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
-            @Override
-            public void onNoMoreShow() {
-                MyToast.showToast(getApplicationContext(), "已经没有更多了~");
-            }
-
-            @Override
-            public void onNoMoreClick() {
-
-            }
-        });
-        //加载更多
-        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadMore(typeId);
-            }
-        });
-        //每个item点击事件-->进入SongActivity
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                presenter.enterSongActivity(adapter.getItem(position));
-
-            }
-        });
         //加载数据
         recycler.setRefreshing(true);
         presenter.setList(position);
@@ -131,7 +107,22 @@ public class SongTypeActivity extends BaseActivity implements SongTypeActivityPr
     //加载失败
     @Override
     public void loadFail() {
-        MyToast.showToast(getApplicationContext(), "唉~获取数据竟然失败了(╬￣皿￣)凸 ，可能网络不太好哦~ ");
+        MyToast.showToast(getApplicationContext(), CommonString.STR_NOT_NET);
     }
 
+
+    @Override
+    public void onMoreShow() {
+        presenter.loadMore(typeId);
+    }
+
+    @Override
+    public void onMoreClick() {
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        presenter.enterSongActivity(adapter.getItem(position));
+    }
 }

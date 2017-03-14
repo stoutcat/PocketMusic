@@ -24,8 +24,8 @@ import java.util.Locale;
  * Created by Cloud on 2017/2/11.
  */
 
-public class SynchronizeLocalSong extends AsyncTask<Void,Void,Void> {
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+public class SynchronizeLocalSong extends AsyncTask<Void, Void, Void> {
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.CHINA);
     private LocalSongDao localSongDao;
     private ImgDao imgDao;
 
@@ -44,11 +44,14 @@ public class SynchronizeLocalSong extends AsyncTask<Void,Void,Void> {
         for (File file : files) {
             LocalSong localSong = new LocalSong();
             //时间
-            localSong.setDate(format.format(new Date()));
+            localSong.setDate(dateFormat.format(new Date()));
             //名字
             String name = file.getName();
             localSong.setName(name);
-            localSongDao.add(localSong);//LocalSong要先加入数据库
+            boolean isSuccess = localSongDao.add(localSong);//LocalSong要先加入数据库
+            if (!isSuccess) {
+                continue;
+            }
             //所有图片
             File[] imgFiles = file.listFiles();
             for (File imgFile : imgFiles) {

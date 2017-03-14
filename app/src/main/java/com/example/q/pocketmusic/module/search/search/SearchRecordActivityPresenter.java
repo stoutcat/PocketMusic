@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.model.bean.SongObject;
@@ -93,7 +94,7 @@ public class SearchRecordActivityPresenter extends BasePresenter {
             intent.putExtra(SearchListActivity.PARAM_QUERY, query);
             context.startActivity(intent);
         } else {
-            MyToast.showToast(context, "不能为空哦~");
+            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
         }
     }
 

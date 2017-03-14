@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 
 import com.example.q.pocketmusic.module.common.BaseActivity;
@@ -12,12 +13,17 @@ import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.ask.comment.AskSongCommentActivity;
 import com.example.q.pocketmusic.module.home.ask.publish.AskSongActivity;
+import com.example.q.pocketmusic.util.ACache;
+import com.example.q.pocketmusic.util.ACacheUtil;
+import com.example.q.pocketmusic.util.LogUtils;
+import com.example.q.pocketmusic.util.MyToast;
 
 import org.json.JSONArray;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import rx.Observable;
 
 /**
@@ -43,7 +49,14 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
         queryPost.findObjects(new ToastQueryListener<AskSongPost>(context, fragment) {
             @Override
             public void onSuccess(List<AskSongPost> list) {
+                ACacheUtil.putAskSongCache(context, list);
                 fragment.setPostList(list);
+            }
+
+            @Override
+            public void onFail(BmobException e) {
+                super.onFail(e);
+                fragment.setPostList(ACacheUtil.getAskSongCache(context));
             }
         });
     }
@@ -90,6 +103,14 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
 
     public void setmPage(int mPage) {
         this.mPage = mPage;
+    }
+
+    public void getCacheList() {
+        List<AskSongPost> list = ACacheUtil.getAskSongCache(context);
+        if (list == null) {
+            getPostList();
+        }
+        fragment.setPostList(list);
     }
 
 

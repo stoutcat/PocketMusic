@@ -31,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by YQ on 2016/8/28.
  */
-public class HomeLocalFragment extends BaseFragment implements HomeLocalFragmentPresenter.IView {
+public class HomeLocalFragment extends BaseFragment implements HomeLocalFragmentPresenter.IView, ViewPager.OnPageChangeListener {
     @BindView(R.id.local_tab_layout)
     TabLayout localTabLayout;
     @BindView(R.id.app_bar)
@@ -67,16 +67,22 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         presenter = new HomeLocalFragmentPresenter(getContext(), this);
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_local, container, false);
-        ButterKnife.bind(this, view);
-        initView();
-        return view;
-
+    public int setContentResource() {
+        return R.layout.fragment_home_local;
     }
+
+    @Override
+    public void setListener() {
+        localViewPager.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void init() {
+        initView();
+    }
+
+
 
 
     private void initView() {
@@ -87,28 +93,6 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         localTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         localTabLayout.setTabTextColors(getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorAccent));
         localTabLayout.setupWithViewPager(localViewPager);
-
-        localViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                //Floating的显示和隐藏
-                if (position == 0) {
-                    addLocalFab.show();
-                } else {
-                    addLocalFab.hide();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     //必须要在onResume中设置
@@ -149,5 +133,25 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        //Floating的显示和隐藏
+        if (position == 0) {
+            addLocalFab.show();
+        } else {
+            addLocalFab.hide();
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

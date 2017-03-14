@@ -1,7 +1,8 @@
-package com.example.q.pocketmusic.module.collection;
+package com.example.q.pocketmusic.module.home.profile.collection;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -23,43 +24,37 @@ import butterknife.ButterKnife;
  * Created by Cloud on 2016/11/14.
  */
 
-public class CollectionActivity extends AuthActivity implements CollectionPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class CollectionActivity extends AuthActivity implements CollectionPresenter.IView, SwipeRefreshLayout.OnRefreshListener, CollectionAdapter.OnSelectListener {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
     @BindView(R.id.recycler)
     EasyRecyclerView recycler;
     private CollectionPresenter presenter;
     private CollectionAdapter adapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collection);
-        ButterKnife.bind(this);
-        presenter = new CollectionPresenter(this, this, user);
+    public int setContentResource() {
+        return R.layout.activity_collection;
+    }
+
+    @Override
+    public void setListener() {
         adapter = new CollectionAdapter(this);
-        initView();
-    }
-
-    private void initView() {
-        initToolbar(toolbar, "我的收藏");
-        initRecyclerView(recycler, adapter,1);
+        adapter.setOnSelectListener(this);
         recycler.setRefreshListener(this);
-        recycler.setRefreshing(true);
-        onRefresh();
-
-        adapter.setOnSelectListener(new CollectionAdapter.OnSelectListener() {
-            //点击more
-            @Override
-            public void onSelectMore(int position) {
-                alertBottomDialog(position);
-            }
-            @Override
-            public void onSelectItem(int position) {
-                presenter.queryAndEnterSongActivity(adapter.getItem(position));
-            }
-        });
     }
+
+    @Override
+    public void init() {
+        presenter = new CollectionPresenter(this, this, user);
+        initToolbar(toolbar, "我的收藏");
+        initRecyclerView(recycler, adapter, 1,true);
+        onRefresh();
+    }
+
 
     //弹出底部dialog
     private void alertBottomDialog(final int position) {
@@ -81,7 +76,6 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
     }
 
 
-
     @Override
     public void setCollectionList(List<CollectionSong> list) {
         adapter.clear();
@@ -96,5 +90,17 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
     @Override
     public void onRefresh() {
         presenter.getCollectionList();
+    }
+
+    //更多选项
+    @Override
+    public void onSelectMore(int position) {
+        alertBottomDialog(position);
+    }
+
+    //item
+    @Override
+    public void onSelectItem(int position) {
+        presenter.queryAndEnterSongActivity(adapter.getItem(position));
     }
 }

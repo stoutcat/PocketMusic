@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.callback;
 
 import android.content.Context;
 
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public abstract class ToastQueryListListener<BatchResult> extends QueryListListe
 
     public void onFail(BmobException e) {
         baseView.showLoading(false);
-        MyToast.showToast(context, "发生错误");
+        MyToast.showToast(context, CommonString.STR_ERROR_INFO+e.getMessage());
         e.printStackTrace();
         //        CrashHandler handler=CrashHandler.getInstance();
 //        handler.uncaughtException(Thread.currentThread(),e);

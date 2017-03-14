@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.model.bean.local;
 
+import com.example.q.pocketmusic.config.Constant;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -23,9 +24,15 @@ public class LocalSong implements Serializable {
     @ForeignCollectionField
     private ForeignCollection<Img> imgs;
     @DatabaseField
-    private int groupId;
+    private int sort;//置顶
 
+    public int getSort() {
+        return sort;
+    }
 
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
 
     @Override
     public String toString() {
@@ -39,9 +46,6 @@ public class LocalSong implements Serializable {
     }
 
 
-    public LocalSong() {
-
-    }
 
     public int getId() {
         return id;
@@ -83,11 +87,4 @@ public class LocalSong implements Serializable {
         this.imgs = imgs;
     }
 
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
 }

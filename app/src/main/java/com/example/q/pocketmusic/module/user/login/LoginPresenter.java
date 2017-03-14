@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.callback.IBaseView;
@@ -31,7 +32,7 @@ public class LoginPresenter extends BasePresenter{
     //登录
     public void login(final String account, String password) {
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
-            MyToast.showToast(context, "请输入完整信息~");
+            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
             return;
         }
         activity.showLoading(true);

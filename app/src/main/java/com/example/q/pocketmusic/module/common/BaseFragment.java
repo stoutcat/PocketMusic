@@ -8,18 +8,24 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.util.ConvertUtil;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Cloud on 2017/1/16.
  */
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements IBaseView {
     public static AlertDialog mLoadingDialog;
     public Context context;
     public final String TAG = this.getClass().getName();
@@ -34,6 +40,16 @@ public class BaseFragment extends Fragment {
                     .setCancelable(false)
                     .create();
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(setContentResource(),container,false);
+        ButterKnife.bind(this, view);
+        setListener();
+        init();
+        return view;
     }
 
     public void showLoading(boolean isShow) {

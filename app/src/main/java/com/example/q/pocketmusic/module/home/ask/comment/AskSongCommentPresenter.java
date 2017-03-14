@@ -9,6 +9,7 @@ import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.Song;
@@ -65,7 +66,6 @@ public class AskSongCommentPresenter extends BasePresenter {
         queryComment.findObjects(new ToastQueryListener<AskSongComment>(context, activity) {
             @Override
             public void onSuccess(List<AskSongComment> list) {
-                //List<AskSongComment> comments = sort(list);
                 activity.setCommentList(list);
             }
         });
@@ -122,7 +122,7 @@ public class AskSongCommentPresenter extends BasePresenter {
                                         @Override
                                         public void onSuccess() {
                                             activity.showLoading(false);
-                                            MyToast.showToast(context, Constant.ADD_CONTRIBUTION_BASE + (Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC));
+                                            MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + (Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC));
                                             activity.sendCommentResult(s, askSongComment);
                                         }
                                     });
@@ -140,7 +140,7 @@ public class AskSongCommentPresenter extends BasePresenter {
                     public void onError(int i, String s) {
                         //文件上传失败
                         activity.showLoading(false);
-                        MyToast.showToast(context, "上传文件失败");
+                        MyToast.showToast(context, CommonString.STR_ERROR_INFO+s);
                     }
                 });
             }
@@ -165,7 +165,7 @@ public class AskSongCommentPresenter extends BasePresenter {
 
             @Override
             public void onHanlderFailure(int requestCode, String errorMsg) {
-                MyToast.showToast(context, "错误信息：" + errorMsg);
+                MyToast.showToast(context, CommonString.STR_ERROR_INFO + errorMsg);
             }
         });
     }

@@ -35,13 +35,21 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenter.
     private RegisterPresenter presenter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         initToolbar(toolbar, "用户注册");
         presenter = new RegisterPresenter(this, this);
     }
+
 
     @OnClick(R.id.ok_txt)
     public void onClick(View view) {

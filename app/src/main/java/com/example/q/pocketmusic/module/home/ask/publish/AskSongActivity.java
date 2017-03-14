@@ -33,10 +33,17 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_song);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_ask_song;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         initToolbar(toolbar, "求谱信息");
         presenter = new AskSongPresenter(this, this);
     }

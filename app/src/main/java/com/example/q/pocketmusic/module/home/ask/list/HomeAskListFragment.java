@@ -26,7 +26,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Cloud on 2017/1/26.
  */
-public class HomeAskListFragment extends BaseFragment implements HomeAskListFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class HomeAskListFragment extends BaseFragment implements HomeAskListFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, HomeAskListAdapter.OnItemClickListener, View.OnClickListener
+        , RecyclerArrayAdapter.OnMoreListener {
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
@@ -35,17 +36,26 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     private HomeAskListFragmentPresenter presenter;
     private HomeAskListAdapter adapter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_ask_list, container, false);
-        ButterKnife.bind(this, view);
-        presenter = new HomeAskListFragmentPresenter(context, this);
+    public int setContentResource() {
+        return R.layout.fragment_home_ask_list;
+    }
+
+    @Override
+    public void setListener() {
         adapter = new HomeAskListAdapter(getContext());
+        adapter.setListener(this);
+        titleBar.setSettingIconOnClickListener(this);
+        adapter.setMore(R.layout.view_more, this);
+    }
+
+    @Override
+    public void init() {
+        presenter = new HomeAskListFragmentPresenter(context, this);
         presenter.setmPage(0);
         initView();
-        return view;
     }
+
 
     private void initView() {
         titleBar.setMyCenterTitle("大家都在找");
@@ -53,52 +63,13 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
         titleBar.setMySettingIcon(R.drawable.ico_add);
         initRecyclerView(recycler, adapter, 72);
         recycler.setRefreshListener(this);
-        setListener();
-        recycler.setRefreshing(true);
-        onRefresh();//刷新
-    }
-
-    private void setListener() {
-        adapter.setListener(new HomeAskListAdapter.OnItemClickListener() {
-            //点击头像跳转到某个人的信息界面
-            @Override
-            public void onClickHeadIv(int position) {
-                presenter.enterOtherProfileActivity(adapter.getItem(position));
-            }
-
-            //点击内容跳转到评论
-            @Override
-            public void onClickContent(int position) {
-                presenter.enterCommentActivity(adapter.getItem(position));
-
-            }
-        });
-        //求谱
-        titleBar.setSettingIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.enterAskSongActivity();
-            }
-        });
-
-        //加载更多
-        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
-            @Override
-            public void onMoreShow() {
-                presenter.getMore();
-            }
-
-            @Override
-            public void onMoreClick() {
-
-            }
-        });
-
+        presenter.getCacheList();
     }
 
 
     @Override
     public void setPostList(List<AskSongPost> list) {
+        recycler.setRefreshing(false);
         adapter.addAll(list);
     }
 
@@ -120,5 +91,30 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onClickHeadIv(int position) {
+        presenter.enterOtherProfileActivity(adapter.getItem(position));
+    }
+
+    @Override
+    public void onClickContent(int position) {
+        presenter.enterCommentActivity(adapter.getItem(position));
+    }
+
+    @Override
+    public void onClick(View v) {
+        presenter.enterAskSongActivity();
+    }
+
+    @Override
+    public void onMoreShow() {
+        presenter.getMore();
+    }
+
+    @Override
+    public void onMoreClick() {
+
     }
 }

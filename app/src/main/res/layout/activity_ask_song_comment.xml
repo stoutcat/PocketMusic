@@ -53,12 +53,12 @@
             android:text="0 张" />
 
         <EditText
+            android:minLines="1"
             android:id="@+id/user_input_edt"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_edt_send"
-            android:maxLines="1" />
+            android:background="@drawable/bg_edt_send" />
 
         <Button
             android:id="@+id/send_comment_btn"

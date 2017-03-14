@@ -32,20 +32,22 @@ public class LocalSongDao {
     }
 
     //添加一个localSong,不重复添加
-    public void add(LocalSong localSong) {
+    public boolean add(LocalSong localSong) {
         try {
             List<LocalSong> list = queryForAll();
             if (list != null) {
                 for (LocalSong song : list) {
                     if (song.getName().equals(localSong.getName())) {
-                        return;
+                        return false;
                     }
                 }
             }
             localSongOpe.create(localSong);
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public void update(LocalSong localSong) {

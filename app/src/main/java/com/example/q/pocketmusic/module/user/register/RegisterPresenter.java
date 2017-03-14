@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.callback.IBaseView;
@@ -36,7 +37,7 @@ public class RegisterPresenter extends BasePresenter {
     public void register(String account, String password, String confirmPassword, String nickName) {
         Boolean isConfirm = checkAccount(account);//邮箱验证账号
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password) || TextUtils.isEmpty(nickName) || TextUtils.isEmpty(confirmPassword)) {
-            MyToast.showToast(context, "信息要输入完整哦~");
+            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
         } else if (!isConfirm) {
             MyToast.showToast(context, "邮箱格式错误~");
         } else if (!confirmPassword.equals(password)){

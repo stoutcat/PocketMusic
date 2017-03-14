@@ -2,6 +2,8 @@ package com.example.q.pocketmusic.callback;
 
 import android.content.Context;
 
+import com.example.q.pocketmusic.config.CommonString;
+import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public abstract class ToastQueryListener<T> extends FindListener<T> {
 
     public void onFail(BmobException e) {
         baseView.showLoading(false);
-        MyToast.showToast(context, "发生错误：" + e.getMessage());
+        MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
         e.printStackTrace();
         //        CrashHandler handler=CrashHandler.getInstance();
 //        handler.uncaughtException(Thread.currentThread(),e);

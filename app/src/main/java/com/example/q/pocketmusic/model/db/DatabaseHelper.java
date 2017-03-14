@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TABLE_NAME = "sqlite-song.db";//数据库名
-    private static final int TABLE_VERSION = 4;//增加了GroupId，升级表
+    private static final int TABLE_VERSION = 6;//删除LocalSong-GroupId,增加LocalSong-Sort
     private Map<String, Dao> daos = new HashMap<String, Dao>();
     private static DatabaseHelper helper;
 

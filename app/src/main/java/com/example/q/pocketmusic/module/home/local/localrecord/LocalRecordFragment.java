@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
  * Created by Cloud on 2016/11/17.
  */
 
-public class LocalRecordFragment extends BaseFragment implements LocalRecordFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class LocalRecordFragment extends BaseFragment implements LocalRecordFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnItemClickListener, LocalRecordFragmentAdapter.OnSelectListener {
     @BindView(R.id.recycler)
     EasyRecyclerView recycler;
     @BindView(R.id.activity_audio_record)
@@ -53,38 +53,41 @@ public class LocalRecordFragment extends BaseFragment implements LocalRecordFrag
     private LocalRecordFragmentPresenter presenter;
     private AlertDialog dialog;
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_local_record, container, false);
-        presenter = new LocalRecordFragmentPresenter(getContext(), this);
-        ButterKnife.bind(this, view);
-        init();
-        return view;
+    public void finish() {
+        getActivity().finish();
     }
 
-    private void init() {
+    @Override
+    public int setContentResource() {
+        return R.layout.fragment_local_record;
+    }
+
+    @Override
+    public void setListener() {
         adapter = new LocalRecordFragmentAdapter(getActivity());
-        initRecyclerView(recycler, adapter, 1);
-        //单击弹出播放dialog
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                alertPlayerDialog(position);
-            }
-        });
-
-        adapter.setListener(new LocalRecordFragmentAdapter.OnSelectListener() {
-            @Override
-            public void onSelectMore(int position) {
-                alertDeleteDialog(adapter.getItem(position));
-            }
-        });
-
+        adapter.setOnItemClickListener(this);
+        adapter.setListener(this);
         recycler.setRefreshListener(this);
+    }
+
+    public void init() {
+        presenter = new LocalRecordFragmentPresenter(getContext(), this);
+        initRecyclerView(recycler, adapter, 1);
         //加载录音列表
         recycler.setRefreshing(true);
         presenter.loadRecordList();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        alertPlayerDialog(position);
+    }
+
+    @Override
+    public void onSelectMore(int position) {
+        alertDeleteDialog(adapter.getItem(position));
     }
 
 
@@ -235,6 +238,7 @@ public class LocalRecordFragment extends BaseFragment implements LocalRecordFrag
         seekBar.setProgress(currentPosition);
         durationTv.setText(time);
     }
+
 
 //    //退出前台,关闭音乐
 //    @Override

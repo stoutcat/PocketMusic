@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.bmob.UserSuggestion;
@@ -46,7 +47,7 @@ public class SuggestionPresenter extends BasePresenter {
                 user.update(new ToastUpdateListener(context, activity) {
                     @Override
                     public void onSuccess() {
-                        MyToast.showToast(context, Constant.ADD_CONTRIBUTION_BASE + Constant.ADD_CONTRIBUTION_SUGGESTION);
+                        MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + Constant.ADD_CONTRIBUTION_SUGGESTION);
                         activity.sendSuggestionResult(userSuggestion);
                     }
                 });

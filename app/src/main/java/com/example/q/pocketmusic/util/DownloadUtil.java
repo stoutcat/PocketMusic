@@ -184,6 +184,7 @@ public class DownloadUtil {
             mDownloadSong = new LocalSong();
             mDownloadSong.setName(name);
             mDownloadSong.setDate(format.format(new Date()));
+            mDownloadSong.setSort(Constant.getSort());
             mDownloadSong.setType(type);
             localSongDao.add(mDownloadSong);
         }

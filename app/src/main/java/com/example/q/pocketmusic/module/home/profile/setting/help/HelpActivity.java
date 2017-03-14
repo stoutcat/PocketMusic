@@ -1,4 +1,4 @@
-package com.example.q.pocketmusic.module.setting.help;
+package com.example.q.pocketmusic.module.home.profile.setting.help;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.bmob.Help;
 import com.example.q.pocketmusic.module.common.BaseActivity;
@@ -23,6 +24,7 @@ import cn.bmob.v3.listener.FindListener;
 
 public class HelpActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.app_bar)
@@ -34,14 +36,20 @@ public class HelpActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private HelpAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
-        ButterKnife.bind(this);
-        initToolbar(toolbar, "帮助信息");
+    public int setContentResource() {
+        return R.layout.activity_help;
+    }
+
+    @Override
+    public void setListener() {
         adapter = new HelpAdapter(this);
-        initRecyclerView(recycler, adapter);
         recycler.setRefreshListener(this);
+    }
+
+    @Override
+    public void init() {
+        initToolbar(toolbar, "帮助信息");
+        initRecyclerView(recycler, adapter);
         onRefresh();
     }
 
@@ -57,7 +65,7 @@ public class HelpActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     adapter.clear();
                     adapter.addAll(list);
                 } else {
-                    MyToast.showToast(context, Constant.STR_NOT_FOUND);
+                    MyToast.showToast(context, CommonString.STR_NOT_FOUND);
                 }
             }
         });

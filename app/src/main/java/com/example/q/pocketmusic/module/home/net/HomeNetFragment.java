@@ -18,6 +18,7 @@ import com.example.q.pocketmusic.model.flag.Divider;
 import com.example.q.pocketmusic.model.flag.TextTv;
 import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.search.search.SearchRecordActivity;
+import com.example.q.pocketmusic.util.LogUtils;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  * Created by Cloud on 2016/11/17.
  */
 //网络Fragment
-public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener {
+public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, NetFragmentAdapter.OnOptionListener, RecyclerArrayAdapter.OnMoreListener {
 
     @BindView(R.id.recycler)
     EasyRecyclerView recycler;
@@ -41,62 +42,35 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
     private HomeNetFragmentPresenter presenter;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_home_net, container, false);
-        ButterKnife.bind(this, view);
+    public int setContentResource() {
+        return R.layout.fragment_home_net;
+    }
+
+    @Override
+    public void setListener() {
+        adapter = new NetFragmentAdapter(getContext());
+        recycler.setRefreshListener(this);
+        adapter.setListener(this);
+        recycler.setOnScrollListener(new SearchViewListener(searchRl));
+        adapter.setMore(R.layout.view_more, this);
+    }
+
+    @Override
+    public void init() {
         presenter = new HomeNetFragmentPresenter(this, getActivity());
         presenter.setSharePage(0);
-        adapter = new NetFragmentAdapter(getContext());
+        initRecyclerView(recycler, adapter);
         initView();
-        return view;
     }
 
 
     //没有设置下拉刷新
     private void initView() {
         //初始化Recycler
-        initRecyclerView(recycler,adapter);
         recycler.setEmptyView(R.layout.view_not_found);
-        recycler.setRefreshListener(this);
-        adapter.setListener(new NetFragmentAdapter.OnOptionListener() {
-
-            //乐器列表选择
-            @Override
-            public void onSelectType(int position) {
-                presenter.enterTypeActivity(position);
-            }
-
-            //上传列表选择
-            @Override
-            public void onSelectShare(int position) {
-                ShareSong shareSong = (ShareSong) adapter.getItem(position);
-                presenter.enterSongActivityByShare(shareSong);
-            }
-
-
-            //设置点击某个RollView
-            @Override
-            public void onSelectRollView(int picPosition) {
-
-            }
-        });
-
-        //recycler的滑动监听，search上移
-        recycler.setOnScrollListener(new SearchViewListener(searchRl));
-
-        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadMore();
-            }
-        });
-
-        //初始化轮播，乐器类型列表
         initList();
-        presenter.getShareList();
+        presenter.getCacheList();
     }
 
     private void initList() {
@@ -109,6 +83,7 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
         adapter.add(new ContentLL());//乐器类型
         adapter.add(textTv2);//文字
         adapter.add(new Divider());//分割线
+        adapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.search_rl)
@@ -120,14 +95,13 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
 
     @Override
     public void setList(List<ShareSong> list) {
+        recycler.setRefreshing(false);
         adapter.addAll(list);
-
     }
 
     @Override
     public void setMore(List<ShareSong> list) {
         adapter.addAll(list);
-
     }
 
 
@@ -142,5 +116,31 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onSelectType(int position) {
+        presenter.enterTypeActivity(position);
+    }
+
+    @Override
+    public void onSelectShare(int position) {
+        ShareSong shareSong = (ShareSong) adapter.getItem(position);
+        presenter.enterSongActivityByShare(shareSong);
+    }
+
+    @Override
+    public void onSelectRollView(int picPosition) {
+
+    }
+
+    @Override
+    public void onMoreShow() {
+        presenter.loadMore();
+    }
+
+    @Override
+    public void onMoreClick() {
+
     }
 }

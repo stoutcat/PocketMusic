@@ -25,14 +25,14 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SharedPrefsUtil.init(getApplicationContext());
-        Bmob.initialize(this, "236163bbf4c3be6f2cc44de4405da6eb", "Bmob");
+        Bmob.initialize(this, Constant.APP_ID, "Bmob");
         //官网SDK
-        AppStat.i("236163bbf4c3be6f2cc44de4405da6eb", "Bmob");
+        AppStat.i(Constant.APP_ID, "Bmob");
         //自动更新
         BmobUpdateAgent.initAppVersion();
         //发布时，开启异常捕获器
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(this);
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
         initGalleryFinal();
 
     }

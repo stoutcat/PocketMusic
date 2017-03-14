@@ -24,6 +24,8 @@ public class LocalRecordFragmentAdapter extends RecyclerArrayAdapter<RecordAudio
     private SimpleDateFormat durationFormat = new SimpleDateFormat("mm分ss秒", Locale.CHINA);
     private OnSelectListener listener;
 
+
+
     public interface OnSelectListener {
         void onSelectMore(int position);
     }

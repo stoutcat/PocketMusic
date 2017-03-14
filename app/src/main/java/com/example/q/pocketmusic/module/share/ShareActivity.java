@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShareActivity extends AuthActivity implements SharePresenter.IView {
+public class ShareActivity extends AuthActivity implements SharePresenter.IView, RecyclerArrayAdapter.OnItemClickListener {
 
     public static final String LOCAL_SONG = "LOCAL_SONG";
     @BindView(R.id.name_tet)
@@ -45,30 +45,29 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView 
     private SmallPicAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share);
-        ButterKnife.bind(this);
-        presenter = new SharePresenter(this, this, user);
+    public int setContentResource() {
+        return R.layout.activity_share;
+    }
+
+
+    public void setListener() {
         adapter = new SmallPicAdapter(this);
+        adapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void init() {
+        presenter = new SharePresenter(this, this, user);
+
         initToolbar(toolbar, "上传曲谱");
         initView();
     }
 
     private void initView() {
-        //获得传过来的参数
         LocalSong localSong = (LocalSong) getIntent().getSerializableExtra(LOCAL_SONG);
         presenter.getPicAndName(localSong);
-
-        //recycler
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycler.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                presenter.checkPic(adapter.getItem(position));//查看图片
-            }
-        });
     }
 
     @OnClick({R.id.add_pic_iv, R.id.upload_txt})
@@ -98,4 +97,9 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView 
     }
 
 
+    //查看图片
+    @Override
+    public void onItemClick(int position) {
+        presenter.checkPic(adapter.getItem(position));
+    }
 }

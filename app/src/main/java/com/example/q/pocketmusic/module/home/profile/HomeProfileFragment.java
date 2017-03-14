@@ -2,9 +2,11 @@ package com.example.q.pocketmusic.module.home.profile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +16,12 @@ import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DisplayStrategy;
 import com.example.q.pocketmusic.view.dialog.ListDialog;
 import com.example.q.pocketmusic.view.widget.net.SnackBarUtil;
+import com.example.q.pocketmusic.view.widget.view.GuaGuaKa;
 import com.example.q.pocketmusic.view.widget.view.IcoTextItem;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,19 +48,27 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     IcoTextItem collectionItem;
     @BindView(R.id.setting_item)
     IcoTextItem settingItem;
+    @BindView(R.id.sign_in_btn)
+    Button signInBtn;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
+    private AlertDialog signInDialog;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_profile, container, false);
-        ButterKnife.bind(this, view);
+    public int setContentResource() {
+        return R.layout.fragment_home_profile;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    @Override
+    public void init() {
         presenter = new HomeProfileFragmentPresenter(context, this);
         initView();
-        //贡献值实时更新
-        return view;
     }
 
     @Override
@@ -81,7 +93,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     }
 
 
-    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item})
+    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.head_iv://设置头像
@@ -99,18 +111,43 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             case R.id.collection_item://进入收藏列表界面
                 presenter.enterCollectionActivity();
                 break;
-            case R.id.contribution_item://得到当前贡献度,需要实时获得，不能使用本地缓存对象
-                CheckUserUtil.getUserContribution(this, context, this, new CheckUserUtil.UserContributionListener() {
-                    @Override
-                    public void onSuccess(Integer contribution) {
-                        SnackBarUtil.IndefiniteSnackbar(contributionItem, "当前贡献度" + contribution, 2000, R.color.black, SnackBarUtil.orange).show();
-                    }
-                });
+            case R.id.contribution_item://进入ContributionActivity
+                presenter.enterContributionActivity();
                 break;
-
+            case R.id.sign_in_btn://签到
+                presenter.checkHasSignIn();
+                break;
         }
     }
 
+    //签到Dialog
+    public void alertSignInDialog() {
+        Random random = new Random();
+        final int reward = random.nextInt(4)+1;//随机1--4点
+        View view = View.inflate(getContext(), R.layout.dialog_sign_in, null);
+        GuaGuaKa guaGuaKa = (GuaGuaKa) view.findViewById(R.id.gua_gua_ka);
+        guaGuaKa.setAwardText(String.valueOf(reward) + " 点贡献度");
+        final Button getRewardBtn = (Button) view.findViewById(R.id.get_reward_btn);
+        signInDialog = new AlertDialog.Builder(getContext())
+                .setCancelable(false)
+                .setView(view)
+                .create();
+        guaGuaKa.setOnCompleteListener(new GuaGuaKa.OnCompleteListener() {
+            @Override
+            public void onComplete() {
+                getRewardBtn.setVisibility(View.VISIBLE);
+            }
+        });
+        getRewardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.addReward(reward);
+            }
+        });
+        signInDialog.show();
+    }
+
+    //设置乐器
     private void setInstrument() {
         String[] instruments = this.getResources().getStringArray(R.array.instrument);
         List<String> list = Arrays.asList(instruments);
@@ -140,7 +177,13 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     }
 
     @Override
+    public void dismissSignDialog() {
+        signInDialog.dismiss();
+    }
+
+    @Override
     public void finish() {
         getActivity().finish();
     }
+
 }

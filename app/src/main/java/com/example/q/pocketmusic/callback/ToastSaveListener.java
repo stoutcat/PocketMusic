@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.callback;
 import android.content.Context;
 
 import com.example.q.pocketmusic.callback.IBaseView;
+import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.util.MyToast;
 
 import cn.bmob.v3.exception.BmobException;
@@ -35,7 +36,7 @@ public abstract class ToastSaveListener<T> extends SaveListener<T> {
 
     public void onFail(T t, BmobException e) {
         baseView.showLoading(false);
-        MyToast.showToast(context, "发生错误：" + e.getMessage());
+        MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
         e.printStackTrace();
         //        CrashHandler handler=CrashHandler.getInstance();
 //        handler.uncaughtException(Thread.currentThread(),e);

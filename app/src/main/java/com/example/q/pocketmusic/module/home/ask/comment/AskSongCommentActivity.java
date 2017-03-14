@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.module.home.ask.comment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Cloud on 2016/11/14.
  */
 
-public class AskSongCommentActivity extends AuthActivity implements AskSongCommentPresenter.IView {
+public class AskSongCommentActivity extends AuthActivity implements AskSongCommentPresenter.IView, View.OnClickListener, RecyclerArrayAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -51,11 +52,22 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
     public static final String PARAM_POST = "param_post";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_song_comment);
-        ButterKnife.bind(this);
+    public int setContentResource() {
+        return R.layout.activity_ask_song_comment;
+    }
+
+    @Override
+    public void setListener() {
+        //回复
         adapter = new AskSongCommentAdapter(AskSongCommentActivity.this);
+        recycler.setRefreshListener(this);
+        sendCommentBtn.setOnClickListener(this);
+        addPic.setOnClickListener(this);
+        adapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void init() {
         final AskSongPost post = (AskSongPost) getIntent().getSerializableExtra(PARAM_POST);
         presenter = new AskSongCommentPresenter(AskSongCommentActivity.this, AskSongCommentActivity.this, user, post);
         initToolbar(toolbar, presenter.getPost().getTitle());
@@ -74,35 +86,7 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
                 presenter.getPost().getCreatedAt()));
         recycler.setRefreshing(true);
         presenter.getCommentList();
-        setListener();
     }
-
-    private void setListener() {
-        //回复
-        sendCommentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String comment = userInputEdt.getText().toString().trim();
-                presenter.sendComment(comment);
-            }
-        });
-        //添加图片
-        addPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.addPic();
-            }
-        });
-
-        //adapter点击事件
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                presenter.alertPicDialog(adapter.getItem(position));  //弹出简略图
-            }
-        });
-    }
-
 
     //加载评论列表
     @Override
@@ -147,4 +131,26 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
         picDialog.show();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.send_comment_btn://发送评论
+                String comment = userInputEdt.getText().toString().trim();
+                presenter.sendComment(comment);
+                break;
+            case R.id.add_pic://添加图片
+                presenter.addPic();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        presenter.alertPicDialog(adapter.getItem(position));  //弹出简略图
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
 }
