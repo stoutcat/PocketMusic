@@ -10,19 +10,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by YQ on 2016/8/29.
  */
-public class LoadTypeSongList extends AsyncTask<String, Void, Integer> {
+public class LoadTypeSongList extends AsyncTask<String, Void, List<Song> > {
     private int typeId;
-    private List<Song> list;
 
-    protected LoadTypeSongList(List<Song> lists, int typeId) {
+
+    protected LoadTypeSongList( int typeId) {
         this.typeId = typeId;
-        this.list = lists;
-        list.clear();
     }
 
     /**
@@ -32,8 +31,9 @@ public class LoadTypeSongList extends AsyncTask<String, Void, Integer> {
      * @return 里诶包
      */
     @Override
-    protected Integer doInBackground(String... strings) {
+    protected List<Song> doInBackground(String... strings) {
         String typeUrl = strings[0];
+        List<Song> list=new ArrayList<>();
         try {
             Document doc = Jsoup.connect(typeUrl).userAgent(Constant.USER_AGENT).timeout(6000).get();
             Element tbody =  doc.select("table.opern_list").get(0).getElementsByTag("tbody").get(0);
@@ -57,9 +57,9 @@ public class LoadTypeSongList extends AsyncTask<String, Void, Integer> {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return Constant.FAIL;
+            return null;
         }
-        return Constant.SUCCESS;
+        return list;
     }
 
 

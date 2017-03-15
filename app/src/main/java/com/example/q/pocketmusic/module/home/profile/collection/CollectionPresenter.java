@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.home.profile.collection;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
@@ -119,7 +120,7 @@ public class CollectionPresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
 
         void setCollectionList(List<CollectionSong> list);
 

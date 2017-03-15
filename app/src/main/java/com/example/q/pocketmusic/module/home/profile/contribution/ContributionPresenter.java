@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.module.home.profile.contribution;
 
 import android.content.Context;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.model.bean.MyUser;
@@ -21,12 +22,11 @@ import cn.bmob.v3.listener.FindListener;
 public class ContributionPresenter {
     private Context context;
     private IView activity;
-    private RecyclerArrayAdapter<MyUser> adapter;
 
-    public ContributionPresenter(Context context, IView activity, RecyclerArrayAdapter<MyUser> adapter) {
+
+    public ContributionPresenter(Context context, IView activity) {
         this.context = context;
         this.activity = activity;
-        this.adapter = adapter;
     }
 
     public void init() {
@@ -36,12 +36,13 @@ public class ContributionPresenter {
         query.findObjects(new ToastQueryListener<MyUser>(context, activity) {
             @Override
             public void onSuccess(List<MyUser> list) {
-                adapter.addAll(list);
+                activity.setListResult(list);
             }
         });
     }
 
-    interface IView extends IBaseView {
+    interface IView extends IBaseList {
 
+        void setListResult(List<MyUser> list);
     }
 }

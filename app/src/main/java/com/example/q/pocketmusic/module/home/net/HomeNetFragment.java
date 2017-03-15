@@ -143,4 +143,9 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
     public void onMoreClick() {
 
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
+    }
 }

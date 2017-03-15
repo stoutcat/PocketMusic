@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBasePresenter;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
@@ -631,7 +632,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
         void loadFail();
 
         void downloadResult(Integer result, String info);

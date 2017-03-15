@@ -65,7 +65,7 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
     @Override
     public void init() {
         presenter = new LocalSongFragmentPresenter(getActivity(), this);
-        initRecyclerView(recycler, adapter, 1);
+        initRecyclerView(recycler, adapter, 1,true);
         initView();
     }
 

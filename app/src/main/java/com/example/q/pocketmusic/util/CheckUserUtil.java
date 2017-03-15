@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.config.Constant;
@@ -62,7 +63,7 @@ public class CheckUserUtil {
     }
 
 
-    public static void getUserContribution(Fragment activity, Context context, IBaseView fragment, final UserContributionListener listener) {
+    public static void getUserContribution(Fragment activity, Context context, IBaseList fragment, final UserContributionListener listener) {
         MyUser user = checkLocalUser(activity);
         if (user == null) {
             return;

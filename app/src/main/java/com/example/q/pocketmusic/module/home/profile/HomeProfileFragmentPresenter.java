@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.home.profile;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
@@ -171,7 +172,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
 
         void setHeadIvResult(String photoPath);
 

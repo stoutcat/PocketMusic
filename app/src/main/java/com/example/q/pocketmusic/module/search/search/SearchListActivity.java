@@ -1,7 +1,6 @@
 package com.example.q.pocketmusic.module.search.search;
 
 
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +18,6 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class SearchListActivity extends BaseActivity implements SearchListActivityPresenter.IView, RecyclerArrayAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener
@@ -46,6 +44,7 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
     }
 
 
+    @Override
     public void setListener() {
         adapter = new SearchListActivityAdapter(this);
         adapter.setMore(R.layout.view_more,this);
@@ -65,13 +64,7 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
     //搜索结束
     @Override
     public void setList(List<Song> lists) {
-        recycler.setRefreshing(false);
-        if (lists == null) {
-            MyToast.showToast(context, CommonString.STR_NOT_MORE);
-        } else {
-           // LogUtils.e(TAG, "获得搜索条目:" + String.valueOf(lists.size()));
-            adapter.addAll(lists);
-        }
+        adapter.addAll(lists);
     }
 
 
@@ -85,12 +78,13 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
     public void onRefresh() {
         adapter.clear();
         presenter.setPage(0);
-        presenter.loadInit(query);
+        presenter.getList(query);
     }
 
     @Override
     public void onMoreShow() {
-        presenter.loadMore(query);
+        presenter.setPage(presenter.getmPage()+1);
+        presenter.getList(query);
     }
 
     @Override

@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
  */
 public class HomeAskListFragment extends BaseFragment implements HomeAskListFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, HomeAskListAdapter.OnItemClickListener, View.OnClickListener
         , RecyclerArrayAdapter.OnMoreListener {
-
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler)
@@ -45,24 +44,20 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     public void setListener() {
         adapter = new HomeAskListAdapter(getContext());
         adapter.setListener(this);
-        titleBar.setSettingIconOnClickListener(this);
+      //  titleBar.setSettingIconOnClickListener(this);
         adapter.setMore(R.layout.view_more, this);
+        recycler.setRefreshListener(this);
     }
 
     @Override
     public void init() {
         presenter = new HomeAskListFragmentPresenter(context, this);
+        initRecyclerView(recycler, adapter, 72,false);
         presenter.setmPage(0);
-        initView();
-    }
-
-
-    private void initView() {
         titleBar.setMyCenterTitle("大家都在找");
         titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
         titleBar.setMySettingIcon(R.drawable.ico_add);
-        initRecyclerView(recycler, adapter, 72);
-        recycler.setRefreshListener(this);
+        titleBar.setSettingIconOnClickListener(this);//需要修改
         presenter.getCacheList();
     }
 
@@ -105,7 +100,12 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
 
     @Override
     public void onClick(View v) {
-        presenter.enterAskSongActivity();
+        switch (v.getId()) {
+            case R.id.title_bar_setting_icon:
+                presenter.enterAskSongActivity();
+                break;
+        }
+
     }
 
     @Override
@@ -116,5 +116,10 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     @Override
     public void onMoreClick() {
 
+    }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
     }
 }

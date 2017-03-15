@@ -14,6 +14,7 @@ import com.example.q.pocketmusic.model.net.LoadRecommendList;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.search.recommend.RecommendListActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
+import com.example.q.pocketmusic.util.ACacheUtil;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.ArrayList;
@@ -26,52 +27,46 @@ import java.util.List;
 public class SearchRecordActivityPresenter extends BasePresenter {
     private Context context;
     private IView activity;
-    private List<Song> songs = new ArrayList<>();
-    private List<Record> records = new ArrayList<>();
     private RecordDao recordDao;
 
     public SearchRecordActivityPresenter(Context context, IView activity) {
         this.context = context;
         this.activity = activity;
-        songs.clear();
-        records.clear();
         recordDao = new RecordDao(context);
     }
 
-    public List<Song> getSongs() {
-        return songs;
+    public void getCacheList() {
+        List<Song> list = ACacheUtil.getRecommendCache(context);
+        if (list == null) {
+            getList();
+        } else {
+            List<Record> records = recordDao.queryForLimitTen();
+            activity.setList(records, list);
+        }
+
     }
 
     //得到第一页推荐和历史记录
     public void getList() {
         String url = Constant.RECOMMEND_LIST_URL + "1" + ".html";
-        if (songs.size() == 0) {//第一次请求,刷新之后不在请求
-            new LoadRecommendList(songs) {
-                @Override
-                protected void onPostExecute(Integer integer) {
-                    super.onPostExecute(integer);
-                    //去除掉一部分
-                    for (int i = songs.size() - 1; i >= 10; i--) {
-                        songs.remove(i);
-                    }
-                    //然后得到 records
-                    setIntResult(integer);
+        new LoadRecommendList() {
+            @Override
+            protected void onPostExecute(List<Song> list) {
+                super.onPostExecute(list);
+                if (list==null){
+                    getCacheList();
+                    return;
                 }
-            }.execute(url);
-        } else {//清除记录之后不用进行网络请求
-            setIntResult(Constant.SUCCESS);
-        }
+                for (int i = list.size() - 1; i >= 10; i--) {
+                    list.remove(i);
+                }
+                ACacheUtil.putRecommendCache(context,list);
+                List<Record> records = recordDao.queryForLimitTen();
+                activity.setList(records, list);
+            }
+        }.execute(url);
     }
 
-
-    private void setIntResult(int result) {
-        records = recordDao.queryForLimitTen();
-        if (result == Constant.SUCCESS) {
-            activity.setList(records, songs);
-        } else {
-            activity.loadFail();
-        }
-    }
 
     public void addRecord(String query) {
         Record record = new Record();
@@ -120,10 +115,7 @@ public class SearchRecordActivityPresenter extends BasePresenter {
         context.startActivity(intent);
     }
 
-
     public interface IView {
         void setList(List<Record> records, List<Song> songs);
-
-        void loadFail();
     }
 }

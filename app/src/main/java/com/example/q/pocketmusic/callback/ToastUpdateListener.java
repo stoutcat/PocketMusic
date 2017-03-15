@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.q.pocketmusic.config.CommonString;
-import com.example.q.pocketmusic.config.CrashHandler;
 import com.example.q.pocketmusic.model.bean.MyUser;
-import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.MyToast;
-
-import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -19,14 +15,14 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 //封装更新，失败后会消除loadingView，且弹出Toast和错误信息
 public abstract class ToastUpdateListener extends UpdateListener {
-    private IBaseView baseView;
+    private IBaseList baseList;
     private Context context;
 
     public abstract void onSuccess();
 
-    public ToastUpdateListener(Context context, IBaseView baseView) {
+    public ToastUpdateListener(Context context,  IBaseList baseList) {
         this.context = context;
-        this.baseView = baseView;
+        this.baseList = baseList;
     }
 
     @Override
@@ -39,7 +35,8 @@ public abstract class ToastUpdateListener extends UpdateListener {
     }
 
     public void onFail(BmobException e) {
-        baseView.showLoading(false);
+        baseList.showLoading(false);
+        baseList.showRefreshing(false);
         MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
         e.printStackTrace();
         if (e.getErrorCode() == 206) {//在其他地方已经登录

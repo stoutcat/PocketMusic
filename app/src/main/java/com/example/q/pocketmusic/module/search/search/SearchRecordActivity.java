@@ -42,11 +42,6 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
         return R.layout.activity_search_record;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     public void setListener() {
         adapter = new SearchRecordActivityAdapter(this);
@@ -61,15 +56,13 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
         presenter = new SearchRecordActivityPresenter(this, this);
         initRecyclerView(recycler, adapter);
         fireWork.bindEditText(searchEdt);
-        onRefresh();
+        presenter.getCacheList();
     }
 
 
     //presenter从网络上得到数据
     @Override
     public void setList(List<Record> records, List<Song> songs) {
-        recycler.setRefreshing(false);
-        adapter.clear();
         adapter.setTagList(songs);//把TagList注入adapter
         Text text1 = new Text(R.drawable.ico_right_more, "热门搜索");
         Text text2 = new Text(R.drawable.ico_right_delete, "搜索记录");
@@ -81,14 +74,10 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void loadFail() {
-        MyToast.showToast(this, "获取数据失败，可能网络不太好哦~");
-        recycler.setRefreshing(false);
-    }
 
     @Override
     public void onRefresh() {
+        adapter.clear();
         presenter.getList();
     }
 
@@ -113,7 +102,7 @@ public class SearchRecordActivity extends BaseActivity implements SearchRecordAc
     //选择Tag
     @Override
     public void onSelectTag(int tagPosition) {
-        Song song = presenter.getSongs().get(tagPosition);
+        Song song = adapter.getTagList().get(tagPosition);
         presenter.enterSongActivityByTag(song);
     }
 

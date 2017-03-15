@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
@@ -207,7 +208,7 @@ public class AskSongCommentPresenter extends BasePresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
 
         void setCommentList(List<AskSongComment> list);
 

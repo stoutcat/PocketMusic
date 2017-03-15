@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by YQ on 2016/8/28.
  */
-public class Song implements Parcelable {
+public class Song implements Parcelable,Serializable {
     private String name;//曲谱名字
     private String url;//曲谱url
     private String artist;//所属，不局限于艺术家

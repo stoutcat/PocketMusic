@@ -233,6 +233,7 @@ public class TitleBar extends Toolbar {
         Context context = this.getContext();
         if (this.mSettingIcon == null) {
             this.mSettingIcon = new ImageButton(context);
+            this.mSettingIcon.setId(R.id.title_bar_setting_icon);
             this.mSettingIcon.setBackground(null);
             //保持点击区域
             int padding = (int) this.getContext().getResources().getDimension(R.dimen.title_right_margin);

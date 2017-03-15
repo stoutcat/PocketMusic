@@ -3,28 +3,19 @@ package com.example.q.pocketmusic.module.home.ask.list;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.q.pocketmusic.callback.IBaseView;
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
-import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
-
-import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.ask.comment.AskSongCommentActivity;
 import com.example.q.pocketmusic.module.home.ask.publish.AskSongActivity;
-import com.example.q.pocketmusic.util.ACache;
 import com.example.q.pocketmusic.util.ACacheUtil;
-import com.example.q.pocketmusic.util.LogUtils;
-import com.example.q.pocketmusic.util.MyToast;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
-import rx.Observable;
 
 /**
  * Created by Cloud on 2017/1/26.
@@ -114,7 +105,7 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList{
         void setPostList(List<AskSongPost> list);
     }
 }

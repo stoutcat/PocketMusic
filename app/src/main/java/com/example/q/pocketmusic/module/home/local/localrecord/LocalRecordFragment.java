@@ -74,7 +74,7 @@ public class LocalRecordFragment extends BaseFragment implements LocalRecordFrag
 
     public void init() {
         presenter = new LocalRecordFragmentPresenter(getContext(), this);
-        initRecyclerView(recycler, adapter, 1);
+        initRecyclerView(recycler, adapter, 1,true);
         //加载录音列表
         recycler.setRefreshing(true);
         presenter.loadRecordList();

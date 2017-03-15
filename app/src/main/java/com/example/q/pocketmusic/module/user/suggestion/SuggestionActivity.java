@@ -56,15 +56,8 @@ public class SuggestionActivity extends AuthActivity implements SuggestionPresen
         presenter = new SuggestionPresenter(this, this, user);
         adapter = new SuggestionAdapter(this);
         initToolbar(toolbar, "反馈意见");
-        initRecycler();
-        adapter.addHeader(new SuggestionHeader(context));
+        initRecyclerView(recycler,adapter);
         onRefresh();
-    }
-
-    private void initRecycler() {
-        recycler.setLayoutManager(new LinearLayoutManager(context));
-        recycler.setRefreshingColorResources(R.color.colorAccent);
-        recycler.setAdapter(adapter);
     }
 
 
@@ -89,7 +82,12 @@ public class SuggestionActivity extends AuthActivity implements SuggestionPresen
 
     @Override
     public void onRefresh() {
+        adapter.addHeader(new SuggestionHeader(context));
         presenter.getSuggestionList();
     }
 
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
+    }
 }

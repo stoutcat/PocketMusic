@@ -2,7 +2,6 @@ package com.example.q.pocketmusic.module.search.type;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
@@ -11,7 +10,6 @@ import com.example.q.pocketmusic.model.net.LoadTypeSongList;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.song.SongActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +19,6 @@ import java.util.List;
 public class SongTypeActivityPresenter extends BasePresenter {
     private Context context;
     private IView activity;
-    private List<Song> list = new ArrayList<>();
     private int mPage;
 
     public SongTypeActivityPresenter(IView activity, Context context) {
@@ -29,37 +26,22 @@ public class SongTypeActivityPresenter extends BasePresenter {
         this.activity = activity;
     }
 
-    public void loadMore(int typeId) {
-        mPage++;
-        String url;
-        url = Constant.BASE_URL + "/qiyue/" + Constant.namesUrl[typeId] + mPage + ".html";//http://www.qupu123.com/qiyue/kouqin/2.html
-        new LoadTypeSongList(list, typeId) {
+    public int getmPage() {
+        return mPage;
+    }
+
+
+    public void getList(int typeId) {
+        String url = Constant.BASE_URL + "/qiyue/" + Constant.namesUrl[typeId] + mPage + ".html";
+        new LoadTypeSongList(typeId) {
             @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setIntResult(integer);
+            protected void onPostExecute(List<Song> songs) {
+                super.onPostExecute(songs);
+                activity.setList(songs);
             }
         }.execute(url);
     }
 
-    public void setList(int typeId) {
-        new LoadTypeSongList(list, typeId) {
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setIntResult(integer);
-            }
-        }.execute(Constant.BASE_URL + "/qiyue/" + Constant.namesUrl[typeId] + mPage + ".html");
-    }
-
-
-    private void setIntResult(int result) {
-        if (result == Constant.SUCCESS) {
-            activity.setMore(list);
-        } else {
-            activity.loadFail();
-        }
-    }
 
     public void setPage(int page) {
         this.mPage = page;
@@ -73,9 +55,7 @@ public class SongTypeActivityPresenter extends BasePresenter {
     }
 
     public interface IView {
-        void setMore(List<Song> list);
 
-        void loadFail();
-
+        void setList(List<Song> songs);
     }
 }

@@ -49,7 +49,6 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView,
         return R.layout.activity_share;
     }
 
-
     public void setListener() {
         adapter = new SmallPicAdapter(this);
         adapter.setOnItemClickListener(this);
@@ -58,17 +57,13 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView,
     @Override
     public void init() {
         presenter = new SharePresenter(this, this, user);
-
         initToolbar(toolbar, "上传曲谱");
-        initView();
-    }
-
-    private void initView() {
         LocalSong localSong = (LocalSong) getIntent().getSerializableExtra(LOCAL_SONG);
         presenter.getPicAndName(localSong);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycler.setAdapter(adapter);
     }
+
 
     @OnClick({R.id.add_pic_iv, R.id.upload_txt})
     public void onClick(View view) {
@@ -101,5 +96,10 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView,
     @Override
     public void onItemClick(int position) {
         presenter.checkPic(adapter.getItem(position));
+    }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
     }
 }

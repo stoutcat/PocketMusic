@@ -17,11 +17,11 @@ import cn.bmob.v3.listener.QueryListListener;
 
 public abstract class ToastQueryListListener<BatchResult> extends QueryListListener<BatchResult> {
     private Context context;
-    private IBaseView baseView;
+    private IBaseList baseList;
 
-    public ToastQueryListListener(Context context, IBaseView baseView) {
+    public ToastQueryListListener(Context context, IBaseList baseView) {
         this.context = context;
-        this.baseView = baseView;
+        this.baseList = baseView;
     }
 
     public abstract void onSuccess(List<BatchResult> list);
@@ -37,7 +37,8 @@ public abstract class ToastQueryListListener<BatchResult> extends QueryListListe
     }
 
     public void onFail(BmobException e) {
-        baseView.showLoading(false);
+        baseList.showLoading(false);
+        baseList.showRefreshing(false);
         MyToast.showToast(context, CommonString.STR_ERROR_INFO+e.getMessage());
         e.printStackTrace();
         //        CrashHandler handler=CrashHandler.getInstance();

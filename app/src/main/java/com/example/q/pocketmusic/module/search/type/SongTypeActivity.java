@@ -1,33 +1,24 @@
 package com.example.q.pocketmusic.module.search.type;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.example.q.pocketmusic.R;
-import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.module.common.BaseActivity;
-import com.example.q.pocketmusic.module.song.SongActivity;
-import com.example.q.pocketmusic.util.ConvertUtil;
-import com.example.q.pocketmusic.util.MyToast;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class SongTypeActivity extends BaseActivity implements SongTypeActivityPresenter.IView, RecyclerArrayAdapter.OnMoreListener, RecyclerArrayAdapter.OnItemClickListener {
+public class SongTypeActivity extends BaseActivity implements SongTypeActivityPresenter.IView, RecyclerArrayAdapter.OnMoreListener, RecyclerArrayAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.top_iv)
     ImageView topIv;
@@ -54,66 +45,49 @@ public class SongTypeActivity extends BaseActivity implements SongTypeActivityPr
         return R.layout.activity_type_song;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new SongTypeActivityPresenter(this, this);
-        presenter.setPage(1);
-        setListener();
-        init();
-    }
 
+    @Override
     public void setListener() {
         adapter = new SongTypeActivityAdapter(this);
         adapter.setOnItemClickListener(this);
         adapter.setMore(R.layout.view_more, this);
+        recycler.setRefreshListener(this);
     }
 
     @Override
     public void init() {
-        //获取传过来的recycler位置信息
-        Intent intent = getIntent();
-        int position = intent.getIntExtra(PARAM_POSITION, 0);
-
+        int position = getIntent().getIntExtra(PARAM_POSITION, 0);
         //获取乐器类型
         typeId = position;
-
+        presenter = new SongTypeActivityPresenter(this, this);
+        initRecyclerView(recycler, adapter, 1, false);
+        //设置toolbar
         toolbar.setTitle(Constant.types[typeId]);
+        toolbar.setTitleTextColor(ContextCompat.getColor(context, R.color.colorTitle));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //只能通过这样才可以设置标题的颜色
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorTitle));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorTranslate));
+        collapsingToolbarLayout.setTitle(Constant.types[typeId]);
 
         //设置顶部图片
         topIv.setBackgroundResource(topDrawable[typeId]);
-        initRecyclerView(recycler, adapter, 1, false);
-
-
-        //加载数据
-        recycler.setRefreshing(true);
-        presenter.setList(position);
+        onRefresh();
     }
 
 
-    //加载更多和初始化列表
     @Override
-    public void setMore(List<Song> moreList) {
-        recycler.setRefreshing(false);
-        adapter.addAll(moreList);
-    }
-
-    //加载失败
-    @Override
-    public void loadFail() {
-        MyToast.showToast(getApplicationContext(), CommonString.STR_NOT_NET);
+    public void setList(List<Song> songs) {
+        adapter.addAll(songs);
     }
 
 
     @Override
     public void onMoreShow() {
-        presenter.loadMore(typeId);
+        presenter.setPage(presenter.getmPage()+1);
+        presenter.getList(typeId);
     }
 
     @Override
@@ -124,5 +98,12 @@ public class SongTypeActivity extends BaseActivity implements SongTypeActivityPr
     @Override
     public void onItemClick(int position) {
         presenter.enterSongActivity(adapter.getItem(position));
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.setPage(1);
+        adapter.clear();
+        presenter.getList(typeId);
     }
 }

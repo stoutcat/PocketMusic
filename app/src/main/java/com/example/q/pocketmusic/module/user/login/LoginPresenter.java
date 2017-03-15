@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
@@ -63,7 +64,7 @@ public class LoginPresenter extends BasePresenter{
         ((Activity) context).startActivityForResult(intent, Constant.REQUEST_REGISTER);
     }
 
-    public interface IView extends IBaseView{
+    public interface IView extends IBaseList{
         void finish();
 
         void loginToResult(Integer success, MyUser myUser);

@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.home.ask.publish;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
@@ -59,7 +60,7 @@ public class AskSongPresenter extends BasePresenter {
 
     }
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
         void finish();
 
         void setAskResult(Integer success);

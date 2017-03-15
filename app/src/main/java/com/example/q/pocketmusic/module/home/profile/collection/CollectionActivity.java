@@ -103,4 +103,9 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
     public void onSelectItem(int position) {
         presenter.queryAndEnterSongActivity(adapter.getItem(position));
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
+    }
 }

@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.home.net;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.config.Constant;
@@ -103,7 +104,7 @@ public class HomeNetFragmentPresenter extends BasePresenter {
         fragment.setList(list);
     }
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
         void setList(List<ShareSong> list);
 
         void setMore(List<ShareSong> list);

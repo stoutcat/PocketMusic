@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.callback.IDisplayStrategy;
+import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.AuthActivity;
 import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DisplayStrategy;
 import com.jude.easyrecyclerview.EasyRecyclerView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +51,7 @@ public class ContributionActivity extends AuthActivity implements SwipeRefreshLa
 
     @Override
     public void init() {
-        presenter = new ContributionPresenter(this, this, adapter);
+        presenter = new ContributionPresenter(this, this);
         new DisplayStrategy().displayCircle(this,user.getHeadImg(),topIv);
         nickNameTv.setText(user.getNickName());
         contributionTv.setText("贡献度："+user.getContribution());
@@ -67,5 +70,15 @@ public class ContributionActivity extends AuthActivity implements SwipeRefreshLa
     public void onRefresh() {
         adapter.clear();
         presenter.init();
+    }
+
+    @Override
+    public void setListResult(List<MyUser> list) {
+        adapter.addAll(list);
+    }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
     }
 }

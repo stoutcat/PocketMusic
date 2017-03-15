@@ -90,4 +90,9 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
             }
         }
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+
+    }
 }

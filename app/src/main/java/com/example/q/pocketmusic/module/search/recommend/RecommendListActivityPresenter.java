@@ -10,6 +10,7 @@ import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.net.LoadRecommendList;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.song.SongActivity;
+import com.example.q.pocketmusic.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.List;
 public class RecommendListActivityPresenter  extends BasePresenter {
     private IView activity;
     private Context context;
-    private List<Song> list = new ArrayList<>();
     private int mPage;
 
     public RecommendListActivityPresenter(IView activity, Context context) {
@@ -31,36 +31,21 @@ public class RecommendListActivityPresenter  extends BasePresenter {
 
     //可以得到推荐列表
     public void getList() {
-        String url = Constant.RECOMMEND_LIST_URL + "1" + ".html";
-        new LoadRecommendList(list) {
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setIntResult(integer);
-            }
-        }.execute(url);
-    }
-
-    //推荐列表加载更多
-    public void loadMore() {
-        mPage++;
         String url = Constant.RECOMMEND_LIST_URL + mPage + ".html";
-        new LoadRecommendList(list) {
+        new LoadRecommendList() {
             @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                activity.loadMore(list);
+            protected void onPostExecute(List<Song> songs) {
+                super.onPostExecute(songs);
+                LogUtils.e(TAG,"songs");
+                activity.setList(songs);
             }
         }.execute(url);
     }
 
-    private void setIntResult(int result) {
-        if (result == Constant.SUCCESS) {
-            activity.setList(list);
-        } else {
-            activity.loadFail();
-        }
+    public int getmPage() {
+        return mPage;
     }
+
 
     public void setPage(int page) {
         this.mPage=page;
@@ -75,9 +60,5 @@ public class RecommendListActivityPresenter  extends BasePresenter {
 
     public interface IView {
         void setList(List<Song> list);
-
-        void loadFail();
-
-        void loadMore(List<Song> list);
     }
 }

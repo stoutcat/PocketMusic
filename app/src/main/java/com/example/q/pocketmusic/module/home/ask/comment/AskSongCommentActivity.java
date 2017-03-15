@@ -72,26 +72,19 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
         presenter = new AskSongCommentPresenter(AskSongCommentActivity.this, AskSongCommentActivity.this, user, post);
         initToolbar(toolbar, presenter.getPost().getTitle());
         initRecyclerView(recycler, adapter);
-        initView();
-    }
-
-
-    private void initView() {
-        //评论者列表
         adapter.addHeader(new PostHeadView(context,
                 presenter.getPost().getContent(),
                 presenter.getPost().getUser().getNickName(),
                 presenter.getPost().getTitle(),
                 presenter.getPost().getUser().getHeadImg(),
                 presenter.getPost().getCreatedAt()));
-        recycler.setRefreshing(true);
-        presenter.getCommentList();
+        onRefresh();
     }
+
 
     //加载评论列表
     @Override
     public void setCommentList(List<AskSongComment> list) {
-        recycler.setRefreshing(false);
         adapter.addAll(list);
     }
 
@@ -151,6 +144,12 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
 
     @Override
     public void onRefresh() {
+        adapter.clear();
+        presenter.getCommentList();
+    }
 
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
     }
 }

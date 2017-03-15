@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBasePresenter;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
@@ -225,7 +226,7 @@ public class SharePresenter extends BasePresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
 
         void finish();
 

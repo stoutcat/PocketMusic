@@ -63,4 +63,9 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenter.
                 break;
         }
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+
+    }
 }

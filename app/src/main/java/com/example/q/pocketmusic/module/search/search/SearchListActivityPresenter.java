@@ -35,20 +35,12 @@ public class SearchListActivityPresenter extends BasePresenter {
         this.activity = activity;
     }
 
-    //搜索,两个方向：网络和Bmob
-    public void loadMore(final String query) {
-        //来自Net
-        mPage++;
-        new LoadSearchSongList(mPage) {
-            @Override
-            protected void onPostExecute(final List<Song> list) {
-                activity.setList(list);
-            }
-        }.execute(query);
+    public int getmPage() {
+        return mPage;
     }
 
     //这里有问题，最好是能够先搜Bmob再搜全网
-    public void loadInit(final String query) {
+    public void getList(final String query) {
         //来自网络
         final List<Song> songs = new ArrayList<>();
         new LoadSearchSongList(mPage) {
@@ -69,7 +61,7 @@ public class SearchListActivityPresenter extends BasePresenter {
     public void enterSongActivity(Song song, int searchFrom) {
         Intent intent = new Intent(context, SongActivity.class);
         SongObject object = new SongObject(song, searchFrom, Constant.SHOW_COLLECTION_MENU, Constant.NET);
-        intent.putExtra(SongActivity.PARAM_SONG_OBJECT_PARCEL,object);
+        intent.putExtra(SongActivity.PARAM_SONG_OBJECT_PARCEL, object);
         context.startActivity(intent);
     }
 

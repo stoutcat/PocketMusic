@@ -54,6 +54,10 @@ public class SearchRecordActivityAdapter extends RecyclerArrayAdapter<Object> {
         void onSelectDeleteRecord();
     }
 
+    public List<Song> getTagList() {
+        return tagList;
+    }
+
     public SearchRecordActivityAdapter(Context context) {
         super(context);
         this.context = context;

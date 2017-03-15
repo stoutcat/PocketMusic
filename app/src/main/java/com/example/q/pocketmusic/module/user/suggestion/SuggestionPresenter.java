@@ -3,6 +3,7 @@ package com.example.q.pocketmusic.module.user.suggestion;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
 import com.example.q.pocketmusic.config.CommonString;
@@ -67,7 +68,7 @@ public class SuggestionPresenter extends BasePresenter {
     }
 
 
-    public interface IView extends IBaseView {
+    public interface IView extends IBaseList {
 
         void sendSuggestionResult(UserSuggestion userSuggestion);
 

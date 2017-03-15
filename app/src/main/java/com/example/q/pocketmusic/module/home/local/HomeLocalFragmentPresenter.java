@@ -3,7 +3,6 @@ package com.example.q.pocketmusic.module.home.local;
 import android.content.Context;
 import android.os.Environment;
 
-import com.example.q.pocketmusic.callback.IBasePresenter;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.local.Img;
@@ -14,11 +13,9 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.util.FileUtils;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;

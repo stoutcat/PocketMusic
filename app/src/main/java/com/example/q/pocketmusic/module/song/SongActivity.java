@@ -302,6 +302,11 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     }
 
     @Override
+    public void showRefreshing(boolean isShow) {
+
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         presenter.onStop();
@@ -363,4 +368,6 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     void neverAskAgain() {
         Toast.makeText(this, "不在询问,请在设置中开启权限", Toast.LENGTH_SHORT).show();
     }
+
+
 }

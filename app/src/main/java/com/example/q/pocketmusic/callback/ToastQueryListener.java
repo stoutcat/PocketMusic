@@ -16,11 +16,11 @@ import cn.bmob.v3.listener.FindListener;
  */
 //封装查询，失败后会消除loadingView，且弹出Toast和错误信息
 public abstract class ToastQueryListener<T> extends FindListener<T> {
-    private IBaseView baseView;
+    private IBaseList baseList;
     private Context context;
 
-    protected ToastQueryListener(Context context, IBaseView baseView) {
-        this.baseView = baseView;
+    protected ToastQueryListener(Context context, IBaseList baseList) {
+        this.baseList = baseList;
         this.context = context;
     }
 
@@ -36,7 +36,8 @@ public abstract class ToastQueryListener<T> extends FindListener<T> {
     }
 
     public void onFail(BmobException e) {
-        baseView.showLoading(false);
+        baseList.showLoading(false);
+        baseList.showRefreshing(false);
         MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
         e.printStackTrace();
         //        CrashHandler handler=CrashHandler.getInstance();

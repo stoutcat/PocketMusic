@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.util;
 
 import android.content.Context;
 
+import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.model.bean.share.ShareSong;
 
@@ -51,6 +52,27 @@ public class ACacheUtil {
                 return null;
             }
             list.add(askSongPost);
+        }
+        return list;
+    }
+
+    public static List<Song> getRecommendCache(Context context) {
+        ACache cache = ACache.get(context);
+        List<Song> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Song song = (Song) cache.getAsObject("recommend_song_key" + i);
+            if (song == null) {
+                return null;
+            }
+            list.add(song);
+        }
+        return list;
+    }
+
+    public static List<Song> putRecommendCache(Context context, List<Song> list) {
+        ACache cache = ACache.get(context);
+        for (int i = 0; i < 10; i++) {
+            cache.put("recommend_song_key" + i, list.get(i), 1 * ACache.TIME_HOUR);
         }
         return list;
     }

@@ -64,4 +64,11 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
     public void setAskResult(Integer success) {
         setResult(success);
     }
+
+
+    //空接口
+    @Override
+    public void showRefreshing(boolean isShow) {
+
+    }
 }

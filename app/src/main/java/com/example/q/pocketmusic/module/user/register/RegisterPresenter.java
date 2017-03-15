@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
@@ -63,7 +64,7 @@ public class RegisterPresenter extends BasePresenter {
 
     }
 
-    public interface IView extends IBaseView{
+    public interface IView extends IBaseList{
         void finish();
 
         void showLoading(boolean isShow);
