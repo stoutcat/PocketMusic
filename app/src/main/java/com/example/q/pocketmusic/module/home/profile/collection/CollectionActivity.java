@@ -48,7 +48,7 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
     }
 
     @Override
-    public void init() {
+    public void initView() {
         presenter = new CollectionPresenter(this, this, user);
         initToolbar(toolbar, "我的收藏");
         initRecyclerView(recycler, adapter, 1,true);

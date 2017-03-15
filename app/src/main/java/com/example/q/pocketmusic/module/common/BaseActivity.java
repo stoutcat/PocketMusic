@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.util.ConvertUtil;
+import com.example.q.pocketmusic.util.LogUtils;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;

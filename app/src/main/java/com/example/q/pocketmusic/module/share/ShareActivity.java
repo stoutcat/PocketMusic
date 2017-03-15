@@ -55,7 +55,7 @@ public class ShareActivity extends AuthActivity implements SharePresenter.IView,
     }
 
     @Override
-    public void init() {
+    public void initView() {
         presenter = new SharePresenter(this, this, user);
         initToolbar(toolbar, "上传曲谱");
         LocalSong localSong = (LocalSong) getIntent().getSerializableExtra(LOCAL_SONG);

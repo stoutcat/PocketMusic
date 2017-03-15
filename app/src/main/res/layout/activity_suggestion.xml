@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:minLines="1"
+            android:maxLines="3"
             android:background="@drawable/bg_edt_send" />
 
         <Button

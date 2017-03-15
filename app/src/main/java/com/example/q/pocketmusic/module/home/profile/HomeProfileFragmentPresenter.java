@@ -157,7 +157,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
                 if (date.getTime() - last.getTime() > 24 * 60 * 60 * 1000) {//距离上次签到已经超过24小时
                     fragment.alertSignInDialog();
                 } else {
-                    MyToast.showToast(context, "已经签到过了哦！");
+                    MyToast.showToast(context, "24小时之内只能签到一次哦！");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

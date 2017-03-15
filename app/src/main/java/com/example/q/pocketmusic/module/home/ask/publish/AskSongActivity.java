@@ -43,7 +43,7 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
     }
 
     @Override
-    public void init() {
+    public void initView() {
         initToolbar(toolbar, "求谱信息");
         presenter = new AskSongPresenter(this, this);
     }

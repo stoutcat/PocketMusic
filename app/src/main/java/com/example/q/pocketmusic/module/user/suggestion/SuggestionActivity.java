@@ -52,7 +52,7 @@ public class SuggestionActivity extends AuthActivity implements SuggestionPresen
     }
 
     @Override
-    public void init() {
+    public void initView() {
         presenter = new SuggestionPresenter(this, this, user);
         adapter = new SuggestionAdapter(this);
         initToolbar(toolbar, "反馈意见");

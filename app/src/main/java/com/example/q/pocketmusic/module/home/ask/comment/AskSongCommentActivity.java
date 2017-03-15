@@ -67,7 +67,7 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
     }
 
     @Override
-    public void init() {
+    public void initView() {
         final AskSongPost post = (AskSongPost) getIntent().getSerializableExtra(PARAM_POST);
         presenter = new AskSongCommentPresenter(AskSongCommentActivity.this, AskSongCommentActivity.this, user, post);
         initToolbar(toolbar, presenter.getPost().getTitle());

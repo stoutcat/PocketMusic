@@ -60,7 +60,7 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
     }
 
     @Override
-    public void init() {
+    public void initView() {
         presenter = new SettingPresenter(this, this);
         initToolbar(toolbar, "设置");
         presenter.checkUpdate(false);//检测更新

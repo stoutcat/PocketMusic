@@ -1,9 +1,12 @@
 package com.example.q.pocketmusic.module.home.profile.contribution;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.AuthActivity;
 import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DisplayStrategy;
+import com.example.q.pocketmusic.util.LogUtils;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 
 import java.util.List;
@@ -43,28 +47,25 @@ public class ContributionActivity extends AuthActivity implements SwipeRefreshLa
         return R.layout.activity_contribution;
     }
 
+
     @Override
     public void setListener() {
         adapter = new ContributionAdapter(this);
         recycler.setRefreshListener(this);
     }
 
+
     @Override
-    public void init() {
+    public void initView() {
         presenter = new ContributionPresenter(this, this);
-        new DisplayStrategy().displayCircle(this,user.getHeadImg(),topIv);
+        new DisplayStrategy().displayCircle(this, user.getHeadImg(), topIv);
         nickNameTv.setText(user.getNickName());
-        contributionTv.setText("贡献度："+user.getContribution());
+        contributionTv.setText("贡献度：" + user.getContribution());
         initToolbar(toolbar, "贡献度榜单");
         initRecyclerView(recycler, adapter);
         onRefresh();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public void onRefresh() {

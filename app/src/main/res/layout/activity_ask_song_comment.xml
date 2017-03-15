@@ -54,6 +54,7 @@
 
         <EditText
             android:minLines="1"
+            android:maxLines="3"
             android:id="@+id/user_input_edt"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
