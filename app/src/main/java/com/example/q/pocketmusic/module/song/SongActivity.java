@@ -1,13 +1,9 @@
 package com.example.q.pocketmusic.module.song;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.config.CommonString;
@@ -30,22 +25,15 @@ import com.example.q.pocketmusic.view.widget.net.HackyViewPager;
 import com.example.q.pocketmusic.view.widget.net.SnackBarUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.jokar.permissiondispatcher.annotation.NeedsPermission;
-import org.jokar.permissiondispatcher.annotation.OnNeverAskAgain;
-import org.jokar.permissiondispatcher.annotation.OnPermissionDenied;
-import org.jokar.permissiondispatcher.annotation.OnShowRationale;
-import org.jokar.permissiondispatcher.annotation.RuntimePermissions;
-import org.jokar.permissiondispatcher.library.PermissionRequest;
-
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 //查看大图界面
-@RuntimePermissions
-public class SongActivity extends BaseActivity implements SongActivityPresenter.IView {
+
+public class SongActivity extends BaseActivity implements SongActivityPresenter.IView, EasyPermissions.PermissionCallbacks {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,6 +51,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     TextView pageTv;
     private SongActivityPresenter presenter;
     private SongActivityAdapter adapter;
+
 
     public final static String PARAM_SONG_OBJECT_PARCEL = "PARAM_SONG_OBJECT_PARCEL";//Parcel
 
@@ -218,9 +207,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.record_play_iv:
-                //权限检查
-                SongActivityPermissionsDispatcher.needsPermissionWithCheck(this);
-
+                presenter.record();
                 break;
         }
     }
@@ -319,55 +306,20 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     }
 
 
-    /**
-     *
-     *
-     * 权限相关
-     *
-     *
-     *
-     */
-    @NeedsPermission(Manifest.permission.RECORD_AUDIO)
-    void needsPermission() {
-        presenter.record();
+    //权限相关
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        SongActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        MyToast.showToast(context, "成功获得权限");
     }
 
-    @OnShowRationale(Manifest.permission.RECORD_AUDIO)
-    void showRationale(final PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setMessage("打开录音功能需要开启权限")
-                .setPositiveButton("开启", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        request.proceed();
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        request.cancel();
-                    }
-                })
-                .show();
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        MyToast.showToast(context, "录音权限被拒绝,如需录音请到设置中心修改");
     }
-
-    @OnPermissionDenied(Manifest.permission.RECORD_AUDIO)
-    void permissionDenied() {
-        Toast.makeText(this, "已拒绝权限申请", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnNeverAskAgain(Manifest.permission.RECORD_AUDIO)
-    void neverAskAgain() {
-        Toast.makeText(this, "不在询问,请在设置中开启权限", Toast.LENGTH_SHORT).show();
-    }
-
-
 }

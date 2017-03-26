@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity {
                 }
                 finish();
             }
-        }, 2000);
+        }, 1200);
     }
 
     private void enterHomeActivity() {

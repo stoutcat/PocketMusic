@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.module.song;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
@@ -61,6 +62,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by YQ on 2016/8/30.
@@ -105,7 +107,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
     private int mRecordTime;
     //定时任务
     private Timer mRecordTimer;
-
+    private final int REQUEST_RECORD_AUDIO = 1001;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -252,7 +254,13 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
         LocalSong localsong = (LocalSong) intent.getSerializableExtra(SongActivity.LOCAL_SONG);
         LocalSongDao localSongDao = new LocalSongDao(context);
         ArrayList<String> imgUrls = new ArrayList<>();
-        ForeignCollection<Img> imgs = localSongDao.findBySongId(localsong.getId()).getImgs();
+        LocalSong localSong = localSongDao.findBySongId(localsong.getId());
+        if (localSong == null) {
+            MyToast.showToast(context, "曲谱消失在了异次元。");
+            activity.finish();
+            return new ArrayList<>();
+        }
+        ForeignCollection<Img> imgs = localSong.getImgs();
         CloseableIterator<Img> iterator = imgs.closeableIterator();
         try {
             while (iterator.hasNext()) {
@@ -527,6 +535,13 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
 
     //录音
     public void record() {
+        //请求权限
+        String[] perms = {Manifest.permission.RECORD_AUDIO};
+        if (!EasyPermissions.hasPermissions(context, perms)) {
+            EasyPermissions.requestPermissions((BaseActivity) context, "录音权限", REQUEST_RECORD_AUDIO, perms);
+            return;
+        }
+
         activity.setBtnStatus(status);
         //开始录音
         if (status == SongActivityPresenter.RECORD_STATUS.STOP) {
