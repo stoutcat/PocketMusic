@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.module.home.local;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -17,10 +18,12 @@ import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.home.local.localrecord.LocalRecordFragment;
 import com.example.q.pocketmusic.module.home.local.localsong.LocalSongFragment;
+import com.example.q.pocketmusic.module.lead.LeadSongActivity;
 import com.example.q.pocketmusic.view.dialog.EditDialog;
 import com.example.q.pocketmusic.view.widget.net.FloatingDraftButton;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +52,6 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     private LocalSongFragment localSongFragment;
     private List<Fragment> fragmentList = new ArrayList<>();
     private HomeLocalFragmentPresenter presenter;
-    private EditDialog editDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,8 +85,6 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     }
 
 
-
-
     private void initView() {
         //viewpager
         fm = getChildFragmentManager();
@@ -103,31 +103,10 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         localTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorTitle));
     }
 
-    //设置添加本地的dialog
-    @Override
-    public void showAddDialog(final List<String> list) {
-        EditDialog.Builder builder = new EditDialog.Builder(getContext());
-        editDialog = builder.setListener(new EditDialog.Builder.OnSelectedListener() {
-            @Override
-            public void onSelectedOk(String str) {
-                presenter.moveFileAndAddDatabase(str, list);//移动，并保存到数据库
-                localSongFragment.onRefresh();
-                editDialog.dismiss();
-            }
-
-            @Override
-            public void onSelectedCancel() {
-                editDialog.dismiss();
-            }
-        }).create();
-        editDialog.show();
-    }
-
-
     //setonClick之后，onTouchEvent就一定会返回true
     @OnClick(R.id.add_local_fab)
     public void onClick() {
-        presenter.openPicture();
+        presenter.enterLeadActivity();
     }
 
     @Override
@@ -153,5 +132,13 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LeadSongActivity.REQUEST_LEAD && resultCode == LeadSongActivity.RESULT_OK) {
+            localSongFragment.onRefresh();
+        }
     }
 }

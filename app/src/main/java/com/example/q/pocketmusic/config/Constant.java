@@ -8,7 +8,7 @@ import com.example.q.pocketmusic.util.SharedPrefsUtil;
 //静态数据,存放标记，url
 public class Constant {
     public final static String APP_ID="236163bbf4c3be6f2cc44de4405da6eb";
-
+    public final static String PATCH_VERSION="1";//补丁版本
 
     //URL
     public final static String BASE_URL = "http://www.qupu123.com";
@@ -26,17 +26,17 @@ public class Constant {
     public final static Integer SUCCESS = 1;
     public final static Integer FAIL = 0;
 
-    public final static Integer QU_BU = 0;
-    public final static Integer HU_LU_SI = 1;
-    public final static Integer JI_TA = 2;
-    public final static Integer GANG_QIN = 3;
-    public final static Integer SA_KE_SI = 4;
-    public final static Integer ER_HU = 5;
-    public final static Integer GU_ZHENG = 6;
-    public final static Integer DIAN_ZI_QIN = 7;
-    public final static Integer PI_PA = 8;
-    public final static Integer KOU_QIN = 9;
-    public final static Integer RECOMMEND = 10;
+//    public final static Integer QU_BU = 0;
+//    public final static Integer HU_LU_SI = 1;
+//    public final static Integer JI_TA = 2;
+//    public final static Integer GANG_QIN = 3;
+//    public final static Integer SA_KE_SI = 4;
+//    public final static Integer ER_HU = 5;
+//    public final static Integer GU_ZHENG = 6;
+//    public final static Integer DIAN_ZI_QIN = 7;
+//    public final static Integer PI_PA = 8;
+//    public final static Integer KOU_QIN = 9;
+//    public final static Integer RECOMMEND = 10;
 
     //乐器对应
     public final static String[] types = {"全部", "葫芦丝", "吉他", "钢琴", "萨克斯", "二胡", "古筝", "电子琴", "琵琶", "口琴", "桃李醉春风"};

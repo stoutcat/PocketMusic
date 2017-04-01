@@ -5,31 +5,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_appbar_toolbar"/>
+    <include layout="@layout/include_appbar_toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/ico_launcher_64dp"
+            android:layout_height="@dimen/ico_launcher_64dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ico_tag" />
+
+        <TextView
+            style="@style/TwoTextMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="把音乐装进口袋" />
+    </LinearLayout>
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/title_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="请输入标题"
-        app:itemInputText="标题：" />
+        app:itemIcoResource="@drawable/ico_title"
+        app:itemInputHint="请输入标题" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/content_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="请输入描述"
-        app:itemInputText="描述：" />
+        app:itemIcoResource="@drawable/ico_content"
+        app:itemInputHint="请输入描述" />
 
-    <Button
-        android:id="@+id/ok_btn"
+
+    <TextView
+        android:id="@+id/ok_txt"
+        style="@style/TextPress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/item_padding_16dp"
-        android:layout_marginRight="@dimen/item_padding_16dp"
-        android:background="@drawable/bg_button"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/bg_text_press"
         android:text="确定" />
-
 
 </LinearLayout>

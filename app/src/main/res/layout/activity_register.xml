@@ -5,45 +5,47 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_appbar_toolbar"/>
+    <include layout="@layout/include_appbar_toolbar" />
+
+    <include layout="@layout/include_top_logo"/>
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/account_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="请输入邮箱"
-        app:itemInputText="账号：" />
+        app:itemIcoResource="@drawable/ico_email"
+        app:itemInputHint="请输入邮箱/Email" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/nick_name_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="请输入昵称"
-        app:itemInputText="昵称：" />
+        app:itemIcoResource="@drawable/ico_nick_name"
+        app:itemInputHint="请输入昵称/Name" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/password_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="请输入密码"
-        app:itemInputPassword="true"
-        app:itemInputText="密码：" />
+        app:itemIcoResource="@drawable/ico_password"
+        app:itemInputHint="请输入密码/Password"
+        app:itemInputPassword="true" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/confirm_password_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemInputHint="再次输入密码"
-        app:itemInputPassword="true"
-        app:itemInputText="确认：" />
+        app:itemIcoResource="@drawable/ico_confirm_password"
+        app:itemInputHint="请再次输入密码/Password"
+        app:itemInputPassword="true" />
 
     <TextView
-        style="@style/TextPress"
         android:id="@+id/ok_txt"
+        style="@style/TextPress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_padding_16dp"
-        android:layout_marginRight="@dimen/item_padding_16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/bg_text_press"
         android:text="确定" />
 

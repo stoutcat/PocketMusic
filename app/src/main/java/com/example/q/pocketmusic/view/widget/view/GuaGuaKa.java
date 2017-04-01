@@ -78,6 +78,8 @@ public class GuaGuaKa extends View {
         mTextColor = array.getColor(R.styleable.GuaGuaKa_Reward_Text_Color, DEFAULT_TEXT_COLOR);
         mEraserSize = array.getDimensionPixelSize(R.styleable.GuaGuaKa_Reward_Eraser_Size, DEFAULT_ERASER_SIZE);
         array.recycle();
+
+
     }
 
     @Override
@@ -86,11 +88,10 @@ public class GuaGuaKa extends View {
         measureHeight = setDefaultMeasureSpec(200, heightMeasureSpec);
         setMeasuredDimension(measureWidth, measureHeight);
         //图层灰色
+        //在这里创建，不会创建多次重新绘制
         bitmap = Bitmap.createBitmap(measureWidth, measureHeight, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(bitmap);
         mCanvas.drawColor(Color.GRAY);
-
-
     }
 
     //设置图片
@@ -217,6 +218,7 @@ public class GuaGuaKa extends View {
                         @Override
                         public void run() {
                             onCompleteListener.onComplete();
+                            bitmap.recycle();//回收
                         }
                     });//切换到主线程
                     postInvalidate();

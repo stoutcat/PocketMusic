@@ -2,7 +2,6 @@ package com.example.q.pocketmusic.module.home.ask.list;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.home.ask.publish.AskSongActivity;
-import com.example.q.pocketmusic.util.LogUtils;
+import com.example.q.pocketmusic.view.widget.net.FloatingDraftButton;
 import com.example.q.pocketmusic.view.widget.net.TitleBar;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -22,16 +21,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Cloud on 2017/1/26.
  */
-public class HomeAskListFragment extends BaseFragment implements HomeAskListFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, HomeAskListAdapter.OnItemClickListener, View.OnClickListener
+public class HomeAskListFragment extends BaseFragment implements HomeAskListFragmentPresenter.IView, SwipeRefreshLayout.OnRefreshListener, HomeAskListAdapter.OnItemClickListener
         , RecyclerArrayAdapter.OnMoreListener {
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler)
     EasyRecyclerView recycler;
+    @BindView(R.id.ask_song_fab)
+    FloatingDraftButton askSongFab;
     private HomeAskListFragmentPresenter presenter;
     private HomeAskListAdapter adapter;
 
@@ -44,7 +46,6 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     public void setListener() {
         adapter = new HomeAskListAdapter(getContext());
         adapter.setListener(this);
-      //  titleBar.setSettingIconOnClickListener(this);
         adapter.setMore(R.layout.view_more, this);
         recycler.setRefreshListener(this);
     }
@@ -52,12 +53,10 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     @Override
     public void init() {
         presenter = new HomeAskListFragmentPresenter(context, this);
-        initRecyclerView(recycler, adapter, 72,false);
+        initRecyclerView(recycler, adapter, 72, false);
         presenter.setmPage(0);
         titleBar.setMyCenterTitle("大家都在找");
         titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
-        titleBar.setMySettingIcon(R.drawable.ico_add);
-        titleBar.setSettingIconOnClickListener(this);//需要修改
         presenter.getCacheList();
     }
 
@@ -99,16 +98,6 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_bar_setting_icon:
-                presenter.enterAskSongActivity();
-                break;
-        }
-
-    }
-
-    @Override
     public void onMoreShow() {
         presenter.getMore();
     }
@@ -121,5 +110,11 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
     @Override
     public void showRefreshing(boolean isShow) {
         recycler.setRefreshing(isShow);
+    }
+
+
+    @OnClick(R.id.ask_song_fab)
+    public void onClick() {
+        presenter.enterAskSongActivity();
     }
 }

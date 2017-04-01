@@ -1,11 +1,19 @@
 package com.example.q.pocketmusic.config;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 
+import com.example.q.pocketmusic.BuildConfig;
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.util.GlideImageLoader;
+import com.example.q.pocketmusic.util.LogUtils;
+import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.util.SharedPrefsUtil;
+import com.taobao.android.SophixManager;
+import com.taobao.android.listener.PatchLoadStatusListener;
+import com.taobao.android.util.PatchStatus;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.statistics.AppStat;
@@ -24,6 +32,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initHotfix();
         SharedPrefsUtil.init(getApplicationContext());
         Bmob.initialize(this, Constant.APP_ID, "Bmob");
         //官网SDK
@@ -35,6 +44,36 @@ public class MyApplication extends Application {
 //        crashHandler.init(this);
         initGalleryFinal();
 
+    }
+
+    //热修复
+    private void initHotfix() {
+
+        SophixManager.getInstance().setContext(this)
+                .setAppVersion(BuildConfig.VERSION_NAME)//字符串
+                .setAesKey(null)
+                .setEnableDebug(true)
+                .setPatchLoadStatusStub(new PatchLoadStatusListener() {
+                    @Override
+                    public void onload(final int mode, final int code, final String info, final int handlePatchVersion) {
+                        // 补丁加载回调通知
+                        if (code == PatchStatus.CODE_LOAD_SUCCESS) {
+                            MyToast.showToast(getApplicationContext(), "补丁加载成功");
+                            // 表明补丁加载成功
+                        } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
+                            // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
+                            // 建议: 用户可以监听进入后台事件, 然后应用自杀
+                            MyToast.showToast(getApplicationContext(), "已修复部分bug~请重启app");
+                        } else if (code == PatchStatus.CODE_LOAD_FAIL) {
+                            // 内部引擎异常, 推荐此时清空本地补丁, 防止失败补丁重复加载
+                            SophixManager.getInstance().cleanPatches();
+                        } else {
+                            LogUtils.e("HotFix", info);
+                            // 其它错误信息, 查看PatchStatus类说明
+                        }
+                    }
+                }).initialize();
+        SophixManager.getInstance().queryAndLoadNewPatch();
     }
 
     private void initGalleryFinal() {

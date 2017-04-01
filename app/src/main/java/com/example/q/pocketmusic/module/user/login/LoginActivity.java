@@ -2,7 +2,6 @@ package com.example.q.pocketmusic.module.user.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,10 +32,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
     TextEdit accountTet;
     @BindView(R.id.password_tet)
     TextEdit passwordTet;
-    @BindView(R.id.register_txt)
-    TextView registerTxt;
     @BindView(R.id.ok_txt)
     TextView okTxt;
+    @BindView(R.id.register_txt)
+    TextView registerTxt;
     private LoginPresenter presenter;
 
 
@@ -95,4 +94,5 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
     public void showRefreshing(boolean isShow) {
 
     }
+
 }

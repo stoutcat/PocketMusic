@@ -8,5 +8,5 @@
         android:height="@dimen/text_press_height" />
     <stroke
         android:width="0.5dp"
-        android:color="@color/colorPrimary" />
+        android:color="@color/black" />
 </shape>

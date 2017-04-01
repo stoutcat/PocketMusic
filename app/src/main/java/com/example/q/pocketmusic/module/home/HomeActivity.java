@@ -57,6 +57,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.IView {
         presenter = new HomePresenter(this, this, getSupportFragmentManager());
         presenter.checkVersion();
         presenter.clickLocal();
+        MyToast.showToast(context,"正常版本");
     }
 
 

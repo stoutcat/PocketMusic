@@ -3,79 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/include_appbar_toolbar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="@dimen/ico_launcher_64dp"
-            android:layout_height="@dimen/ico_launcher_64dp"
-            android:src="@mipmap/ico_launcher" />
-
-        <TextView
-            style="@style/TwoTextMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="把音乐装进口袋" />
-    </LinearLayout>
+   <include layout="@layout/include_top_logo"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="vertical">
 
         <com.example.q.pocketmusic.view.widget.view.TextEdit
             android:id="@+id/account_tet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemInputHint="请输入邮箱"
-            app:itemInputText="账号：" />
+            app:itemIcoResource="@drawable/ico_email"
+            app:itemInputHint="请输入邮箱/Email" />
 
         <com.example.q.pocketmusic.view.widget.view.TextEdit
             android:id="@+id/password_tet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemInputHint="请输入密码"
-            app:itemInputPassword="true"
-            app:itemInputText="密码：" />
+            app:itemIcoResource="@drawable/ico_password"
+            app:itemInputHint="请输入密码/Password"
+            app:itemInputPassword="true" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/ok_txt"
+            style="@style/TextPress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/bg_text_press"
+            android:text="确定" />
 
-            <TextView
-                android:id="@+id/register_txt"
-                style="@style/TextPress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/item_padding_16dp"
-                android:background="@drawable/bg_text_press"
-                android:text="注册" />
 
-            <TextView
-                android:id="@+id/ok_txt"
-                style="@style/TextPressAttention"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/item_padding_16dp"
-                android:background="@drawable/bg_text_press"
-                android:text="确定" />
-
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/register_txt"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="去注册>>" />
     </LinearLayout>
 
 

@@ -14,7 +14,7 @@
     </declare-styleable>
 
     <declare-styleable name="TabView">
-        <attr name="itemTabNoSelectIco" format="reference"/>
+        <attr name="itemTabNoSelectIco" format="reference" />
         <attr name="itemTabSelectIco" format="reference" />
         <attr name="itemTabName" format="string" />
     </declare-styleable>
@@ -26,8 +26,8 @@
 
 
     <declare-styleable name="TextEdit">
+        <attr name="itemIcoResource" format="reference" />
         <attr name="itemInputPassword" format="boolean" />
-        <attr name="itemInputText" format="string" />
         <attr name="itemInputHint" format="string" />
     </declare-styleable>
 </resources>

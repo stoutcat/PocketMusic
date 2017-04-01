@@ -62,7 +62,6 @@
         android:id="@+id/has_pic_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:gravity="right"
         android:text="查看图片>>"
         android:textColor="@color/confetti_red" />

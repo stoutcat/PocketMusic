@@ -1,10 +1,10 @@
 package com.example.q.pocketmusic.module.home.ask.publish;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.module.common.AuthActivity;
@@ -22,12 +22,14 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
     @BindView(R.id.title_tet)
     TextEdit titleTet;
     @BindView(R.id.content_tet)
     TextEdit contentTet;
-    @BindView(R.id.ok_btn)
-    Button okBtn;
+    @BindView(R.id.ok_txt)
+    TextView okTxt;
     private AskSongPresenter presenter;
     public static final int REQUEST_ASK = 1001;//跳转到求谱界面
 
@@ -49,10 +51,10 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
     }
 
 
-    @OnClick({R.id.ok_btn})
+    @OnClick({R.id.ok_txt})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ok_btn:
+            case R.id.ok_txt:
                 String title = titleTet.getInputString();
                 String content = contentTet.getInputString();
                 presenter.askForSong(title, content, user);
@@ -71,4 +73,5 @@ public class AskSongActivity extends AuthActivity implements AskSongPresenter.IV
     public void showRefreshing(boolean isShow) {
 
     }
+
 }
