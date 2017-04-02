@@ -12,6 +12,7 @@ import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.module.common.BasePresenter;
+import com.example.q.pocketmusic.module.user.forget.ForgetActivity;
 import com.example.q.pocketmusic.module.user.register.RegisterActivity;
 import com.example.q.pocketmusic.util.MyToast;
 
@@ -21,7 +22,7 @@ import cn.bmob.v3.exception.BmobException;
  * Created by Cloud on 2016/11/14.
  */
 
-public class LoginPresenter extends BasePresenter{
+public class LoginPresenter extends BasePresenter {
     private IView activity;
     private Context context;
 
@@ -40,7 +41,7 @@ public class LoginPresenter extends BasePresenter{
         final MyUser user = new MyUser();
         user.setUsername(account);
         user.setPassword(password);
-        user.login(new ToastSaveListener<MyUser>(context,activity) {
+        user.login(new ToastSaveListener<MyUser>(context, activity) {
 
             @Override
             public void onSuccess(MyUser user) {
@@ -64,7 +65,13 @@ public class LoginPresenter extends BasePresenter{
         ((Activity) context).startActivityForResult(intent, Constant.REQUEST_REGISTER);
     }
 
-    public interface IView extends IBaseList{
+    public void enterForgetActivity() {
+        Intent intent = new Intent(context, ForgetActivity.class);
+        context.startActivity(intent);
+
+    }
+
+    public interface IView extends IBaseList {
         void finish();
 
         void loginToResult(Integer success, MyUser myUser);

@@ -7,7 +7,7 @@
 
     <include layout="@layout/include_appbar_toolbar" />
 
-   <include layout="@layout/include_top_logo"/>
+    <include layout="@layout/include_top_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +21,28 @@
             app:itemIcoResource="@drawable/ico_email"
             app:itemInputHint="请输入邮箱/Email" />
 
-        <com.example.q.pocketmusic.view.widget.view.TextEdit
-            android:id="@+id/password_tet"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemIcoResource="@drawable/ico_password"
-            app:itemInputHint="请输入密码/Password"
-            app:itemInputPassword="true" />
+            android:layout_height="wrap_content">
+
+            <com.example.q.pocketmusic.view.widget.view.TextEdit
+                android:id="@+id/password_tet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemIcoResource="@drawable/ico_password"
+                app:itemInputHint="请输入密码/Password"
+                app:itemInputPassword="true" />
+
+            <ImageView
+                android:id="@+id/forget_password_iv"
+                android:layout_marginRight="32dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ico_forget_password" />
+        </RelativeLayout>
 
 
         <TextView
@@ -43,13 +58,13 @@
 
         <TextView
             android:id="@+id/register_txt"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="去注册>>" />
+            android:text="去注册>>"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

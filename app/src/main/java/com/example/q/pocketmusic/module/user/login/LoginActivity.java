@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
@@ -36,6 +37,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
     TextView okTxt;
     @BindView(R.id.register_txt)
     TextView registerTxt;
+    @BindView(R.id.forget_password_iv)
+    ImageView forgetPasswordIv;
     private LoginPresenter presenter;
 
 
@@ -65,7 +68,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
     }
 
 
-    @OnClick({R.id.ok_txt, R.id.register_txt})
+    @OnClick({R.id.ok_txt, R.id.register_txt,R.id.forget_password_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ok_txt://点击确定
@@ -76,6 +79,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
             case R.id.register_txt://跳转到注册
                 presenter.enterRegisterActivity();//请求码REQUEST_REGISTER
                 break;
+            case R.id.forget_password_iv:
+                presenter.enterForgetActivity();
         }
     }
 
@@ -93,6 +98,13 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.IView 
     @Override
     public void showRefreshing(boolean isShow) {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 }

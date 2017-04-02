@@ -38,6 +38,9 @@ public class Constant {
 //    public final static Integer KOU_QIN = 9;
 //    public final static Integer RECOMMEND = 10;
 
+    //BmobInfo
+    public final static Integer BMOB_INFO_RESET_PASSWORD=1;//请求重置密码
+
     //乐器对应
     public final static String[] types = {"全部", "葫芦丝", "吉他", "钢琴", "萨克斯", "二胡", "古筝", "电子琴", "琵琶", "口琴", "桃李醉春风"};
     public final static String[] namesUrl = {"qita/", "hulusi/", "jita/", "gangqin/", "sakesi/", "huqin/", "guzhengguqin/", "dianziqin/", "pipa/", "kouqin/"};

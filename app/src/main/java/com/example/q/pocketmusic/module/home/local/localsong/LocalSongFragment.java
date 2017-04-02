@@ -154,7 +154,7 @@ public class LocalSongFragment extends BaseFragment implements LocalSongFragment
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         presenter.deleteSong(adapter.getItem(position));
-                        adapter.notifyItemRemoved(position);
+                        onRefresh();
                         if (adapter.getCount() == 0) {
                             recycler.showEmpty();
                         }

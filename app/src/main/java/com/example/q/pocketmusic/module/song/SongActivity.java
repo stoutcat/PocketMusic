@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.module.song;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 //查看大图界面
@@ -320,6 +322,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        MyToast.showToast(context, "录音权限被拒绝,如需录音请到设置中心修改");
+        MyToast.showToast(context, "录音权限被拒绝,如需录音请到设置中心--权限管理中修改");
     }
+
 }

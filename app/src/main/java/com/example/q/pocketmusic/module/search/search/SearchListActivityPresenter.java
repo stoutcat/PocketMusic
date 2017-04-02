@@ -2,7 +2,11 @@ package com.example.q.pocketmusic.module.search.search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.example.q.pocketmusic.callback.IBaseList;
+import com.example.q.pocketmusic.callback.IBaseView;
+import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
 
@@ -43,6 +47,10 @@ public class SearchListActivityPresenter extends BasePresenter {
     public void getList(final String query) {
         //来自网络
         final List<Song> songs = new ArrayList<>();
+        getListFromNet(query, songs);
+    }
+
+    private void getListFromNet(String query, final List<Song> songs) {
         new LoadSearchSongList(mPage) {
             @Override
             protected void onPostExecute(final List<Song> list) {
@@ -65,7 +73,7 @@ public class SearchListActivityPresenter extends BasePresenter {
         context.startActivity(intent);
     }
 
-    public interface IView {
+    public interface IView extends IBaseList {
         void setList(List<Song> list);
     }
 }

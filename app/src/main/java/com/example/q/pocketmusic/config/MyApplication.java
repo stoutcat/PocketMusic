@@ -58,7 +58,7 @@ public class MyApplication extends Application {
                     public void onload(final int mode, final int code, final String info, final int handlePatchVersion) {
                         // 补丁加载回调通知
                         if (code == PatchStatus.CODE_LOAD_SUCCESS) {
-                            MyToast.showToast(getApplicationContext(), "补丁加载成功");
+//                            MyToast.showToast(getApplicationContext(), "补丁加载成功");
                             // 表明补丁加载成功
                         } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
                             // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;

@@ -91,4 +91,9 @@ public class SearchListActivity extends BaseActivity implements SearchListActivi
     public void onMoreClick() {
 
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+        recycler.setRefreshing(isShow);
+    }
 }
