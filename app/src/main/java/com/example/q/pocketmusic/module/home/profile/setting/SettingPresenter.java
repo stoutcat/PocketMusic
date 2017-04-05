@@ -79,10 +79,6 @@ public class SettingPresenter extends BasePresenter {
         }
     }
 
-    public void enterHelpActivity() {
-        Intent intent = new Intent(context, HelpActivity.class);
-        context.startActivity(intent);
-    }
 
 
     public interface IView {

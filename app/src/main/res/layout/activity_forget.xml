@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemIcoResource="@drawable/ico_password"
-        app:itemInputHint="请输入密码/Password"
+        app:itemInputHint="请输入新密码/Password"
         app:itemInputPassword="true" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit

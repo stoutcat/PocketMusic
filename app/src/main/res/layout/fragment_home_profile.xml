@@ -85,6 +85,14 @@
 
         <View style="@style/SettingBigDivider" />
 
+        <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+            android:id="@+id/help_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitleIco="@drawable/ico_setting_help"
+            app:itemTitleText="帮助" />
+
+        <View style="@style/SettingDivider" />
 
         <com.example.q.pocketmusic.view.widget.view.IcoTextItem
             android:id="@+id/setting_item"

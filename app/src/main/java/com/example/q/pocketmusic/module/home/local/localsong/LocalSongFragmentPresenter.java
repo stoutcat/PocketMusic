@@ -48,7 +48,6 @@ public class LocalSongFragmentPresenter extends BasePresenter {
 
     }
 
-    //对于数据库的操作，只用一个list,防止数据删除错误
     public void loadLocalSong() {
         new LoadLocalSongList(localSongDao, context) {
             @Override
@@ -80,7 +79,7 @@ public class LocalSongFragmentPresenter extends BasePresenter {
                 File file = new File(img.getUrl());
                 parent = file.getParent();
                 if (file.exists()) {
-                    boolean isInvalid = file.delete();
+                    file.delete();
                 }
             }
             //删除文件夹

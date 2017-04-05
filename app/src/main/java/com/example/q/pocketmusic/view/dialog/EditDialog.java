@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,8 +16,8 @@ import com.example.q.pocketmusic.util.MyToast;
 
 //Builder设计模式
 public class EditDialog {
-    private Button okBtn;
-    private Button cancelBtn;
+    private TextView okTxt;
+    private TextView cancelTxt;
     private EditText hintEdit;
     private TextView titleTxt;
     private String mTitle;
@@ -32,8 +31,8 @@ public class EditDialog {
     private EditDialog(Builder builder) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(builder.getContext());
         View view = View.inflate(builder.getContext(), R.layout.dialog_edit, null);
-        okBtn = (Button) view.findViewById(R.id.ok);
-        cancelBtn = (Button) view.findViewById(R.id.cancel);
+        okTxt = (TextView) view.findViewById(R.id.ok);
+        cancelTxt = (TextView) view.findViewById(R.id.cancel);
         hintEdit = (EditText) view.findViewById(R.id.name_edt);
         titleTxt = (TextView) view.findViewById(R.id.title_tv);
         alertBuilder.setView(view).setCancelable(false);//要用同一个View
@@ -49,10 +48,10 @@ public class EditDialog {
         titleTxt.setText(mTitle);
         hintEdit.setHint(mHitStr);
         hintEdit.setText(mEditStr);
-        okBtn.setText(mOkStr);
-        cancelBtn.setText(mCancelStr);
+        okTxt.setText(mOkStr);
+        cancelTxt.setText(mCancelStr);
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
+        okTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
@@ -67,7 +66,7 @@ public class EditDialog {
             }
         });
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
+        cancelTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {

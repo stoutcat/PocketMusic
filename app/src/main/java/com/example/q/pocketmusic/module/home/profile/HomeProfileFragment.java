@@ -1,7 +1,6 @@
 package com.example.q.pocketmusic.module.home.profile;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.module.common.AuthFragment;
-import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DisplayStrategy;
 import com.example.q.pocketmusic.view.dialog.ListDialog;
-import com.example.q.pocketmusic.view.widget.net.SnackBarUtil;
 import com.example.q.pocketmusic.view.widget.view.GuaGuaKa;
 import com.example.q.pocketmusic.view.widget.view.IcoTextItem;
 
@@ -26,6 +23,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -50,6 +48,9 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     IcoTextItem settingItem;
     @BindView(R.id.sign_in_btn)
     Button signInBtn;
+    @BindView(R.id.help_item)
+    IcoTextItem helpItem;
+    Unbinder unbinder;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
     private AlertDialog signInDialog;
@@ -93,7 +94,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     }
 
 
-    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn})
+    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn,R.id.help_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.head_iv://设置头像
@@ -117,13 +118,15 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             case R.id.sign_in_btn://签到
                 presenter.checkHasSignIn();
                 break;
+            case R.id.help_item:
+                presenter.enterHelpActivity();
         }
     }
 
     //签到Dialog
     public void alertSignInDialog() {
         Random random = new Random();
-        final int reward = random.nextInt(4)+1;//随机1--4点
+        final int reward = random.nextInt(4) + 1;//随机1--4点
         View view = View.inflate(getContext(), R.layout.dialog_sign_in, null);
         GuaGuaKa guaGuaKa = (GuaGuaKa) view.findViewById(R.id.gua_gua_ka);
         guaGuaKa.setAwardText(String.valueOf(reward) + " 点贡献度");
@@ -190,5 +193,15 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     @Override
     public void showRefreshing(boolean isShow) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick()
+    public void onViewClicked() {
     }
 }

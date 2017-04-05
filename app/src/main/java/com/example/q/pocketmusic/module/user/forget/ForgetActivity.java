@@ -78,7 +78,7 @@ public class ForgetActivity extends BaseActivity {
             return;
         }
 
-        if (newPassword.equals(confirmPassword)) {
+        if (!newPassword.equals(confirmPassword)) {
             MyToast.showToast(context, "两次密码输入不同");
             return;
         }
@@ -89,16 +89,23 @@ public class ForgetActivity extends BaseActivity {
         bmobQuery.findObjects(new FindListener<MyUser>() {
             @Override
             public void done(List<MyUser> list, BmobException e) {
-                if (e == null && list.size() == 1) {
-                    BmobInfo bmobInfo=new BmobInfo(Constant.BMOB_INFO_RESET_PASSWORD,account+":"+newPassword);
+                if (e == null) {
+
+                    if (list.size() != 1) {
+                        showLoading(false);
+                        MyToast.showToast(context, "没有找到该用户");
+                        return;
+                    }
+
+                    BmobInfo bmobInfo = new BmobInfo(Constant.BMOB_INFO_RESET_PASSWORD, account + ":" + newPassword);
                     bmobInfo.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             showLoading(false);
-                            if (e==null){
-                                MyToast.showToast(context,"已收到修改密码请求，请稍等");
+                            if (e == null) {
+                                MyToast.showToast(context, "已收到修改密码请求，请稍等");
                                 finish();
-                            }else {
+                            } else {
                                 MyToast.showToast(context, e.getMessage());
                             }
                         }

@@ -6,17 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_appbar_toolbar"/>
+    <include layout="@layout/include_appbar_toolbar" />
 
+    <include layout="@layout/include_top_logo" />
 
-    <ImageView
-        android:id="@+id/launcher_iv"
-        android:layout_width="@dimen/ico_launcher_64dp"
-        android:layout_height="@dimen/ico_launcher_64dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ico_tag" />
 
     <TextView
         android:id="@+id/version_tv"
@@ -48,14 +41,6 @@
 
     <View style="@style/SettingDivider" />
 
-    <com.example.q.pocketmusic.view.widget.view.IcoTextItem
-        android:id="@+id/help_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemTitleIco="@drawable/ico_setting_help"
-        app:itemTitleText="帮助" />
-
-    <View style="@style/SettingDivider" />
 
     <com.example.q.pocketmusic.view.widget.view.IcoTextItem
         android:id="@+id/share_item"

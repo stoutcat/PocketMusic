@@ -16,6 +16,7 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
+import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
 import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.util.StringUtil;
@@ -169,6 +170,11 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
     public void enterContributionActivity() {
         Intent intent = new Intent(context, ContributionActivity.class);
+        context.startActivity(intent);
+    }
+
+    public void enterHelpActivity() {
+        Intent intent = new Intent(context, HelpActivity.class);
         context.startActivity(intent);
     }
 

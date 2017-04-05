@@ -57,6 +57,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.IView {
         presenter = new HomePresenter(this, this, getSupportFragmentManager());
         presenter.checkVersion();
         presenter.clickLocal();
+//        MyToast.showToast(context,"加了补丁了");
     }
 
 
@@ -95,7 +96,6 @@ public class HomeActivity extends BaseActivity implements HomePresenter.IView {
 
 
     //捕获back，设置按第二次退出
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

@@ -31,7 +31,7 @@ public class ContributionPresenter {
 
     public void init() {
         BmobQuery<MyUser> query = new BmobQuery<>();
-        query.setLimit(20);//前十个
+        query.setLimit(10);//前十个
         query.order("-contribution");
         query.findObjects(new ToastQueryListener<MyUser>(context, activity) {
             @Override

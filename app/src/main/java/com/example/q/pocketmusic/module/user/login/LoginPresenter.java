@@ -47,7 +47,7 @@ public class LoginPresenter extends BasePresenter {
             public void onSuccess(MyUser user) {
                 MyToast.showToast(context, "欢迎尊贵的VIP！ ");
                 activity.loginToResult(Constant.SUCCESS, user);
-                activity.finish();
+                activity.finish();//关闭登录界面
             }
 
             @Override

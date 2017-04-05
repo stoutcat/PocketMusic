@@ -32,16 +32,12 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
     Toolbar toolbar;
     @BindView(R.id.app_bar)
     AppBarLayout appBar;
-    @BindView(R.id.launcher_iv)
-    ImageView launcherIv;
     @BindView(R.id.version_tv)
     TextView versionTv;
     @BindView(R.id.update_item)
     IcoTextItem updateItem;
     @BindView(R.id.grade_item)
     IcoTextItem gradeItem;
-    @BindView(R.id.help_item)
-    IcoTextItem helpItem;
     @BindView(R.id.share_item)
     IcoTextItem shareItem;
     @BindView(R.id.logout_item)
@@ -77,7 +73,7 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
 
     }
 
-    @OnClick({R.id.update_item, R.id.logout_item, R.id.grade_item, R.id.share_item, R.id.help_item})
+    @OnClick({R.id.update_item, R.id.logout_item, R.id.grade_item, R.id.share_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.update_item:
@@ -91,9 +87,6 @@ public class SettingActivity extends AuthActivity implements SettingPresenter.IV
                 break;
             case R.id.share_item://分享app
                 presenter.shareApp();
-                break;
-            case R.id.help_item:
-                presenter.enterHelpActivity();
                 break;
         }
     }

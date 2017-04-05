@@ -7,8 +7,8 @@ android {
         applicationId "com.example.q.pocketmusic"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 20
-        versionName "4.3"
+        versionCode 21
+        versionName "4.4"
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/BmobSDK_3.5.3_20161116.jar')
-    compile('com.taobao.android:alisdk-hotfix:2.0.1') {
+    compile('com.taobao.android:alisdk-hotfix:2.0.5') {
         transitive = false
     }
     compile 'com.android.support:appcompat-v7:25.2.0'

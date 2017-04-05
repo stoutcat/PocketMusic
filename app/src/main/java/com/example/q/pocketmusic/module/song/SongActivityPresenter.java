@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 
@@ -584,6 +586,14 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
             //加入弹出dialog
             activity.showAddDialog(song.getName());
         }
+    }
+
+    //进入系统设置中心
+    public void enterSystemSetting() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
+        context.startActivity(intent);
     }
 
     //s:歌曲名=editText的输入

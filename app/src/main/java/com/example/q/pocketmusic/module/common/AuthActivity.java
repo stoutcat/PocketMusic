@@ -16,7 +16,7 @@ import com.example.q.pocketmusic.util.LogUtils;
 public abstract class AuthActivity extends BaseActivity {
     public static MyUser user;
     public static int a;
-    public static final String RESULT_USER = "result";
+    public static final String RESULT_USER = "result_user";//返回的User
     public abstract void initView();
 
     public void init() {
@@ -35,8 +35,8 @@ public abstract class AuthActivity extends BaseActivity {
                 user = (MyUser) data.getSerializableExtra(RESULT_USER);//成功登录并复制
             } else if (resultCode == Constant.FAIL) {
                 user = null;//登录失败
-                finish();//把登录跳转前的界面(即将进入的页面)finish掉
             }
+            finish();//把登录跳转前的界面(即将进入的页面)finish掉
         }
     }
 }
