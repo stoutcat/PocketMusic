@@ -91,7 +91,7 @@
         <activity
             android:name=".module.lead.LeadSongActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".module.user.forget.ForgetActivity"></activity>
+        <activity android:name=".module.user.forget.ForgetActivity"/>
     </application>
 
 </manifest>

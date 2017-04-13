@@ -9,17 +9,20 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/agree"
+        android:icon="@drawable/ico_agree"
         android:orderInCategory="90"
         android:title="赞一个"
-        app:showAsAction="never" />
+        app:showAsAction="withText|never" />
     <item
         android:id="@+id/collection"
+        android:icon="@drawable/ico_profile_collection"
         android:orderInCategory="80"
         android:title="收藏"
-        app:showAsAction="never" />
+        app:showAsAction="withText|never" />
     <item
-        app:showAsAction="never"
         android:id="@+id/share"
+        android:icon="@drawable/ico_setting_share"
         android:orderInCategory="70"
-        android:title="分享" />
+        android:title="分享"
+        app:showAsAction="withText|never" />
 </menu>

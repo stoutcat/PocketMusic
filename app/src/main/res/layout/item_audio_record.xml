@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/Text"
-        android:textSize="@dimen/item_two_txt_main_16sp"
+        android:textSize="@dimen/item_two_txt_main_14sp"
         tools:text="名字" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/name_tv"
         android:textColor="@color/TextGray"
-        android:textSize="@dimen/item_two_txt_second_14sp"
+        android:textSize="@dimen/item_two_txt_second_12sp"
         tools:text="300秒" />
 
     <ImageView

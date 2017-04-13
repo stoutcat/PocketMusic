@@ -17,7 +17,6 @@ import com.example.q.pocketmusic.R;
  */
 
 public class TabView extends LinearLayout {
-    private Context context;
     private ImageView ico;
     private TextView tv;
     private int selectResource;
@@ -33,15 +32,14 @@ public class TabView extends LinearLayout {
 
     public TabView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
         initView(attrs);
     }
 
     private void initView(AttributeSet attrs) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_bottom_tab, this);
-        ico = (ImageView) view.findViewById(R.id.ico_iv);
-        tv = (TextView) view.findViewById(R.id.name_tv);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TabView);
+        inflate(getContext(),R.layout.view_bottom_tab,this);
+        ico=getView(R.id.ico_iv);
+        tv=getView(R.id.name_tv);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.TabView);
         selectResource = array.getResourceId(R.styleable.TabView_itemTabSelectIco, 0);
         noSelectResource = array.getResourceId(R.styleable.TabView_itemTabNoSelectIco, 0);
         String name = array.getString(R.styleable.TabView_itemTabName);
@@ -54,10 +52,14 @@ public class TabView extends LinearLayout {
     public void onSelect(Boolean isSelect) {
         if (isSelect) {
             ico.setImageResource(selectResource);
-            tv.setTextColor(ContextCompat.getColor(context, R.color.TabBottomText));
+            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.TabBottomText));
         } else {
-            tv.setTextColor(ContextCompat.getColor(context, R.color.Text));
+            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.Text));
             ico.setImageResource(noSelectResource);
         }
+    }
+
+    public <T extends View> T getView(int id) {
+        return (T) findViewById(id);
     }
 }

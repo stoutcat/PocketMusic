@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.IBaseView;
-import com.example.q.pocketmusic.callback.ToastSaveListener;
+import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
+import com.example.q.pocketmusic.config.BmobInfo;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
@@ -19,14 +19,13 @@ import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
 import com.example.q.pocketmusic.util.MyToast;
-import com.example.q.pocketmusic.util.StringUtil;
 
 import java.io.File;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import cn.bmob.v3.BmobRealTimeData;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -133,7 +132,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         user.update(new ToastUpdateListener(context, fragment) {
             @Override
             public void onSuccess() {
-                MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + reward);
+                MyToast.showToast(context, CommonString.ADD_COIN_BASE + reward);
                 fragment.dismissSignDialog();
             }
         });
@@ -147,7 +146,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
             user.update(new ToastUpdateListener(context, fragment) {
                 @Override
                 public void onSuccess() {
-                    MyToast.showToast(context, "今天已签到：" + CommonString.ADD_CONTRIBUTION_BASE + 1);
+                    MyToast.showToast(context, "今天已签到：" + CommonString.ADD_COIN_BASE + 1);
                 }
             });
         } else {
@@ -178,6 +177,17 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         context.startActivity(intent);
     }
 
+    public void getBmobInfo() {
+        BmobQuery<BmobInfo> query = new BmobQuery<>();
+        query.addWhereEqualTo("type", Constant.BMOB_INFO_LABA);
+        query.findObjects(new ToastQueryListener<BmobInfo>(context, fragment) {
+            @Override
+            public void onSuccess(List<BmobInfo> list) {
+                    fragment.setLaBaText(list.get(0));
+            }
+        });
+    }
+
 
     public interface IView extends IBaseList {
 
@@ -189,5 +199,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         void dismissSignDialog();
 
         void alertSignInDialog();
+
+        void setLaBaText(BmobInfo bmobInfo);
     }
 }

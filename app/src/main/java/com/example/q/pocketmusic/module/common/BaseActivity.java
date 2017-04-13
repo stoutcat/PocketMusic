@@ -9,7 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.callback.IBaseView;
@@ -18,6 +21,8 @@ import com.example.q.pocketmusic.util.LogUtils;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+
+import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
@@ -97,6 +102,23 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         return super.onOptionsItemSelected(item);
     }
 
+    //反射显示图标
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try{
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "onMenuOpened...unable to set icons for overflow menu", e);
+                }
+            }
+        }
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
     //直接重启应用，cleartop
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -118,4 +140,5 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         super.onDestroy();
         mLoadingDialog.dismiss();
     }
+
 }

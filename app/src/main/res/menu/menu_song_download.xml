@@ -8,8 +8,9 @@
         android:title="下载"
         app:showAsAction="always" />
     <item
-        app:showAsAction="never"
         android:id="@+id/share"
+        android:icon="@drawable/ico_setting_share"
         android:orderInCategory="70"
-        android:title="分享" />
+        android:title="分享"
+        app:showAsAction="withText|never" />
 </menu>

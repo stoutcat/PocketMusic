@@ -24,7 +24,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/BmobSDK_3.5.3_20161116.jar')
-    compile('com.taobao.android:alisdk-hotfix:2.0.5') {
+    compile('com.taobao.android:alisdk-hotfix:2.0.7') {
         transitive = false
     }
     compile 'com.android.support:appcompat-v7:25.2.0'
@@ -52,4 +52,5 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.3.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile files('libs/alicloud-android-utils-1.0.1.jar')
 }

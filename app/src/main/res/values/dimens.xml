@@ -14,8 +14,8 @@
 
     <dimen name="item_padding_16dp">16dp</dimen>
 
-    <dimen name="item_two_txt_main_16sp">16sp</dimen>
-    <dimen name="item_two_txt_second_14sp">14sp</dimen>
+    <dimen name="item_two_txt_main_14sp">14sp</dimen>
+    <dimen name="item_two_txt_second_12sp">12sp</dimen>
     <dimen name="item_two_txt_right_margin_16dp">16dp</dimen>
     <dimen name="item_two_txt_height_72dp">72dp</dimen>
 

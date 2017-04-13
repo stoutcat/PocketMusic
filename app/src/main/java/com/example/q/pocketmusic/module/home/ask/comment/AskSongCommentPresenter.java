@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
@@ -72,18 +71,6 @@ public class AskSongCommentPresenter extends BasePresenter {
         });
     }
 
-    //将得到的评论列表进行排序,有图的放在最前面
-    //这里最好用list的比较接口实现
-    private List<AskSongComment> sort(List<AskSongComment> list) {
-        for (int i = 0; i < list.size(); i++) {
-            AskSongComment comment = list.get(i);
-            if (comment.getHasPic()) {
-                list.remove(comment);
-                list.add(0, comment);
-            }
-        }
-        return list;
-    }
 
     //发送评论
     public void sendComment(final String comment) {
@@ -99,53 +86,62 @@ public class AskSongCommentPresenter extends BasePresenter {
         askSongComment.save(new ToastSaveListener<String>(context, activity) {
             @Override
             public void onSuccess(final String s) {
-                if (picUrls.size() <= 0) {//无图
-                    activity.showLoading(false);
-                    activity.sendCommentResult(s, askSongComment);
-                    return;
-                }
-                //批量上传图片
-                BmobFile.uploadBatch(picUrls.toArray(new String[picUrls.size()]), new UploadBatchListener() {
+                //帖子表的评论数+1
+                post.increment("commentNum", 1);
+                post.update(new ToastUpdateListener(context, activity) {
                     @Override
-                    public void onSuccess(final List<BmobFile> list, List<String> list1) {
-                        if (picUrls.size() == list1.size()) {// 全部的图片上传成功后调用
-                            List<BmobObject> askSongPics = new ArrayList<>();
-                            for (int i = 0; i < list.size(); i++) {
-                                AskSongPic askSongPic = new AskSongPic(askSongComment, list1.get(i));
-                                askSongPics.add(askSongPic);
-                            }
-                            //批量添加AskSongPic表
-                            new BmobBatch().insertBatch(askSongPics).doBatch(new ToastQueryListListener<BatchResult>(context, activity) {
-                                @Override
-                                public void onSuccess(List<BatchResult> list) {
-                                    user.increment("contribution", Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC); //原子操作
-                                    user.update(new ToastUpdateListener(context, activity) {
+                    public void onSuccess() {
+                        if (picUrls.size() <= 0) {//无图
+                            activity.showLoading(false);
+                            activity.sendCommentResult(s, askSongComment);
+                            return;
+                        }
+                        //批量上传图片
+                        BmobFile.uploadBatch(picUrls.toArray(new String[picUrls.size()]), new UploadBatchListener() {
+                            @Override
+                            public void onSuccess(final List<BmobFile> list, List<String> list1) {
+                                if (picUrls.size() == list1.size()) {// 全部的图片上传成功后调用
+                                    List<BmobObject> askSongPics = new ArrayList<>();
+                                    for (int i = 0; i < list.size(); i++) {
+                                        AskSongPic askSongPic = new AskSongPic(askSongComment, list1.get(i));
+                                        askSongPics.add(askSongPic);
+                                    }
+                                    //批量添加AskSongPic表
+                                    new BmobBatch().insertBatch(askSongPics).doBatch(new ToastQueryListListener<BatchResult>(context, activity) {
                                         @Override
-                                        public void onSuccess() {
-                                            activity.showLoading(false);
-                                            MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + (Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC));
-                                            activity.sendCommentResult(s, askSongComment);
+                                        public void onSuccess(List<BatchResult> list) {
+                                            user.increment("contribution", Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC); //原子操作
+                                            user.update(new ToastUpdateListener(context, activity) {
+                                                @Override
+                                                public void onSuccess() {
+                                                    activity.showLoading(false);
+                                                    MyToast.showToast(context, CommonString.ADD_COIN_BASE + (Constant.ADD_CONTRIBUTION_COMMENT_WITH_PIC));
+                                                    activity.sendCommentResult(s, askSongComment);
+                                                }
+                                            });
                                         }
                                     });
                                 }
-                            });
-                        }
-                    }
+                            }
 
-                    @Override
-                    public void onProgress(int i, int i1, int i2, int i3) {
+                            @Override
+                            public void onProgress(int i, int i1, int i2, int i3) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onError(int i, String s) {
-                        //文件上传失败
-                        activity.showLoading(false);
-                        MyToast.showToast(context, CommonString.STR_ERROR_INFO+s);
+                            @Override
+                            public void onError(int i, String s) {
+                                //文件上传失败
+                                activity.showLoading(false);
+                                MyToast.showToast(context, CommonString.STR_ERROR_INFO + s);
+                            }
+                        });
                     }
                 });
             }
         });
+
+
     }
 
 

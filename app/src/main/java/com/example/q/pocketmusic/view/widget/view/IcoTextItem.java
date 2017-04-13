@@ -12,17 +12,17 @@ import android.widget.TextView;
 import com.allenliu.badgeview.BadgeFactory;
 import com.allenliu.badgeview.BadgeView;
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.util.ConvertUtil;
 
 /**
  * Created by YQ on 2016/10/17.
  */
-
+//假如继承LinearLayout会不会报错？
 public class IcoTextItem extends RelativeLayout {
     private TextView mTitleTv;
     private TextView mSubTv;
     private ImageView mIco;
 
-    private Context context;
     private String mTitle;
     private int icoId;
     private BadgeView badgeView;
@@ -37,18 +37,17 @@ public class IcoTextItem extends RelativeLayout {
 
     public IcoTextItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
         init(attrs);
     }
 
 
     private void init(AttributeSet attrs) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_ico_text, this);
-        mTitleTv = (TextView) view.findViewById(R.id.title_tv);
-        mIco = (ImageView) view.findViewById(R.id.ico);
-        mSubTv = (TextView) view.findViewById(R.id.subtitle_tv);
+        inflate(getContext(), R.layout.item_ico_text, this);
+        mTitleTv = getView(R.id.title_tv);
+        mIco = getView(R.id.ico);
+        mSubTv = getView(R.id.subtitle_tv);
 
-        TypedArray types = context.obtainStyledAttributes(attrs, R.styleable.IcoTextItem);
+        TypedArray types = getContext().obtainStyledAttributes(attrs, R.styleable.IcoTextItem);
         mTitle = types.getString(R.styleable.IcoTextItem_itemTitleText);
         icoId = types.getResourceId(R.styleable.IcoTextItem_itemTitleIco, 0);
         types.recycle();
@@ -66,14 +65,18 @@ public class IcoTextItem extends RelativeLayout {
     public void bindBadge(Boolean isBind) {
         if (isBind) {
             if (badgeView == null) {
-                badgeView = BadgeFactory.createDot(context)
+                badgeView = BadgeFactory.createDot(getContext())
                         .bind(mIco);
             }
         } else {
-            if (badgeView!=null){
+            if (badgeView != null) {
                 badgeView.unbind();
             }
         }
+    }
+
+    public <T extends View> T getView(int id) {
+        return (T) findViewById(id);
     }
 
 

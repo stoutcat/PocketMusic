@@ -35,20 +35,14 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
     public void getPostList() {
         BmobQuery<AskSongPost> queryPost = new BmobQuery<>();
         queryPost.setLimit(10);
-        queryPost.order("-updatedAt");//逆序
+        queryPost.order("-createdAt");//逆序
         queryPost.include("user");//把User表也查出来
         queryPost.findObjects(new ToastQueryListener<AskSongPost>(context, fragment) {
             @Override
             public void onSuccess(List<AskSongPost> list) {
-                ACacheUtil.putAskSongCache(context, list);
                 fragment.setPostList(list);
             }
 
-            @Override
-            public void onFail(BmobException e) {
-                super.onFail(e);
-                fragment.setPostList(ACacheUtil.getAskSongCache(context));
-            }
         });
     }
 
@@ -58,7 +52,7 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
         BmobQuery<AskSongPost> queryPost = new BmobQuery<>();
         queryPost.setLimit(10);
         queryPost.setSkip(mPage * 10);
-        queryPost.order("-updatedAt");//逆序
+        queryPost.order("-createdAt");//逆序
         queryPost.include("user");//把User表也查出来
         queryPost.findObjects(new ToastQueryListener<AskSongPost>(context, fragment) {
             @Override
@@ -96,16 +90,8 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
         this.mPage = mPage;
     }
 
-    public void getCacheList() {
-        List<AskSongPost> list = ACacheUtil.getAskSongCache(context);
-        if (list == null) {
-            getPostList();
-        }
-        fragment.setPostList(list);
-    }
 
-
-    public interface IView extends IBaseList{
+    public interface IView extends IBaseList {
         void setPostList(List<AskSongPost> list);
     }
 }

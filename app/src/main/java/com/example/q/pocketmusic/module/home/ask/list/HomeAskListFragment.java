@@ -57,7 +57,7 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
         presenter.setmPage(0);
         titleBar.setMyCenterTitle("大家都在找");
         titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
-        presenter.getCacheList();
+        presenter.getPostList();
     }
 
 
@@ -78,6 +78,7 @@ public class HomeAskListFragment extends BaseFragment implements HomeAskListFrag
 
     @Override
     public void onRefresh() {
+        presenter.setmPage(0);
         adapter.clear();
         presenter.getPostList();
     }

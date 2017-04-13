@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/Text"
-            android:textSize="@dimen/item_two_txt_main_16sp"
+            android:textSize="@dimen/item_two_txt_main_14sp"
             tools:text="歌曲名" />
 
         <TextView
@@ -27,6 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/TextGray"
-            android:textSize="@dimen/item_two_txt_second_14sp" />
+            android:textSize="@dimen/item_two_txt_second_12sp" />
     </LinearLayout>
 </RelativeLayout>

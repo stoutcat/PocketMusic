@@ -9,7 +9,6 @@ package com.example.q.pocketmusic.view.widget.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ public class SwitchSettingItem extends RelativeLayout {
     private TextView mSubtitleTv;
     private ToggleButton mToggleBtn;
 
-    private Context context;
     private String mTitle;
     private String mSubtitleIsFalse;
     private String mSubtitleIsTrue;
@@ -52,17 +50,16 @@ public class SwitchSettingItem extends RelativeLayout {
 
     public SwitchSettingItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_setting,this);
-        mToggleBtn= (ToggleButton) view.findViewById(R.id.toggle_btn);
-        mTitleTv= (TextView) view.findViewById(R.id.title_tv);
-        mSubtitleTv= (TextView) view.findViewById(R.id.subtitle_tv);
+        inflate(getContext(),R.layout.item_setting,this);
+        mToggleBtn=getView(R.id.toggle_btn);
+        mTitleTv=getView(R.id.title_tv);
+        mSubtitleTv=getView(R.id.subtitle_tv);
 
-        TypedArray types = context.obtainStyledAttributes(attrs, R.styleable.SwitchSettingItem);
+        TypedArray types = getContext().obtainStyledAttributes(attrs, R.styleable.SwitchSettingItem);
         mTitle = types.getString(R.styleable.SwitchSettingItem_itemTitle);
         mSubtitleIsFalse = types.getString(R.styleable.SwitchSettingItem_itemSubtitleIsFalse);
         mSubtitleIsTrue = types.getString(R.styleable.SwitchSettingItem_itemSubtitleIsTrue);
@@ -111,5 +108,9 @@ public class SwitchSettingItem extends RelativeLayout {
 
     public void setSubtitleVisible(int Visible){
         mSubtitleTv.setVisibility(Visible);
+    }
+
+    public <T extends View> T getView(int id) {
+        return (T) findViewById(id);
     }
 }

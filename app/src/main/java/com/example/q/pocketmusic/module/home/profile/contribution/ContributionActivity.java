@@ -60,8 +60,8 @@ public class ContributionActivity extends AuthActivity implements SwipeRefreshLa
         presenter = new ContributionPresenter(this, this);
         new DisplayStrategy().displayCircle(this, user.getHeadImg(), topIv);
         nickNameTv.setText(user.getNickName());
-        contributionTv.setText("贡献度：" + user.getContribution());
-        initToolbar(toolbar, "贡献度榜单");
+        contributionTv.setText("硬币：" + user.getContribution()+"枚");
+        initToolbar(toolbar, "硬币榜");
         initRecyclerView(recycler, adapter);
         onRefresh();
     }

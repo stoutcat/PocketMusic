@@ -20,7 +20,6 @@ import com.example.q.pocketmusic.R;
  */
 
 public class TextEdit extends LinearLayout {
-    private Context context;
     private EditText inputEdt;
     private ImageView ico;
 
@@ -36,15 +35,14 @@ public class TextEdit extends LinearLayout {
 
     public TextEdit(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
         initView(attrs);
     }
 
     private void initView(AttributeSet attrs) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_text_edt, this);
-        inputEdt = (EditText) view.findViewById(R.id.input_edt);
-        ico = (ImageView) view.findViewById(R.id.ico_iv);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TextEdit);
+        inflate(getContext(),R.layout.view_text_edt,this);
+        inputEdt=getView(R.id.input_edt);
+        ico=getView(R.id.ico_iv);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.TextEdit);
         String hintString = array.getString(R.styleable.TextEdit_itemInputHint);
         boolean isPassword = array.getBoolean(R.styleable.TextEdit_itemInputPassword, false);
         int resourceId = array.getResourceId(R.styleable.TextEdit_itemIcoResource, 0);
@@ -64,5 +62,9 @@ public class TextEdit extends LinearLayout {
 
     public void setInputString(String s) {
         inputEdt.setText(s);
+    }
+
+    public <T extends View> T getView(int id) {
+        return (T) findViewById(id);
     }
 }

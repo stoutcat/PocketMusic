@@ -17,7 +17,6 @@ import android.view.Menu;
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBasePresenter;
-import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
@@ -46,6 +45,7 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DownloadUtil;
 import com.example.q.pocketmusic.util.FileUtils;
+import com.example.q.pocketmusic.util.LogUtils;
 import com.example.q.pocketmusic.util.MyToast;
 import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -64,6 +64,8 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -352,15 +354,15 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
                 return new DownloadInfo("找不到用户", false);
             }
             //贡献度是否足够
-            if (!CheckUserUtil.checkUserContribution(((BaseActivity) context), Constant.REDUCE_CONTRIBUTION_UPLOAD)) {
+            if (!CheckUserUtil.checkUserContribution(((BaseActivity) context), Constant.REDUCE_COIN_UPLOAD)) {
                 activity.showLoading(false);
-                return new DownloadInfo(CommonString.STR_NOT_ENOUGH_CONTRIBUTION, false);
+                return new DownloadInfo(CommonString.STR_NOT_ENOUGH_COIN, false);
             }
-            user.increment("contribution", -Constant.REDUCE_CONTRIBUTION_UPLOAD);
+            user.increment("contribution", -Constant.REDUCE_COIN_UPLOAD);
             user.update(new ToastUpdateListener(context, activity) {
                 @Override
                 public void onSuccess() {
-                    MyToast.showToast(context, CommonString.REDUCE_CONTRIBUTION_BASE + (Constant.REDUCE_CONTRIBUTION_UPLOAD));
+                    MyToast.showToast(context, CommonString.REDUCE_COIN_BASE + (Constant.REDUCE_COIN_UPLOAD));
                 }
             });
         }
@@ -384,7 +386,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
                     user.update(new ToastUpdateListener(context, activity) {
                         @Override
                         public void onSuccess() {
-                            MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + Constant.ADD_CONTRIBUTION_AGREE);
+                            MyToast.showToast(context, CommonString.ADD_COIN_BASE + Constant.ADD_CONTRIBUTION_AGREE);
                         }
                     });
                 }
@@ -489,7 +491,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
                                             @Override
                                             public void onSuccess() {
                                                 activity.showLoading(false);
-                                                MyToast.showToast(context, CommonString.REDUCE_CONTRIBUTION_BASE + Constant.REDUCE_CONTRIBUTION_COLLECTION);
+                                                MyToast.showToast(context, CommonString.REDUCE_COIN_BASE + Constant.REDUCE_CONTRIBUTION_COLLECTION);
                                             }
                                         });
                                     }

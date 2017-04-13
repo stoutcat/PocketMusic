@@ -14,8 +14,8 @@ public class CommonString {
 
 
     //贡献度
-    public final static String ADD_CONTRIBUTION_BASE = "贡献值：+";
-    public final static String REDUCE_CONTRIBUTION_BASE = "已扣除贡献度：";
-    public final static String STR_NOT_ENOUGH_CONTRIBUTION="贡献度不够哦~";
+    public final static String ADD_COIN_BASE = "获得硬币数：";
+    public final static String REDUCE_COIN_BASE = "已扣除硬币：";
+    public final static String STR_NOT_ENOUGH_COIN ="硬币不够了哦~";
 
 }

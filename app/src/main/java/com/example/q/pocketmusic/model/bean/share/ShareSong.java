@@ -14,21 +14,12 @@ public class ShareSong extends BmobObject {
     private MyUser user;//上传者
     private String name;//歌曲名字
     private String content;//内容，介绍信息
-    private Integer downloadNum;//下载数
 
-    public Integer getDownloadNum() {
-        return downloadNum;
-    }
-
-    public void setDownloadNum(Integer downloadNum) {
-        this.downloadNum = downloadNum;
-    }
 
     public ShareSong(MyUser user, String name, String content) {
         this.user = user;
         this.name = name;
         this.content = content;
-        this.downloadNum = 0;
     }
 
     public MyUser getUser() {

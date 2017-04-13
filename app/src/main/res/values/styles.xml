@@ -41,12 +41,12 @@
     </style>
 
     <style name="TwoTextMain">
-        <item name="android:textSize">@dimen/item_two_txt_main_16sp</item>
+        <item name="android:textSize">@dimen/item_two_txt_main_14sp</item>
         <item name="android:textColor">@color/Text</item>
     </style>
 
     <style name="TwoTextSecond">
-        <item name="android:textSize">@dimen/item_two_txt_second_14sp</item>
+        <item name="android:textSize">@dimen/item_two_txt_second_12sp</item>
         <item name="android:textColor">@color/TextGray</item>
     </style>
 
@@ -59,16 +59,10 @@
     </style>
 
     <style name="TextPressAttention">
-        <item name="android:textSize">@dimen/item_two_txt_main_16sp</item>
+        <item name="android:textSize">@dimen/item_two_txt_main_14sp</item>
         <item name="android:textColor">@color/textPressAttention</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <declare-styleable name="GuaGuaKa">
-        <attr name="Reward_Text" format="string" />
-        <attr name="Reward_Text_Color" format="color" />
-        <attr name="Reward_Text_Size" format="dimension" />
-        <attr name="Reward_Eraser_Size" format="dimension" />
-        <attr name="Reward_Resource" format="reference" />
-    </declare-styleable>
+
 </resources>

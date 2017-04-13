@@ -9,15 +9,26 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.common.TestActivity;
 import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.view.widget.view.TabView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobBatch;
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BatchResult;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListListener;
 
 public class HomeActivity extends BaseActivity implements HomePresenter.IView {
 
@@ -59,8 +70,6 @@ public class HomeActivity extends BaseActivity implements HomePresenter.IView {
         presenter.clickLocal();
 //        MyToast.showToast(context,"加了补丁了");
     }
-
-
 
     //触发SingleTask
     @Override

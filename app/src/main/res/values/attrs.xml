@@ -30,4 +30,12 @@
         <attr name="itemInputPassword" format="boolean" />
         <attr name="itemInputHint" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="GuaGuaKa">
+        <attr name="Reward_Text" format="string" />
+        <attr name="Reward_Text_Color" format="color" />
+        <attr name="Reward_Text_Size" format="dimension" />
+        <attr name="Reward_Eraser_Size" format="dimension" />
+        <attr name="Reward_Resource" format="reference" />
+    </declare-styleable>
 </resources>

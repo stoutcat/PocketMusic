@@ -51,6 +51,7 @@ public class HomeAskListAdapter extends RecyclerArrayAdapter<AskSongPost> {
         TextView postUserContentTv;
         TextView postUserNameTv;
         TextView postUserDateTv;
+        TextView postUserCommentNumTv;
 
         ImageView postUserHeadIv;
         LinearLayout contentLl;
@@ -62,6 +63,7 @@ public class HomeAskListAdapter extends RecyclerArrayAdapter<AskSongPost> {
             postUserNameTv = $(R.id.post_user_name_tv);
             postUserHeadIv = $(R.id.post_user_head_iv);
             postUserDateTv = $(R.id.post_user_date_tv);
+            postUserCommentNumTv = $(R.id.post_user_comment_num_tv);
             contentLl = $(R.id.content_ll);
             //点击内容
             contentLl.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +93,7 @@ public class HomeAskListAdapter extends RecyclerArrayAdapter<AskSongPost> {
             postUserNameTv.setText(data.getUser().getNickName());
             displayStrategy.displayCircle(context, data.getUser().getHeadImg(), postUserHeadIv);
             postUserDateTv.setText(data.getCreatedAt());
+            postUserCommentNumTv.setText(String.valueOf(data.getCommentNum()));
         }
 
     }

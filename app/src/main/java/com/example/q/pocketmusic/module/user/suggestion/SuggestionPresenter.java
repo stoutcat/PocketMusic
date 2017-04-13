@@ -5,15 +5,10 @@ import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
-import com.example.q.pocketmusic.callback.ToastUpdateListener;
-import com.example.q.pocketmusic.config.CommonString;
-import com.example.q.pocketmusic.config.Constant;
+import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.bmob.UserSuggestion;
-import com.example.q.pocketmusic.callback.IBaseView;
-import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.module.common.BasePresenter;
-import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.List;
 
@@ -39,19 +34,13 @@ public class SuggestionPresenter extends BasePresenter {
         if (TextUtils.isEmpty(suggestion)) {
             return;
         }
+
         final UserSuggestion userSuggestion = new UserSuggestion(user);
         userSuggestion.setSuggestion(suggestion);
         userSuggestion.save(new ToastSaveListener<String>(context, activity) {
             @Override
             public void onSuccess(String s) {
-                user.increment("contribution", Constant.ADD_CONTRIBUTION_SUGGESTION);
-                user.update(new ToastUpdateListener(context, activity) {
-                    @Override
-                    public void onSuccess() {
-                        MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + Constant.ADD_CONTRIBUTION_SUGGESTION);
-                        activity.sendSuggestionResult(userSuggestion);
-                    }
-                });
+                activity.sendSuggestionResult(userSuggestion);
             }
         });
     }

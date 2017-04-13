@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.BmobInfo;
 import com.example.q.pocketmusic.module.common.AuthFragment;
 import com.example.q.pocketmusic.util.DisplayStrategy;
 import com.example.q.pocketmusic.view.dialog.ListDialog;
@@ -51,6 +52,9 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     @BindView(R.id.help_item)
     IcoTextItem helpItem;
     Unbinder unbinder;
+    @BindView(R.id.bmob_info_tv)
+    TextView bmobInfoTv;
+    Unbinder unbinder1;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
     private AlertDialog signInDialog;
@@ -90,11 +94,12 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             instrumentItem.setSubText(user.getInstrument());
             //设置贡献值，数据更新有问题
 //            contributionItem.setSubText(String.valueOf(user.getContribution()) + " 点");
+            presenter.getBmobInfo();
         }
     }
 
 
-    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn,R.id.help_item})
+    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn, R.id.help_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.head_iv://设置头像
@@ -129,7 +134,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
         final int reward = random.nextInt(4) + 1;//随机1--4点
         View view = View.inflate(getContext(), R.layout.dialog_sign_in, null);
         GuaGuaKa guaGuaKa = (GuaGuaKa) view.findViewById(R.id.gua_gua_ka);
-        guaGuaKa.setAwardText(String.valueOf(reward) + " 点贡献度");
+        guaGuaKa.setAwardText(String.valueOf(reward) + " 枚硬币");
         final Button getRewardBtn = (Button) view.findViewById(R.id.get_reward_btn);
         signInDialog = new AlertDialog.Builder(getContext())
                 .setCancelable(false)
@@ -148,6 +153,12 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             }
         });
         signInDialog.show();
+    }
+
+    //小喇叭
+    @Override
+    public void setLaBaText(BmobInfo bmobInfo) {
+        bmobInfoTv.setText(bmobInfo.getContent());
     }
 
     //设置乐器
@@ -203,5 +214,13 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
 
     @OnClick()
     public void onViewClicked() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

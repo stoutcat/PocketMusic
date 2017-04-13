@@ -30,11 +30,15 @@ public class TypeView extends LinearLayout {
         resourceId = array.getResourceId(R.styleable.TypeView_itemIco, 0);
         array.recycle();
 
-        View view = LayoutInflater.from(context).inflate(R.layout.item_type, this);
-        typeIv = (ImageView) view.findViewById(R.id.type_iv);
-        typeTv = (TextView) view.findViewById(R.id.type_tv);
+        inflate(getContext(),R.layout.item_type,this);
+        typeIv=getView(R.id.type_iv);
+        typeTv=getView(R.id.type_tv);
 
         typeIv.setImageResource(resourceId);
         typeTv.setText(name);
+    }
+
+    public <T extends View> T getView(int id) {
+        return (T) findViewById(id);
     }
 }

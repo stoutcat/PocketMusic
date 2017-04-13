@@ -12,11 +12,17 @@ public class AskSongPost extends BmobObject {
     private MyUser user;//帖子的发布者，一对一
     private String title;//帖子标题
     private String content;//帖子内容
+    private Integer commentNum;//回复数量
+
+
+    public AskSongPost() {
+    }
 
     public AskSongPost(MyUser user, String title, String content) {
         this.user = user;
         this.title = title;
         this.content = content;
+        this.commentNum = 0;
     }
 
     public String getTitle() {
@@ -41,6 +47,14 @@ public class AskSongPost extends BmobObject {
 
     public void setUser(MyUser user) {
         this.user = user;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
     }
 
 }

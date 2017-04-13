@@ -7,8 +7,8 @@ import com.example.q.pocketmusic.util.SharedPrefsUtil;
  */
 //静态数据,存放标记，url
 public class Constant {
-    public final static String APP_ID="236163bbf4c3be6f2cc44de4405da6eb";
-    public final static String PATCH_VERSION="1";//补丁版本
+    public final static String APP_ID = "236163bbf4c3be6f2cc44de4405da6eb";
+    public final static String PATCH_VERSION = "1";//补丁版本
 
     //URL
     public final static String BASE_URL = "http://www.qupu123.com";
@@ -39,7 +39,8 @@ public class Constant {
 //    public final static Integer RECOMMEND = 10;
 
     //BmobInfo
-    public final static Integer BMOB_INFO_RESET_PASSWORD=1;//请求重置密码
+    public final static Integer BMOB_INFO_RESET_PASSWORD = 1;//请求重置密码
+    public final static Integer BMOB_INFO_LABA = 2;//小喇叭
 
     //乐器对应
     public final static String[] types = {"全部", "葫芦丝", "吉他", "钢琴", "萨克斯", "二胡", "古筝", "电子琴", "琵琶", "口琴", "桃李醉春风"};
@@ -78,13 +79,12 @@ public class Constant {
 
     //贡献度+
     public final static int ADD_CONTRIBUTION_UPLOAD = 3;//上传
-    public final static int ADD_CONTRIBUTION_SUGGESTION = 1;//建议
     public final static int ADD_CONTRIBUTION_COMMENT_WITH_PIC = 2;//评论加图
     public final static int ADD_CONTRIBUTION_INIT = 10;//初始
     public final static int ADD_CONTRIBUTION_AGREE = 1;//点赞+1
 
     //贡献度-
-    public final static int REDUCE_CONTRIBUTION_UPLOAD = 2;//下载上传-2
+    public final static int REDUCE_COIN_UPLOAD = 2;//下载上传-2
     public final static int REDUCE_CONTRIBUTION_COLLECTION = 1;//收藏-1
     public final static int REDUCE_CONTRIBUTION_ASK = 1;//求谱减一
 

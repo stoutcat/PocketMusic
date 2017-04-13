@@ -9,12 +9,10 @@ import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
-import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.util.CheckUserUtil;
-import com.example.q.pocketmusic.util.LogUtils;
 import com.example.q.pocketmusic.util.MyToast;
 
 /**
@@ -36,7 +34,7 @@ public class AskSongPresenter extends BasePresenter {
             return;
         }
         if (!CheckUserUtil.checkUserContribution((BaseActivity) context, Constant.REDUCE_CONTRIBUTION_ASK)) {
-            MyToast.showToast(context,CommonString.STR_NOT_ENOUGH_CONTRIBUTION);
+            MyToast.showToast(context,CommonString.STR_NOT_ENOUGH_COIN);
             return;
         }
         activity.showLoading(true);
@@ -48,7 +46,7 @@ public class AskSongPresenter extends BasePresenter {
                 user.update(new ToastUpdateListener(context,activity) {
                     @Override
                     public void onSuccess() {
-                        MyToast.showToast(context, CommonString.REDUCE_CONTRIBUTION_BASE + Constant.REDUCE_CONTRIBUTION_ASK);
+                        MyToast.showToast(context, CommonString.REDUCE_COIN_BASE + Constant.REDUCE_CONTRIBUTION_ASK);
                         activity.showLoading(false);
                         activity.setAskResult(Constant.SUCCESS);
                         activity.finish();

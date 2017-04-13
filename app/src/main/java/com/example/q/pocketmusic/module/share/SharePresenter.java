@@ -5,7 +5,6 @@ import android.database.SQLException;
 import android.text.TextUtils;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.IBasePresenter;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
@@ -18,7 +17,6 @@ import com.example.q.pocketmusic.model.bean.local.LocalSong;
 import com.example.q.pocketmusic.model.bean.share.SharePic;
 import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.model.db.LocalSongDao;
-import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.util.LogUtils;
 import com.example.q.pocketmusic.util.MyToast;
@@ -34,9 +32,6 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -175,7 +170,7 @@ public class SharePresenter extends BasePresenter {
                         user.update(new ToastUpdateListener(context, activity) {
                             @Override
                             public void onSuccess() {
-                                MyToast.showToast(context, CommonString.ADD_CONTRIBUTION_BASE + (Constant.ADD_CONTRIBUTION_UPLOAD));
+                                MyToast.showToast(context, CommonString.ADD_COIN_BASE + (Constant.ADD_CONTRIBUTION_UPLOAD));
                                 activity.showLoading(false);
                                 activity.finish();
                             }
