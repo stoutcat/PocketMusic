@@ -1,13 +1,7 @@
 package com.example.q.pocketmusic.module.home.net;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.q.pocketmusic.R;
@@ -17,15 +11,13 @@ import com.example.q.pocketmusic.model.flag.ContentLL;
 import com.example.q.pocketmusic.model.flag.Divider;
 import com.example.q.pocketmusic.model.flag.TextTv;
 import com.example.q.pocketmusic.module.common.BaseFragment;
-import com.example.q.pocketmusic.module.search.search.SearchRecordActivity;
-import com.example.q.pocketmusic.util.LogUtils;
+import com.example.q.pocketmusic.module.search.SearchMainActivity;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -88,14 +80,13 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
 
     @OnClick(R.id.search_rl)
     public void onClick() {
-        Intent intent = new Intent(getActivity(), SearchRecordActivity.class);
+        Intent intent = new Intent(getActivity(), SearchMainActivity.class);
         startActivity(intent);
     }
 
 
     @Override
     public void setList(List<ShareSong> list) {
-        recycler.setRefreshing(false);
         adapter.addAll(list);
     }
 

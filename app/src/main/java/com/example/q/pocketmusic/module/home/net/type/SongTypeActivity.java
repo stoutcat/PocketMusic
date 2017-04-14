@@ -1,4 +1,4 @@
-package com.example.q.pocketmusic.module.search.type;
+package com.example.q.pocketmusic.module.home.net.type;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;

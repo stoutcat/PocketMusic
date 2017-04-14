@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_appbar_toolbar" />
-
-    <LinearLayout
-        android:id="@+id/top_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="曲谱名" />
-    </LinearLayout>
-
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"

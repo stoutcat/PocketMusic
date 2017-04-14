@@ -93,7 +93,7 @@
             android:id="@+id/contribution_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_contribution"
+            app:itemTitleIco="@drawable/ico_profile_coin"
             app:itemTitleText="我的硬币" />
 
         <View style="@style/SettingDivider" />

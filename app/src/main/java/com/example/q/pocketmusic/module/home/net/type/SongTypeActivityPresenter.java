@@ -1,5 +1,4 @@
-package com.example.q.pocketmusic.module.search.type;
-
+package com.example.q.pocketmusic.module.home.net.type;
 import android.content.Context;
 import android.content.Intent;
 

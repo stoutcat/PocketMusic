@@ -1,42 +1,31 @@
-package com.example.q.pocketmusic.module.search.search;
+package com.example.q.pocketmusic.module.search.net;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
-import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
-
 import com.example.q.pocketmusic.model.bean.SongObject;
-import com.example.q.pocketmusic.model.bean.share.SharePic;
-import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.model.net.LoadSearchSongList;
-import com.example.q.pocketmusic.callback.IBasePresenter;
-import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.song.SongActivity;
-import com.example.q.pocketmusic.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-
 /**
- * Created by YQ on 2016/9/4.
+ * Created by 81256 on 2017/4/14.
  */
-public class SearchListActivityPresenter extends BasePresenter {
+
+public class SearchNetFragmentPresenter {
     private Context context;
-    private IView activity;
+    private IView fragment;
     private int mPage;
 
-    public SearchListActivityPresenter(Context context, IView activity) {
+    public SearchNetFragmentPresenter(Context context, IView fragment) {
         this.context = context;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     public int getmPage() {
@@ -57,7 +46,7 @@ public class SearchListActivityPresenter extends BasePresenter {
                 if (list != null) {
                     songs.addAll(list);//Bmob和网络搜索组合
                 }
-                activity.setList(songs);
+                fragment.setList(songs);
             }
         }.execute(query);
     }

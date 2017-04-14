@@ -4,18 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.config.Constant;
-
 import com.example.q.pocketmusic.model.bean.Song;
-
 import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.module.common.BasePresenter;
-import com.example.q.pocketmusic.module.search.type.SongTypeActivity;
+
+import com.example.q.pocketmusic.module.home.net.type.SongTypeActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
-import com.example.q.pocketmusic.util.ACache;
 import com.example.q.pocketmusic.util.ACacheUtil;
 
 import java.util.List;
@@ -59,7 +56,7 @@ public class HomeNetFragmentPresenter extends BasePresenter {
         query.findObjects(new ToastQueryListener<ShareSong>(context, fragment) {
             @Override
             public void onSuccess(List<ShareSong> list) {
-                    ACacheUtil.putShareSongCache(context, list);//添加缓存
+                ACacheUtil.putShareSongCache(context, list);//添加缓存
                 fragment.setList(list);
             }
 

@@ -54,7 +54,6 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     Unbinder unbinder;
     @BindView(R.id.bmob_info_tv)
     TextView bmobInfoTv;
-    Unbinder unbinder1;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
     private AlertDialog signInDialog;
@@ -150,6 +149,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             @Override
             public void onClick(View v) {
                 presenter.addReward(reward);
+                signInDialog.dismiss();
             }
         });
         signInDialog.show();
@@ -190,10 +190,6 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
         instrumentItem.setSubText(instrumentStr);
     }
 
-    @Override
-    public void dismissSignDialog() {
-        signInDialog.dismiss();
-    }
 
     @Override
     public void finish() {
@@ -206,21 +202,4 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @OnClick()
-    public void onViewClicked() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }

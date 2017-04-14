@@ -10,9 +10,7 @@ import com.example.q.pocketmusic.config.BmobInfo;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
-
 import com.example.q.pocketmusic.module.common.BasePresenter;
-
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
@@ -133,7 +131,6 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
             @Override
             public void onSuccess() {
                 MyToast.showToast(context, CommonString.ADD_COIN_BASE + reward);
-                fragment.dismissSignDialog();
             }
         });
     }
@@ -183,7 +180,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         query.findObjects(new ToastQueryListener<BmobInfo>(context, fragment) {
             @Override
             public void onSuccess(List<BmobInfo> list) {
-                    fragment.setLaBaText(list.get(0));
+                fragment.setLaBaText(list.get(0));
             }
         });
     }
@@ -194,9 +191,6 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         void setHeadIvResult(String photoPath);
 
         void setInstrumentResult(String instrumentStr);
-
-
-        void dismissSignDialog();
 
         void alertSignInDialog();
 

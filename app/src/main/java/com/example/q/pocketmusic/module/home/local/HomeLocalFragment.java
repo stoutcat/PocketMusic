@@ -90,8 +90,6 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         fm = getChildFragmentManager();
         adapter = new LocalFragmentPagerAdapter(getActivity(), fm, tabs, fragmentList);
         localViewPager.setAdapter(adapter);
-        localTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
-        localTabLayout.setTabTextColors(getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorAccent));
         localTabLayout.setupWithViewPager(localViewPager);
     }
 

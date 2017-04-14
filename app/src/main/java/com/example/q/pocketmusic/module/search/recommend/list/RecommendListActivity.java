@@ -1,4 +1,4 @@
-package com.example.q.pocketmusic.module.search.recommend;
+package com.example.q.pocketmusic.module.search.recommend.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

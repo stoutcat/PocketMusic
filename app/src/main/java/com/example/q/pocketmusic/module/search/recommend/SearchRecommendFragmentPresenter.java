@@ -1,37 +1,33 @@
-package com.example.q.pocketmusic.module.search.search;
+package com.example.q.pocketmusic.module.search.recommend;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
-import com.example.q.pocketmusic.config.CommonString;
+import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.local.Record;
 import com.example.q.pocketmusic.model.db.RecordDao;
 import com.example.q.pocketmusic.model.net.LoadRecommendList;
-import com.example.q.pocketmusic.module.common.BasePresenter;
-import com.example.q.pocketmusic.module.search.recommend.RecommendListActivity;
+import com.example.q.pocketmusic.module.search.recommend.list.RecommendListActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
 import com.example.q.pocketmusic.util.ACacheUtil;
-import com.example.q.pocketmusic.util.MyToast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YQ on 2016/9/21.
+ * Created by 81256 on 2017/4/14.
  */
 
-public class SearchRecordActivityPresenter extends BasePresenter {
+public class SearchRecommendFragmentPresenter {
     private Context context;
-    private IView activity;
+    private IView fragment;
     private RecordDao recordDao;
 
-    public SearchRecordActivityPresenter(Context context, IView activity) {
+    public SearchRecommendFragmentPresenter(Context context, IView fragment) {
         this.context = context;
-        this.activity = activity;
+        this.fragment = fragment;
         recordDao = new RecordDao(context);
     }
 
@@ -41,7 +37,7 @@ public class SearchRecordActivityPresenter extends BasePresenter {
             getList();
         } else {
             List<Record> records = recordDao.queryForLimitTen();
-            activity.setList(records, list);
+            fragment.setList(records, list);
         }
 
     }
@@ -53,20 +49,19 @@ public class SearchRecordActivityPresenter extends BasePresenter {
             @Override
             protected void onPostExecute(List<Song> list) {
                 super.onPostExecute(list);
-                if (list==null){
-                    getCacheList();
+                if (list == null) {
+//                    getCacheList();
                     return;
                 }
                 for (int i = list.size() - 1; i >= 10; i--) {
                     list.remove(i);
                 }
-                ACacheUtil.putRecommendCache(context,list);
+                ACacheUtil.putRecommendCache(context, list);
                 List<Record> records = recordDao.queryForLimitTen();
-                activity.setList(records, list);
+                fragment.setList(records, list);
             }
         }.execute(url);
     }
-
 
     public void addRecord(String query) {
         Record record = new Record();
@@ -74,30 +69,9 @@ public class SearchRecordActivityPresenter extends BasePresenter {
         recordDao.add(record);
     }
 
-    public void deleteAllRecord() {
-        recordDao.deleteAllRecord();
-    }
-
-    //进入会搜索列表
-    public void enterSearchListActivity(String temp) {
-        String query = temp.replaceAll(" ", "");//消除空格
-        if (!TextUtils.isEmpty(query)) {
-            //添加搜索记录
-            addRecord(query);
-            //跳转页面
-            Intent intent = new Intent(context, SearchListActivity.class);
-            intent.putExtra(SearchListActivity.PARAM_QUERY, query);
-            context.startActivity(intent);
-        } else {
-            MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
-        }
-    }
-
-    //通过记录进入搜索列表
-    public void enterSearchListActivityByRecord(Record record) {
-        String query = record.getName().replaceAll(" ", "");//消除空格
-        Intent intent = new Intent(context, SearchListActivity.class);
-        intent.putExtra(SearchListActivity.PARAM_QUERY, query);
+    //进入推荐列表
+    public void enterRecommendListActivity() {
+        Intent intent = new Intent(context, RecommendListActivity.class);
         context.startActivity(intent);
     }
 
@@ -109,13 +83,12 @@ public class SearchRecordActivityPresenter extends BasePresenter {
         context.startActivity(intent);
     }
 
-    //进入推荐列表
-    public void enterRecommendListActivity() {
-        Intent intent = new Intent(context, RecommendListActivity.class);
-        context.startActivity(intent);
+    public void deleteAllRecord() {
+        recordDao.deleteAllRecord();
     }
 
-    public interface IView {
-        void setList(List<Record> records, List<Song> songs);
+    interface IView extends IBaseView {
+
+        void setList(List<Record> records, List<Song> list);
     }
 }

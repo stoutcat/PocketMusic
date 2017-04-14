@@ -20,6 +20,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Cloud on 2017/1/16.
@@ -29,6 +30,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public static AlertDialog mLoadingDialog;
     public Context context;
     public final String TAG = this.getClass().getName();
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +47,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(setContentResource(),container,false);
-        ButterKnife.bind(this, view);
+        View view = inflater.inflate(setContentResource(), container, false);
+        unbinder = ButterKnife.bind(this, view);
         setListener();
         init();
         return view;
@@ -61,10 +63,10 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     }
 
     //有分割线三个参数为1
-    public void initRecyclerView(EasyRecyclerView recyclerView, RecyclerArrayAdapter<?> adapter, int dp1,boolean setEmpty) {
+    public void initRecyclerView(EasyRecyclerView recyclerView, RecyclerArrayAdapter<?> adapter, int dp1, boolean setEmpty) {
         initRecyclerView(recyclerView, adapter);
         int dp = ConvertUtil.Dp2Px(context, dp1);
-        if (setEmpty){
+        if (setEmpty) {
             recyclerView.setEmptyView(R.layout.view_not_found);
         }
         recyclerView.addItemDecoration(new DividerDecoration(ContextCompat.getColor(context, R.color.setting_divider), 1, dp, 1));
@@ -83,5 +85,9 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         toolbar.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

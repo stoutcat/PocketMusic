@@ -1,7 +1,6 @@
-package com.example.q.pocketmusic.module.search.type;
+package com.example.q.pocketmusic.module.search.net;
 
 import android.content.Context;
-
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -10,13 +9,17 @@ import com.example.q.pocketmusic.model.bean.Song;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
+/**
+ * Created by 81256 on 2017/4/14.
+ */
 
-public class SongTypeActivityAdapter extends RecyclerArrayAdapter<Song> {
+public class SearchNetAdapter extends RecyclerArrayAdapter<Song> {
     private Context context;
 
-    public SongTypeActivityAdapter(Context context) {
+    public SearchNetAdapter(Context context) {
         super(context);
         this.context = context;
+
     }
 
     @Override
@@ -24,26 +27,24 @@ public class SongTypeActivityAdapter extends RecyclerArrayAdapter<Song> {
         return new MyViewHolder(parent);
     }
 
-    class MyViewHolder extends BaseViewHolder<Song> {
+    private static class MyViewHolder extends BaseViewHolder<Song> {
         TextView nameTv;
-        TextView artistTv;
+        TextView contentTv;
 
-        public MyViewHolder(ViewGroup parent) {
-            super(parent, R.layout.item_song_list);
+        MyViewHolder(ViewGroup parent) {
+            super(parent, R.layout.item_search);
             nameTv = $(R.id.name_tv);
-            artistTv = $(R.id.artist_tv);
+            contentTv = $(R.id.content_tv);
         }
 
         @Override
         public void setData(Song data) {
             super.setData(data);
             nameTv.setText(data.getName());
-            if (data.getArtist() != null) {
-                artistTv.setText("描述：" + data.getArtist());
-            } else {
-                artistTv.setText("描述：暂无");
+            if (data.getContent() == null) {
+                contentTv.setText("暂无");
             }
+            contentTv.setText(data.getContent());
         }
     }
-
 }

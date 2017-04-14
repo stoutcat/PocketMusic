@@ -1,4 +1,4 @@
-package com.example.q.pocketmusic.module.search.search;
+package com.example.q.pocketmusic.module.search.recommend;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
-import com.example.q.pocketmusic.model.bean.local.Record;
 import com.example.q.pocketmusic.model.bean.Song;
+import com.example.q.pocketmusic.model.bean.local.Record;
 import com.example.q.pocketmusic.model.flag.Divider;
 import com.example.q.pocketmusic.model.flag.Tag;
 import com.example.q.pocketmusic.model.flag.Text;
@@ -23,10 +23,10 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.List;
 
 /**
- * Created by YQ on 2016/8/28.
+ * Created by 81256 on 2017/4/14.
  */
-//Search Recommend Record Adapter
-public class SearchRecordActivityAdapter extends RecyclerArrayAdapter<Object> {
+
+public class SearchRecommendAdapter extends RecyclerArrayAdapter<Object> {
     public static final int TYPE_RECOMMEND_TOP = 0;
     public static final int TYPE_TAG = 1;
     public static final int TYPE_DIVIDER = 2;
@@ -58,7 +58,7 @@ public class SearchRecordActivityAdapter extends RecyclerArrayAdapter<Object> {
         return tagList;
     }
 
-    public SearchRecordActivityAdapter(Context context) {
+    public SearchRecommendAdapter(Context context) {
         super(context);
         this.context = context;
     }
@@ -110,7 +110,7 @@ public class SearchRecordActivityAdapter extends RecyclerArrayAdapter<Object> {
                 @Override
                 public void onClick(View v) {
                     if (onSelectListener != null) {
-                        switch (data.getmResource()){
+                        switch (data.getmResource()) {
                             case R.drawable.ico_right_more:
                                 onSelectListener.onSelectMore();
                                 break;
@@ -195,5 +195,3 @@ public class SearchRecordActivityAdapter extends RecyclerArrayAdapter<Object> {
     }
 
 }
-
-
