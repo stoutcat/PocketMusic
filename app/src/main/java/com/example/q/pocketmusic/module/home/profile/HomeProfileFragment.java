@@ -130,7 +130,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     //签到Dialog
     public void alertSignInDialog() {
         Random random = new Random();
-        final int reward = random.nextInt(4) + 1;//随机1--4点
+        final int reward = random.nextInt(5) + 3;//随机3--6点
         View view = View.inflate(getContext(), R.layout.dialog_sign_in, null);
         GuaGuaKa guaGuaKa = (GuaGuaKa) view.findViewById(R.id.gua_gua_ka);
         guaGuaKa.setAwardText(String.valueOf(reward) + " 枚硬币");

@@ -2,31 +2,12 @@ package com.example.q.pocketmusic.config;
 
 import android.app.Application;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
-import com.example.q.pocketmusic.BuildConfig;
 import com.example.q.pocketmusic.R;
-import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.util.GlideImageLoader;
-import com.example.q.pocketmusic.util.LogUtils;
-import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.util.SharedPrefsUtil;
-import com.taobao.sophix.PatchStatus;
-import com.taobao.sophix.SophixManager;
-import com.taobao.sophix.listener.PatchLoadStatusListener;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobBatch;
-import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BatchResult;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.statistics.AppStat;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.finalteam.galleryfinal.CoreConfig;
@@ -57,39 +38,39 @@ public class MyApplication extends Application {
     }
 
 
-    //热修复
-    private void initHotfix() {
-        SophixManager.getInstance().setContext(this)
-                .setAppVersion(BuildConfig.VERSION_NAME)
-                .setAesKey(null)
-                .setEnableDebug(true)
-                .setPatchLoadStatusStub(new PatchLoadStatusListener() {
-                    @Override
-                    public void onLoad(int i, int i1, String s, int i2) {
-                        LogUtils.e("hotfix", "i:" + i);
-                        LogUtils.e("hotfix", "i1:" + i1);
-                        LogUtils.e("hotfix", "s:" + s);
-                        LogUtils.e("hotfix", "i2:" + i2);
-                        // 补丁加载回调通知
-//                        LogUtils.e("TAG","code:"+code);
-//                        if (code == PatchStatus.CODE_LOAD_SUCCESS) {
-////                            MyToast.showToast(getApplicationContext(), "补丁加载成功");
-//                            // 表明补丁加载成功
-//                        } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
-//                            // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
-//                            // 建议: 用户可以监听进入后台事件, 然后应用自杀
-//                            MyToast.showToast(getApplicationContext(), "已修复部分bug~请重启app");
-//                        } else if (code == PatchStatus.CODE_LOAD_FAIL) {
-//                            // 内部引擎异常, 推荐此时清空本地补丁, 防止失败补丁重复加载
-//                            SophixManager.getInstance().cleanPatches();
-//                        } else {
-//                            LogUtils.e("HotFix", info);
-//                            // 其它错误信息, 查看PatchStatus类说明
-//                        }
-                    }
-                }).initialize();
-        SophixManager.getInstance().queryAndLoadNewPatch();
-    }
+//    //热修复
+//    private void initHotfix() {
+//        SophixManager.getInstance().setContext(this)
+//                .setAppVersion(BuildConfig.VERSION_NAME)
+//                .setAesKey(null)
+//                .setEnableDebug(true)
+//                .setPatchLoadStatusStub(new PatchLoadStatusListener() {
+//                    @Override
+//                    public void onLoad(int i, int i1, String s, int i2) {
+//                        LogUtils.e("hotfix", "i:" + i);
+//                        LogUtils.e("hotfix", "i1:" + i1);
+//                        LogUtils.e("hotfix", "s:" + s);
+//                        LogUtils.e("hotfix", "i2:" + i2);
+//                        // 补丁加载回调通知
+////                        LogUtils.e("TAG","code:"+code);
+////                        if (code == PatchStatus.CODE_LOAD_SUCCESS) {
+//////                            MyToast.showToast(getApplicationContext(), "补丁加载成功");
+////                            // 表明补丁加载成功
+////                        } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
+////                            // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
+////                            // 建议: 用户可以监听进入后台事件, 然后应用自杀
+////                            MyToast.showToast(getApplicationContext(), "已修复部分bug~请重启app");
+////                        } else if (code == PatchStatus.CODE_LOAD_FAIL) {
+////                            // 内部引擎异常, 推荐此时清空本地补丁, 防止失败补丁重复加载
+////                            SophixManager.getInstance().cleanPatches();
+////                        } else {
+////                            LogUtils.e("HotFix", info);
+////                            // 其它错误信息, 查看PatchStatus类说明
+////                        }
+//                    }
+//                }).initialize();
+//        SophixManager.getInstance().queryAndLoadNewPatch();
+//    }
 
     private void initGalleryFinal() {
         ThemeConfig.Builder builder = new ThemeConfig.Builder();

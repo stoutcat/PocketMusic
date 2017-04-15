@@ -14,9 +14,6 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
-        maven {
-            url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories"
-        }
         mavenCentral()  // GPUImage for Android
     }
 }

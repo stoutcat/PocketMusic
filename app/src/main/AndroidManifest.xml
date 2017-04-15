@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    >
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
@@ -70,15 +69,15 @@
         <activity android:name=".module.home.profile.setting.help.HelpActivity" />
         <activity android:name=".module.home.profile.contribution.ContributionActivity" />
 
-        <meta-data
-            android:name="com.taobao.android.hotfix.IDSECRET"
-            android:value="@string/IDSECRET" />
-        <meta-data
-            android:name="com.taobao.android.hotfix.APPSECRET"
-            android:value="@string/APPSECRET" />
-        <meta-data
-            android:name="com.taobao.android.hotfix.RSASECRET"
-            android:value="@string/RSASECRET" />
+        <!--<meta-data-->
+            <!--android:name="com.taobao.android.hotfix.IDSECRET"-->
+            <!--android:value="@string/IDSECRET" />-->
+        <!--<meta-data-->
+            <!--android:name="com.taobao.android.hotfix.APPSECRET"-->
+            <!--android:value="@string/APPSECRET" />-->
+        <!--<meta-data-->
+            <!--android:name="com.taobao.android.hotfix.RSASECRET"-->
+            <!--android:value="@string/RSASECRET" />-->
 
         <activity
             android:name=".module.lead.LeadSongActivity"
