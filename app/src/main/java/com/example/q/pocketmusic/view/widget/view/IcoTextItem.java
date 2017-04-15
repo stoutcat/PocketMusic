@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.view.widget.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.example.q.pocketmusic.util.ConvertUtil;
 public class IcoTextItem extends RelativeLayout {
     private TextView mTitleTv;
     private TextView mSubTv;
-    private ImageView mIco;
+    private AppCompatImageView mIco;
 
     private String mTitle;
     private int icoId;

@@ -34,7 +34,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="35dp"
         android:layout_marginRight="27dp"
-        android:src="@drawable/ico_add_local"
+        android:src="@drawable/ico_fab_add_local"
         fab:backgroundTint="@color/colorPrimary" />
 
 </RelativeLayout>

@@ -18,7 +18,7 @@
             android:id="@+id/account_tet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemIcoResource="@drawable/ico_email"
+            app:itemIcoResource="@drawable/ic_vec_email"
             app:itemInputHint="请输入邮箱/Email" />
 
 
@@ -30,7 +30,7 @@
                 android:id="@+id/password_tet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:itemIcoResource="@drawable/ico_password"
+                app:itemIcoResource="@drawable/ic_vec_password"
                 app:itemInputHint="请输入密码/Password"
                 app:itemInputPassword="true" />
 
@@ -41,7 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ico_forget_password" />
+                app:srcCompat="@drawable/ic_vec_forget_password" />
         </RelativeLayout>
 
 

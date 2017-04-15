@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initHotfix();
+//        initHotfix();
         SharedPrefsUtil.init(getApplicationContext());
         Bmob.initialize(this, Constant.APP_ID, "Bmob");
         //官网SDK

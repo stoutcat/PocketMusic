@@ -14,13 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="8dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ico_laba" />
+                app:srcCompat="@drawable/ic_vec_laba" />
 
             <TextView
                 android:id="@+id/bmob_info_tv"
@@ -73,7 +74,7 @@
             android:id="@+id/email_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_email"
+            app:itemTitleIco="@drawable/ic_vec_profile_email"
             app:itemTitleText="反馈意见" />
 
         <View style="@style/SettingBigDivider" />
@@ -83,7 +84,7 @@
             android:id="@+id/instrument_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_instrument"
+            app:itemTitleIco="@drawable/ic_vec_profile_instrument"
             app:itemTitleText="钟爱乐器" />
 
         <View style="@style/SettingDivider" />
@@ -93,7 +94,7 @@
             android:id="@+id/contribution_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_coin"
+            app:itemTitleIco="@drawable/ic_vec_profile_coin"
             app:itemTitleText="我的硬币" />
 
         <View style="@style/SettingDivider" />
@@ -102,7 +103,7 @@
             android:id="@+id/collection_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_collection"
+            app:itemTitleIco="@drawable/ic_vec_profile_collection"
             app:itemTitleText="我的收藏" />
 
 
@@ -112,7 +113,7 @@
             android:id="@+id/help_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_setting_help"
+            app:itemTitleIco="@drawable/ic_vec_setting_help"
             app:itemTitleText="帮助" />
 
         <View style="@style/SettingDivider" />
@@ -121,7 +122,7 @@
             android:id="@+id/setting_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ico_profile_setting"
+            app:itemTitleIco="@drawable/ic_vec_profile_setting"
             app:itemTitleText="设置" />
 
         <View style="@style/SettingBigDivider" />

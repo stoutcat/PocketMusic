@@ -25,7 +25,7 @@
         android:id="@+id/update_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemTitleIco="@drawable/ico_setting_update"
+        app:itemTitleIco="@drawable/ic_vec_setting_update"
         app:itemTitleText="检测新版本" />
 
 
@@ -36,7 +36,7 @@
         android:id="@+id/grade_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemTitleIco="@drawable/ico_setting_pingfen"
+        app:itemTitleIco="@drawable/ic_vec_setting_pingfen"
         app:itemTitleText="评个分吧！" />
 
     <View style="@style/SettingDivider" />
@@ -46,7 +46,7 @@
         android:id="@+id/share_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemTitleIco="@drawable/ico_setting_share"
+        app:itemTitleIco="@drawable/ic_vec_setting_share"
         app:itemTitleText="分享小口袋" />
 
     <View style="@style/SettingDivider" />
@@ -56,7 +56,7 @@
         android:id="@+id/logout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemTitleIco="@drawable/ico_setting_logout"
+        app:itemTitleIco="@drawable/ic_vec_setting_logout"
         app:itemTitleText="退出登录" />
 
     <View style="@style/SettingDivider" />

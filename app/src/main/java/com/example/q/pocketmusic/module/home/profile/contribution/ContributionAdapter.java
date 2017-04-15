@@ -53,6 +53,7 @@ public class ContributionAdapter extends RecyclerArrayAdapter<MyUser> {
             super.setData(data);
             int position=getAdapterPosition()+1;
             rankTv.setText(position+".");
+
             displayStrategy.displayCircle(context, data.getHeadImg(), headIv);
             nickNameTv.setText(data.getNickName());
             contributionTv.setText(String.valueOf(data.getContribution())+" 枚");

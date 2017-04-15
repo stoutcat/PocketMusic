@@ -247,10 +247,10 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     @Override
     public void setBtnStatus(SongActivityPresenter.RECORD_STATUS status) {
         if (status == SongActivityPresenter.RECORD_STATUS.STOP) {
-            recordPlayIv.setImageResource(R.drawable.ico_record_stop);
+            recordPlayIv.setImageResource(R.drawable.ico_media_record_stop);
             avi.setVisibility(View.VISIBLE);
         } else {
-            recordPlayIv.setImageResource(R.drawable.ico_record);
+            recordPlayIv.setImageResource(R.drawable.ico_media_record);
             avi.setVisibility(View.INVISIBLE);
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -71,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:src="@drawable/ico_comment" />
+            app:srcCompat="@drawable/ic_vec_comment" />
 
         <TextView
             android:id="@+id/post_user_comment_num_tv"

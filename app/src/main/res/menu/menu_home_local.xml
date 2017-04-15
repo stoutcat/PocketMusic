@@ -5,18 +5,18 @@
         android:title="上传"
         app:showAsAction="always"
         android:id="@+id/upload"
-        android:icon="@drawable/ico_upload"
+        android:icon="@drawable/ico_menu_upload"
         android:orderInCategory="100" />
     <item
         android:title="删除"
         app:showAsAction="always"
         android:id="@+id/delete"
-        android:icon="@drawable/ico_delete"
+        android:icon="@drawable/ico_menu_delete"
         android:orderInCategory="90" />
     <item
         android:title="置顶"
         app:showAsAction="always"
         android:id="@+id/top"
-        android:icon="@drawable/ico_top"
+        android:icon="@drawable/ico_menu_top"
         android:orderInCategory="80"/>
 </menu>

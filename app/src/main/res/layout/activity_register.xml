@@ -13,21 +13,21 @@
         android:id="@+id/account_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_email"
+        app:itemIcoResource="@drawable/ic_vec_email"
         app:itemInputHint="请输入邮箱/Email" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/nick_name_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_nick_name"
+        app:itemIcoResource="@drawable/ic_vec_nick_name"
         app:itemInputHint="请输入昵称/Name" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/password_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_password"
+        app:itemIcoResource="@drawable/ic_vec_password"
         app:itemInputHint="请输入密码/Password"
         app:itemInputPassword="true" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/confirm_password_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_confirm_password"
+        app:itemIcoResource="@drawable/ic_vec_confirm_password"
         app:itemInputHint="请再次输入密码/Password"
         app:itemInputPassword="true" />
 

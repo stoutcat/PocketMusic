@@ -37,14 +37,14 @@
         android:id="@+id/name_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_title"
+        app:itemIcoResource="@drawable/ic_vec_title"
         app:itemInputHint="曲谱名" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/content_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_content"
+        app:itemIcoResource="@drawable/ic_vec_content"
         app:itemInputHint="描述" />
 
     <TextView
@@ -70,7 +70,7 @@
             android:layout_height="48dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/bg_edt"
-            android:src="@drawable/add_ico" />
+            app:srcCompat="@drawable/ic_vec_ico_add" />
 
         <com.jude.easyrecyclerview.EasyRecyclerView
             android:id="@+id/recycler"

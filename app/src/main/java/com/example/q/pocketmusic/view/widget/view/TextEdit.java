@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.view.widget.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import com.example.q.pocketmusic.R;
 
 public class TextEdit extends LinearLayout {
     private EditText inputEdt;
-    private ImageView ico;
+    private AppCompatImageView ico;
 
     //一定要用this！不要用super！
     public TextEdit(Context context) {

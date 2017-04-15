@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_quanbu"
+            app:itemIco="@drawable/ico_yueqi_quanbu"
             app:itemName="全部" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_hulu"
+            app:itemIco="@drawable/ico_yueqi_hulu"
             app:itemName="葫芦丝" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_jita"
+            app:itemIco="@drawable/ico_yueqi_jita"
             app:itemName="吉他" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_gangqin"
+            app:itemIco="@drawable/ico_yueqi_gangqin"
             app:itemName="钢琴" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_sakesi"
+            app:itemIco="@drawable/ico_yueqi_sakesi"
             app:itemName="萨克斯" />
 
     </LinearLayout>
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_erhu"
+            app:itemIco="@drawable/ico_yueqi_erhu"
             app:itemName="二胡" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_guzheng"
+            app:itemIco="@drawable/ico_yueqi_guzheng"
             app:itemName="古筝" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_dianziqin"
+            app:itemIco="@drawable/ico_yueqi_dianziqin"
             app:itemName="电子琴" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_pipa"
+            app:itemIco="@drawable/ico_yueqi_pipa"
             app:itemName="琵琶" />
 
         <com.example.q.pocketmusic.view.widget.view.TypeView
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            app:itemIco="@drawable/ico_kouqin"
+            app:itemIco="@drawable/ico_yueqi_kouqin"
             app:itemName="口琴" />
     </LinearLayout>
 </LinearLayout>

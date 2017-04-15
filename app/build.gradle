@@ -9,6 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 22
         versionName "4.5"
+        vectorDrawables.useSupportLibrary=true
     }
     buildTypes {
         release {
@@ -28,8 +29,8 @@ dependencies {
         transitive = false
     }
     compile files('libs/alicloud-android-utils-1.0.1.jar')
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.jude:easyrecyclerview:4.3.7'
     compile 'org.jsoup:jsoup:1.9.2'

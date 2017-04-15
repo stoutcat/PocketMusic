@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ico_search" />
+            app:srcCompat="@drawable/ic_vec_search" />
     </RelativeLayout>
 
 

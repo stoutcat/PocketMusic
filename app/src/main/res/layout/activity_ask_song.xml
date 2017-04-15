@@ -35,14 +35,14 @@
         android:id="@+id/title_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_title"
+        app:itemIcoResource="@drawable/ic_vec_title"
         app:itemInputHint="请输入标题" />
 
     <com.example.q.pocketmusic.view.widget.view.TextEdit
         android:id="@+id/content_tet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIcoResource="@drawable/ico_content"
+        app:itemIcoResource="@drawable/ic_vec_content"
         app:itemInputHint="请输入描述" />
 
 

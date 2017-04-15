@@ -38,7 +38,7 @@
             android:layout_height="wrap_content" />
 
         <SeekBar
-            android:thumb="@drawable/ico_thumb"
+            android:thumb="@drawable/ico_media_thumb"
             android:id="@+id/seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

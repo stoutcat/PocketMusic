@@ -104,9 +104,9 @@ public class LocalRecordFragment extends BaseFragment implements LocalRecordFrag
     @Override
     public void setPlayOrPauseImage(boolean status) {
         if (status) {
-            playIv.setImageResource(R.drawable.ico_play);
+            playIv.setImageResource(R.drawable.ico_media_play);
         } else {
-            playIv.setImageResource(R.drawable.ico_pause);
+            playIv.setImageResource(R.drawable.ico_media_pause);
         }
     }
 
