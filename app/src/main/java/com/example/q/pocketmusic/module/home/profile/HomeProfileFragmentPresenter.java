@@ -13,6 +13,7 @@ import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
+import com.example.q.pocketmusic.module.home.profile.piano.PianoActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
@@ -183,6 +184,11 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
                 fragment.setLaBaText(list.get(0));
             }
         });
+    }
+
+    public void enterPianoActivity() {
+        Intent intent = new Intent(context, PianoActivity.class);
+        context.startActivity(intent);
     }
 
 

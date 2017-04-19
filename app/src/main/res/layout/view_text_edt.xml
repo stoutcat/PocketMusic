@@ -28,7 +28,8 @@
             android:layout_marginLeft="16dp"
             android:background="@null"
             android:hint="..."
-            android:maxLines="1" />
+            android:maxLines="2"
+            android:minLines="1" />
     </LinearLayout>
 
     <View style="@style/SettingDivider" />

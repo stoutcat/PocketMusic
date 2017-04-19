@@ -106,6 +106,14 @@
             app:itemTitleIco="@drawable/ic_vec_profile_collection"
             app:itemTitleText="我的收藏" />
 
+        <View style="@style/SettingDivider" />
+
+        <com.example.q.pocketmusic.view.widget.view.IcoTextItem
+            android:id="@+id/piano_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitleIco="@drawable/ic_vec_piano"
+            app:itemTitleText="电子钢琴" />
 
         <View style="@style/SettingBigDivider" />
 

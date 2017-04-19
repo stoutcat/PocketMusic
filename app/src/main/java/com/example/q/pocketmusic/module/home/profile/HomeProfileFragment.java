@@ -54,6 +54,9 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     Unbinder unbinder;
     @BindView(R.id.bmob_info_tv)
     TextView bmobInfoTv;
+    @BindView(R.id.piano_item)
+    IcoTextItem pianoItem;
+    Unbinder unbinder1;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
     private AlertDialog signInDialog;
@@ -98,7 +101,7 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     }
 
 
-    @OnClick({R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn, R.id.help_item})
+    @OnClick({R.id.piano_item, R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn, R.id.help_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.head_iv://设置头像
@@ -124,6 +127,10 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
                 break;
             case R.id.help_item:
                 presenter.enterHelpActivity();
+                break;
+            case R.id.piano_item:
+                presenter.enterPianoActivity();
+                break;
         }
     }
 
@@ -202,4 +209,17 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
+    }
 }

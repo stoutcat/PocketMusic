@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
@@ -17,6 +18,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.q.pocketmusic.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".module.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,15 +80,15 @@
         <activity android:name=".module.home.profile.setting.help.HelpActivity" />
         <activity android:name=".module.home.profile.contribution.ContributionActivity" />
 
-        <!--<meta-data-->
-            <!--android:name="com.taobao.android.hotfix.IDSECRET"-->
-            <!--android:value="@string/IDSECRET" />-->
-        <!--<meta-data-->
-            <!--android:name="com.taobao.android.hotfix.APPSECRET"-->
-            <!--android:value="@string/APPSECRET" />-->
-        <!--<meta-data-->
-            <!--android:name="com.taobao.android.hotfix.RSASECRET"-->
-            <!--android:value="@string/RSASECRET" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.taobao.android.hotfix.IDSECRET" -->
+        <!-- android:value="@string/IDSECRET" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.taobao.android.hotfix.APPSECRET" -->
+        <!-- android:value="@string/APPSECRET" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.taobao.android.hotfix.RSASECRET" -->
+        <!-- android:value="@string/RSASECRET" /> -->
 
         <activity
             android:name=".module.lead.LeadSongActivity"
@@ -86,9 +97,8 @@
         <activity
             android:name=".module.search.SearchMainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity android:name=".module.home.profile.piano.PianoActivity"></activity>
     </application>
 
 </manifest>

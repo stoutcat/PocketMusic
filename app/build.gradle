@@ -9,7 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 22
         versionName "4.5"
-        vectorDrawables.useSupportLibrary=true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
