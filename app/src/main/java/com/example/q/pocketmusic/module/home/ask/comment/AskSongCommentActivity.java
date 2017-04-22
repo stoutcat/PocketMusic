@@ -1,7 +1,5 @@
 package com.example.q.pocketmusic.module.home.ask.comment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,7 +22,6 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Cloud on 2016/11/14.
@@ -145,7 +142,7 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
     @Override
     public void onRefresh() {
         adapter.clear();
-        presenter.getCommentList();
+        presenter.getInitCommentList();
     }
 
     @Override

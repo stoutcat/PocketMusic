@@ -15,10 +15,12 @@ import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.collection.CollectionPic;
 import com.example.q.pocketmusic.model.bean.collection.CollectionSong;
 import com.example.q.pocketmusic.module.song.SongActivity;
+import com.example.q.pocketmusic.util.BmobUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -34,19 +36,20 @@ public class CollectionPresenter {
     private IView activity;
     private Context context;
     private MyUser user;
+    private CollectionModel collectionModel;
+    private int mPage;
 
     public CollectionPresenter(IView activity, Context context, MyUser user) {
         this.activity = activity;
         this.context = context;
         this.user = user;
+        collectionModel = new CollectionModel();
+
     }
 
     //获得收藏曲谱列表
     public void getCollectionList() {
-        BmobQuery<CollectionSong> query = new BmobQuery<>();
-        query.order("-updatedAt");
-        query.addWhereRelatedTo("collections", new BmobPointer(user));//在user表的Collections找user
-        query.findObjects(new ToastQueryListener<CollectionSong>(context, activity) {
+        collectionModel.getInitCollectionList(user, new ToastQueryListener<CollectionSong>(context, activity) {
             @Override
             public void onSuccess(List<CollectionSong> list) {
                 activity.setCollectionList(list);
@@ -57,9 +60,7 @@ public class CollectionPresenter {
     //先查询，后进入SongActivity
     public void queryAndEnterSongActivity(final CollectionSong collectionSong) {
         activity.showLoading(true);
-        BmobQuery<CollectionPic> query = new BmobQuery<>();
-        query.addWhereEqualTo("collectionSong", new BmobPointer(collectionSong));
-        query.findObjects(new ToastQueryListener<CollectionPic>(context, activity) {
+        collectionModel.querySong(collectionSong, new ToastQueryListener<CollectionPic>(context, activity) {
             @Override
             public void onSuccess(List<CollectionPic> list) {
                 activity.showLoading(false);
@@ -78,43 +79,31 @@ public class CollectionPresenter {
                 context.startActivity(intent);
             }
         });
-
-
     }
 
     //删除收藏
     public void deleteCollection(final CollectionSong collectionSong) {
         activity.showLoading(true);
-        BmobRelation relation = new BmobRelation();
-        relation.remove(collectionSong);
-        user.setCollections(relation);
-        user.update(new ToastUpdateListener(context, activity) {
+        collectionModel.deleteCollection(user, collectionSong, context, activity, new ToastUpdateListener(context, activity) {
             @Override
             public void onSuccess() {
-                //删除收藏多个图片表,
-                BmobQuery<CollectionPic> query = new BmobQuery<CollectionPic>();
-                query.addWhereEqualTo("collectionSong", collectionSong);
-                query.findObjects(new ToastQueryListener<CollectionPic>(context, activity) {
-                    @Override
-                    public void onSuccess(List<CollectionPic> list) {
-                        List<BmobObject> pics = new ArrayList<BmobObject>();
-                        pics.addAll(list);
-                        new BmobBatch().deleteBatch(pics).doBatch(new ToastQueryListListener<BatchResult>(context, activity) {
-                            @Override
-                            public void onSuccess(List<BatchResult> list) {
-                                //删除收藏记录
-                                collectionSong.delete(new ToastUpdateListener(context, activity) {
-                                    @Override
-                                    public void onSuccess() {
-                                        activity.showLoading(false);
-                                        activity.deleteCollectionResult(collectionSong);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                activity.showLoading(false);
+                activity.deleteCollectionResult(collectionSong);
+            }
+        });
+    }
 
+    public void setPage(int page) {
+        this.mPage = page;
+    }
+
+    public void getMoreList() {
+        mPage++;
+        collectionModel.getMoreList(user, mPage, new ToastQueryListener<CollectionSong>(context, activity) {
+
+            @Override
+            public void onSuccess(List<CollectionSong> list) {
+                activity.setCollectionList(list);
             }
         });
     }

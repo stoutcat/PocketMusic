@@ -19,6 +19,7 @@ import com.example.q.pocketmusic.model.bean.ask.AskSongPic;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.song.SongActivity;
+import com.example.q.pocketmusic.util.BmobUtil;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.a.From;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -42,15 +44,16 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 public class AskSongCommentPresenter extends BasePresenter {
     private IView activity;
     private Context context;
+    private AskSongCommentModel model;
     private AskSongPost post;
     private MyUser user;
-    private List<String> picUrls = new ArrayList<>();
 
     public AskSongCommentPresenter(IView activity, Context context, MyUser user, AskSongPost post) {
         this.activity = activity;
         this.context = context;
         this.post = post;
         this.user = user;
+        model = new AskSongCommentModel();
     }
 
     //获得发帖人
@@ -58,12 +61,9 @@ public class AskSongCommentPresenter extends BasePresenter {
         return post;
     }
 
-    public void getCommentList() {
-        BmobQuery<AskSongComment> queryComment = new BmobQuery<>();
-        queryComment.order("-createdAt");
-        queryComment.addWhereEqualTo("post", new BmobPointer(post));//对应帖子
-        queryComment.include("user,post.user");//发帖人，和评论的信息都找出来
-        queryComment.findObjects(new ToastQueryListener<AskSongComment>(context, activity) {
+    //获得初始列表
+    public void getInitCommentList() {
+        model.getInitCommentList(post, new ToastQueryListener<AskSongComment>(context, activity) {
             @Override
             public void onSuccess(List<AskSongComment> list) {
                 activity.setCommentList(list);
@@ -78,7 +78,8 @@ public class AskSongCommentPresenter extends BasePresenter {
             return;
         }
         Boolean hasPic;
-        hasPic = picUrls.size() > 0;
+
+        hasPic = model.getPicUrls().size() > 0;
         final AskSongComment askSongComment = new AskSongComment(user, post, comment, hasPic);
         activity.showLoading(true);
         activity.setCommentInput("");//空
@@ -91,16 +92,16 @@ public class AskSongCommentPresenter extends BasePresenter {
                 post.update(new ToastUpdateListener(context, activity) {
                     @Override
                     public void onSuccess() {
-                        if (picUrls.size() <= 0) {//无图
+                        if (model.getPicUrls().size() <= 0) {//无图
                             activity.showLoading(false);
                             activity.sendCommentResult(s, askSongComment);
                             return;
                         }
                         //批量上传图片
-                        BmobFile.uploadBatch(picUrls.toArray(new String[picUrls.size()]), new UploadBatchListener() {
+                        BmobFile.uploadBatch(model.getPicUrls().toArray(new String[model.getPicUrls().size()]), new UploadBatchListener() {
                             @Override
                             public void onSuccess(final List<BmobFile> list, List<String> list1) {
-                                if (picUrls.size() == list1.size()) {// 全部的图片上传成功后调用
+                                if (model.getPicUrls().size() == list1.size()) {// 全部的图片上传成功后调用
                                     List<BmobObject> askSongPics = new ArrayList<>();
                                     for (int i = 0; i < list.size(); i++) {
                                         AskSongPic askSongPic = new AskSongPic(askSongComment, list1.get(i));
@@ -153,11 +154,11 @@ public class AskSongCommentPresenter extends BasePresenter {
         GalleryFinal.openGalleryMuti(3, config, new GalleryFinal.OnHanlderResultCallback() {
             @Override
             public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
-                picUrls.clear();
+                model.getPicUrls().clear();
                 for (PhotoInfo photoInfo : resultList) {
-                    picUrls.add(photoInfo.getPhotoPath());
+                    model.getPicUrls().add(photoInfo.getPhotoPath());
                 }
-                activity.addPicResult(picUrls);
+                activity.addPicResult(model.getPicUrls());
             }
 
             @Override
@@ -172,9 +173,7 @@ public class AskSongCommentPresenter extends BasePresenter {
         if (askSongComment.getHasPic()) {
             activity.showLoading(true);
             //查询有多少张图片
-            BmobQuery<AskSongPic> query = new BmobQuery<>();
-            query.addWhereEqualTo("comment", new BmobPointer(askSongComment));
-            query.findObjects(new ToastQueryListener<AskSongPic>(context, activity) {
+            model.getPicList(askSongComment, new ToastQueryListener<AskSongPic>(context, activity) {
                 @Override
                 public void onSuccess(List<AskSongPic> list) {
                     final Song song = new Song(askSongComment.getContent(), null);//将评论者的内容当做标题
@@ -186,7 +185,6 @@ public class AskSongCommentPresenter extends BasePresenter {
                     song.setIvUrl(urls);
                     activity.showLoading(false);
                     activity.showPicDialog(song, askSongComment);
-
                 }
             });
         }

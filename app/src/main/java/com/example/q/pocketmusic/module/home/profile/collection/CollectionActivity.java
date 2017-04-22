@@ -14,6 +14,7 @@ import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by Cloud on 2016/11/14.
  */
 
-public class CollectionActivity extends AuthActivity implements CollectionPresenter.IView, SwipeRefreshLayout.OnRefreshListener, CollectionAdapter.OnSelectListener {
+public class CollectionActivity extends AuthActivity implements CollectionPresenter.IView, SwipeRefreshLayout.OnRefreshListener, CollectionAdapter.OnSelectListener, RecyclerArrayAdapter.OnMoreListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -45,13 +46,15 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
         adapter = new CollectionAdapter(this);
         adapter.setOnSelectListener(this);
         recycler.setRefreshListener(this);
+        adapter.setMore(R.layout.view_more, this);
     }
 
     @Override
     public void initView() {
         presenter = new CollectionPresenter(this, this, user);
+        presenter.setPage(0);
         initToolbar(toolbar, "我的收藏");
-        initRecyclerView(recycler, adapter, 1,true);
+        initRecyclerView(recycler, adapter, 1, true);
         onRefresh();
     }
 
@@ -78,7 +81,6 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
 
     @Override
     public void setCollectionList(List<CollectionSong> list) {
-        adapter.clear();
         adapter.addAll(list);
     }
 
@@ -89,6 +91,8 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
 
     @Override
     public void onRefresh() {
+        adapter.clear();
+        presenter.setPage(0);
         presenter.getCollectionList();
     }
 
@@ -107,5 +111,16 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
     @Override
     public void showRefreshing(boolean isShow) {
         recycler.setRefreshing(isShow);
+    }
+
+    //加载更多
+    @Override
+    public void onMoreShow() {
+        presenter.getMoreList();
+    }
+
+    @Override
+    public void onMoreClick() {
+
     }
 }

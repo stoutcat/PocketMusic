@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.module.home.profile;
 
+import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.Intent;
 
@@ -13,10 +14,11 @@ import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
-import com.example.q.pocketmusic.module.home.profile.piano.PianoActivity;
+import com.example.q.pocketmusic.module.piano.PianoActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
+import com.example.q.pocketmusic.util.BmobUtil;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.io.File;
@@ -40,14 +42,16 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
     private Context context;
     private IView fragment;
     private MyUser user;
+    private HomeProfileModel profileModel;
 
     public HomeProfileFragmentPresenter(Context context, IView fragment) {
         this.context = context;
         this.fragment = fragment;
+        profileModel = new HomeProfileModel();
     }
 
 
-    //选择图片
+    //选择头像
     public void setHeadIv() {
         final FunctionConfig config = new FunctionConfig.Builder()
                 .setMutiSelectMaxSize(1)
@@ -63,20 +67,21 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
                 bmobFile.upload(new UploadFileListener() {
                     @Override
                     public void done(BmobException e) {
-                        if (e == null) {
-                            //修改用户表的headIv属性
-                            user.setHeadImg(bmobFile.getFileUrl());
-                            user.update(new ToastUpdateListener(context, fragment) {
-                                @Override
-                                public void onSuccess() {
-                                    fragment.showLoading(false);
-                                    fragment.setHeadIvResult(picPath);
-                                }
-                            });
-                        } else {
+                        if (e != null) {
                             fragment.showLoading(false);
                             MyToast.showToast(context, CommonString.STR_ERROR_INFO + e.getMessage());
+                            return;
                         }
+                        //修改用户表的headIv属性
+                        user.setHeadImg(bmobFile.getFileUrl());
+                        user.update(new ToastUpdateListener(context, fragment) {
+                            @Override
+                            public void onSuccess() {
+                                fragment.showLoading(false);
+                                fragment.setHeadIvResult(picPath);
+                            }
+                        });
+
                     }
                 });
             }
@@ -87,16 +92,16 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
                 MyToast.showToast(context, CommonString.STR_ERROR_INFO + errorMsg);
             }
         });
+
+
     }
 
-
+    //设置乐器
     public void setInstrument(final String instrumentStr) {
-        fragment.showLoading(true);
         user.setInstrument(instrumentStr);
         user.update(new ToastUpdateListener(context, fragment) {
             @Override
             public void onSuccess() {
-                fragment.showLoading(false);
                 fragment.setInstrumentResult(instrumentStr);
             }
         });
@@ -108,23 +113,22 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
     //跳转到用户邮箱界面
     public void enterSuggestionActivity() {
-        Intent intent = new Intent(context, SuggestionActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, SuggestionActivity.class));
     }
 
 
     //跳转到设置界面
     public void enterSettingActivity() {
-        Intent intent = new Intent(context, SettingActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, SettingActivity.class));
     }
 
+    //调转到收藏界面
     public void enterCollectionActivity() {
-        Intent intent = new Intent(context, CollectionActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, CollectionActivity.class));
     }
 
 
+    //签到
     public void addReward(final int reward) {
         user.increment("contribution", reward);
         user.setLastSignInDate(dateFormat.format(new Date()));//设置最新签到时间
@@ -140,7 +144,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
     public void checkHasSignIn() {
         if (user.getLastSignInDate() == null) {//之前没有这个列
             user.setLastSignInDate(dateFormat.format(new Date()));//设置当前时间为最后时间
-            user.increment("contribution", 1);//第一次都加1
+            user.increment("contribution", 5);//第一次都加5
             user.update(new ToastUpdateListener(context, fragment) {
                 @Override
                 public void onSuccess() {
@@ -165,30 +169,29 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
     }
 
+    //进入硬币榜
     public void enterContributionActivity() {
-        Intent intent = new Intent(context, ContributionActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, ContributionActivity.class));
     }
 
+    //进入帮助
     public void enterHelpActivity() {
-        Intent intent = new Intent(context, HelpActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, HelpActivity.class));
     }
 
+    //得到通知栏
     public void getBmobInfo() {
-        BmobQuery<BmobInfo> query = new BmobQuery<>();
-        query.addWhereEqualTo("type", Constant.BMOB_INFO_LABA);
-        query.findObjects(new ToastQueryListener<BmobInfo>(context, fragment) {
+        profileModel.getBmobInfoList(new ToastQueryListener<BmobInfo>(context, fragment) {
             @Override
             public void onSuccess(List<BmobInfo> list) {
                 fragment.setLaBaText(list.get(0));
             }
         });
+
     }
 
     public void enterPianoActivity() {
-        Intent intent = new Intent(context, PianoActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, PianoActivity.class));
     }
 
 

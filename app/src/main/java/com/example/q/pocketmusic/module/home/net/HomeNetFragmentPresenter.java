@@ -14,6 +14,7 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.net.type.SongTypeActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
 import com.example.q.pocketmusic.util.ACacheUtil;
+import com.example.q.pocketmusic.util.BmobUtil;
 
 import java.util.List;
 
@@ -27,33 +28,27 @@ public class HomeNetFragmentPresenter extends BasePresenter {
     private IView fragment;
     private Context context;
     private int mPage;
+    private HomeNetModel homeNetModel;
 
     public HomeNetFragmentPresenter(IView fragment, Context context) {
         this.fragment = fragment;
         this.context = context;
+        homeNetModel=new HomeNetModel();
     }
 
     public void loadMore() {
         mPage++;
-        BmobQuery<ShareSong> query = new BmobQuery<>();
-        query.setSkip(mPage * 10);
-        query.setLimit(10);
-        query.include("user");
-        query.order("-createdAt");
-        query.findObjects(new ToastQueryListener<ShareSong>(context, fragment) {
+        homeNetModel.getMoreShareList(mPage, new ToastQueryListener<ShareSong>(context, fragment) {
             @Override
             public void onSuccess(List<ShareSong> list) {
                 fragment.setMore(list);
             }
         });
+
     }
 
     public void getShareList() {
-        BmobQuery<ShareSong> query = new BmobQuery<>();
-        query.setLimit(10);
-        query.order("-createdAt");
-        query.include("user");
-        query.findObjects(new ToastQueryListener<ShareSong>(context, fragment) {
+        homeNetModel.getInitShareList(new ToastQueryListener<ShareSong>(context, fragment) {
             @Override
             public void onSuccess(List<ShareSong> list) {
                 ACacheUtil.putShareSongCache(context, list);//添加缓存
@@ -66,6 +61,7 @@ public class HomeNetFragmentPresenter extends BasePresenter {
                 fragment.setList(ACacheUtil.getShareSongCache(context));
             }
         });
+
     }
 
     public void setSharePage(int page) {

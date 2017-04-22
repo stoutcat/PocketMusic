@@ -11,6 +11,7 @@ import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.ask.comment.AskSongCommentActivity;
 import com.example.q.pocketmusic.module.home.ask.publish.AskSongActivity;
 import com.example.q.pocketmusic.util.ACacheUtil;
+import com.example.q.pocketmusic.util.BmobUtil;
 
 import java.util.List;
 
@@ -24,37 +25,30 @@ import cn.bmob.v3.exception.BmobException;
 public class HomeAskListFragmentPresenter extends BasePresenter {
     private Context context;
     private IView fragment;
+    private BmobUtil bmobUtil;
     private int mPage;
 
     public HomeAskListFragmentPresenter(Context context, IView fragment) {
         this.context = context;
         this.fragment = fragment;
+        bmobUtil = new BmobUtil();
+
     }
 
     //得到帖子列表
     public void getPostList() {
-        BmobQuery<AskSongPost> queryPost = new BmobQuery<>();
-        queryPost.setLimit(10);
-        queryPost.order("-createdAt");//逆序
-        queryPost.include("user");//把User表也查出来
-        queryPost.findObjects(new ToastQueryListener<AskSongPost>(context, fragment) {
+        bmobUtil.getInitList(AskSongPost.class, "user", new ToastQueryListener<AskSongPost>(context, fragment) {
             @Override
             public void onSuccess(List<AskSongPost> list) {
                 fragment.setPostList(list);
             }
-
         });
     }
 
     //加载更多
     public void getMore() {
         mPage++;
-        BmobQuery<AskSongPost> queryPost = new BmobQuery<>();
-        queryPost.setLimit(10);
-        queryPost.setSkip(mPage * 10);
-        queryPost.order("-createdAt");//逆序
-        queryPost.include("user");//把User表也查出来
-        queryPost.findObjects(new ToastQueryListener<AskSongPost>(context, fragment) {
+        bmobUtil.getMoreList(AskSongPost.class, "user", mPage, new ToastQueryListener<AskSongPost>(context,fragment) {
             @Override
             public void onSuccess(List<AskSongPost> list) {
                 fragment.setPostList(list);

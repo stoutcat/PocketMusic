@@ -66,8 +66,7 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void enterForgetActivity() {
-        Intent intent = new Intent(context, ForgetActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, ForgetActivity.class));
 
     }
 

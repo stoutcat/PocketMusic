@@ -48,7 +48,6 @@ public class SettingPresenter extends BasePresenter {
     public void logOut() {
         MyUser.logOut();
         android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
         ContextWrapper wrapper = ((ContextWrapper) context);
         Intent i = wrapper.getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(wrapper.getBaseContext().getPackageName());
@@ -71,7 +70,7 @@ public class SettingPresenter extends BasePresenter {
         Intent intent = new Intent("android.intent.action.SEND");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "推荐一款app:" + "口袋乐谱" + "/n 官网地址：" + "http://pocketmusic.bmob.site/");
+        intent.putExtra(Intent.EXTRA_TEXT, "推荐一款app:" + "<口袋乐谱>" + "---官网地址：" + "http://pocketmusic.bmob.site/");
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
         } else {

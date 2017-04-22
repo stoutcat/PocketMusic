@@ -6,6 +6,7 @@ import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.IBaseView;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.model.bean.MyUser;
+import com.example.q.pocketmusic.util.BmobUtil;
 import com.example.q.pocketmusic.util.MyToast;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -29,9 +30,10 @@ public class ContributionPresenter {
         this.activity = activity;
     }
 
+    //贡献前十个
     public void init() {
         BmobQuery<MyUser> query = new BmobQuery<>();
-        query.setLimit(10);//前十个
+        query.setLimit(10);
         query.order("-contribution");
         query.findObjects(new ToastQueryListener<MyUser>(context, activity) {
             @Override

@@ -26,6 +26,7 @@ public class AskSongPresenter extends BasePresenter {
     public AskSongPresenter(IView activity, Context context) {
         this.activity = activity;
         this.context = context;
+
     }
 
     public void askForSong(String title, final String content, final MyUser user) {
@@ -34,7 +35,7 @@ public class AskSongPresenter extends BasePresenter {
             return;
         }
         if (!CheckUserUtil.checkUserContribution((BaseActivity) context, Constant.REDUCE_CONTRIBUTION_ASK)) {
-            MyToast.showToast(context,CommonString.STR_NOT_ENOUGH_COIN);
+            MyToast.showToast(context, CommonString.STR_NOT_ENOUGH_COIN);
             return;
         }
         activity.showLoading(true);
@@ -42,8 +43,8 @@ public class AskSongPresenter extends BasePresenter {
         askSongPost.save(new ToastSaveListener<String>(context, activity) {
             @Override
             public void onSuccess(String s) {
-                user.increment("contribution",-Constant.REDUCE_CONTRIBUTION_ASK);
-                user.update(new ToastUpdateListener(context,activity) {
+                user.increment("contribution", -Constant.REDUCE_CONTRIBUTION_ASK);
+                user.update(new ToastUpdateListener(context, activity) {
                     @Override
                     public void onSuccess() {
                         MyToast.showToast(context, CommonString.REDUCE_COIN_BASE + Constant.REDUCE_CONTRIBUTION_ASK);

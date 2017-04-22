@@ -13,7 +13,6 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
  */
 
 public class InstrumentAdapter extends RecyclerArrayAdapter<String> {
-    private Context context;
 
     public InstrumentAdapter(Context context) {
         super(context);

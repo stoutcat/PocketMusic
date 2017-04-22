@@ -44,7 +44,7 @@ public class SearchMainActivity extends BaseActivity implements ISearchInfo, Vie
     @Override
     public void init() {
         presenter = new SearchMainPresenter(this, this);
-        fireWork.bindEditText(searchEdt);
+        //fireWork.bindEditText(searchEdt);去掉后看是否会崩溃？
         adapter = new SearchMainAdapter(this, getSupportFragmentManager(), presenter.getTabsTxt(), presenter.getFragments());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

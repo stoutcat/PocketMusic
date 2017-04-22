@@ -71,8 +71,7 @@ public class SearchRecommendFragmentPresenter {
 
     //进入推荐列表
     public void enterRecommendListActivity() {
-        Intent intent = new Intent(context, RecommendListActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, RecommendListActivity.class));
     }
 
     //进入歌曲详情
