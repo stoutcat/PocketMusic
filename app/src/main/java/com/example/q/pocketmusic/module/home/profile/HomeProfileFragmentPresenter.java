@@ -1,24 +1,19 @@
 package com.example.q.pocketmusic.module.home.profile;
 
-import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
-import com.example.q.pocketmusic.config.BmobInfo;
 import com.example.q.pocketmusic.config.CommonString;
-import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
-import com.example.q.pocketmusic.module.piano.PianoActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
+import com.example.q.pocketmusic.module.piano.PianoActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
-import com.example.q.pocketmusic.util.BmobUtil;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.io.File;
@@ -26,7 +21,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -42,12 +36,11 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
     private Context context;
     private IView fragment;
     private MyUser user;
-    private HomeProfileModel profileModel;
 
     public HomeProfileFragmentPresenter(Context context, IView fragment) {
         this.context = context;
         this.fragment = fragment;
-        profileModel = new HomeProfileModel();
+
     }
 
 
@@ -179,16 +172,7 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         context.startActivity(new Intent(context, HelpActivity.class));
     }
 
-    //得到通知栏
-    public void getBmobInfo() {
-        profileModel.getBmobInfoList(new ToastQueryListener<BmobInfo>(context, fragment) {
-            @Override
-            public void onSuccess(List<BmobInfo> list) {
-                fragment.setLaBaText(list.get(0));
-            }
-        });
 
-    }
 
     public void enterPianoActivity() {
         context.startActivity(new Intent(context, PianoActivity.class));
@@ -203,6 +187,5 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
         void alertSignInDialog();
 
-        void setLaBaText(BmobInfo bmobInfo);
     }
 }

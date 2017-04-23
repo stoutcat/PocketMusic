@@ -11,7 +11,9 @@ import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 
+import com.example.q.pocketmusic.module.home.net.banner.BannerActivity;
 import com.example.q.pocketmusic.module.home.net.type.SongTypeActivity;
+import com.example.q.pocketmusic.module.search.SearchMainActivity;
 import com.example.q.pocketmusic.module.song.SongActivity;
 import com.example.q.pocketmusic.util.ACacheUtil;
 import com.example.q.pocketmusic.util.BmobUtil;
@@ -33,7 +35,7 @@ public class HomeNetFragmentPresenter extends BasePresenter {
     public HomeNetFragmentPresenter(IView fragment, Context context) {
         this.fragment = fragment;
         this.context = context;
-        homeNetModel=new HomeNetModel();
+        homeNetModel = new HomeNetModel();
     }
 
     public void loadMore() {
@@ -95,6 +97,16 @@ public class HomeNetFragmentPresenter extends BasePresenter {
             getShareList();
         }
         fragment.setList(list);
+    }
+
+    public void enterBannerActivity(int picPosition) {
+        Intent intent=new Intent(context,BannerActivity.class);
+        intent.putExtra(BannerActivity.PARAM_PIC_POSITION,picPosition);
+        context.startActivity(intent);
+    }
+
+    public void enterSearchMainActivity() {
+        context.startActivity(new Intent(context, SearchMainActivity.class));
     }
 
     public interface IView extends IBaseList {

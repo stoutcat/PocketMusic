@@ -80,8 +80,7 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
 
     @OnClick(R.id.search_rl)
     public void onClick() {
-        Intent intent = new Intent(getActivity(), SearchMainActivity.class);
-        startActivity(intent);
+        presenter.enterSearchMainActivity();
     }
 
 
@@ -122,7 +121,7 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
 
     @Override
     public void onSelectRollView(int picPosition) {
-
+        presenter.enterBannerActivity(picPosition);
     }
 
     @Override

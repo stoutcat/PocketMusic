@@ -44,7 +44,7 @@ public class PianoPresenter {
     }
 
     public String setBoLang() {
-        return builder.append("~~").toString();
+        return builder.append("~").toString();
     }
 
     public interface IView {

@@ -25,6 +25,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -35,13 +36,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     public Activity context;
     public final String TAG = this.getClass().getName();
     public AlertDialog mLoadingDialog;//这个dialog一般在上传，下载，的时候才会用到
+    private Unbinder unbinder;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setContentResource());
-        ButterKnife.bind(this);
+        unbinder=ButterKnife.bind(this);
         this.context = this;
         setListener();//如果有adapter，需在这里初始化
         init();
@@ -139,6 +141,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected void onDestroy() {
         super.onDestroy();
         mLoadingDialog.dismiss();
+        unbinder.unbind();
     }
 
 }

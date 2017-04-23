@@ -10,28 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="8dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_vec_laba" />
-
-            <TextView
-                android:id="@+id/bmob_info_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:ellipsize="marquee"
-                android:focusable="true"
-                android:maxLines="1" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,14 +85,7 @@
             app:itemTitleIco="@drawable/ic_vec_profile_collection"
             app:itemTitleText="我的收藏" />
 
-        <View style="@style/SettingDivider" />
 
-        <com.example.q.pocketmusic.view.widget.view.IcoTextItem
-            android:id="@+id/piano_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ic_vec_piano"
-            app:itemTitleText="电子钢琴" />
 
         <View style="@style/SettingBigDivider" />
 

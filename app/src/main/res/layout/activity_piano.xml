@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/title_edt"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_edt"
+        android:gravity="center"
+        android:hint="请输入标题" />
+
     <LinearLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
@@ -23,21 +32,25 @@
             android:padding="8dp"
             android:textColor="@color/black"
             android:textSize="21sp"
-            tools:text="13221564654" />
+            android:maxLines="10"
+            android:lineSpacingExtra="8dp"
+            tools:text="1322156465411111111111111111111111" />
 
         <LinearLayout
+            android:background="@drawable/bg_piano_normal"
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="8dp">
 
+
             <ImageView
-                android:id="@+id/back_iv"
+                android:id="@+id/keep_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_vec_back" />
+                app:srcCompat="@drawable/ic_vec_keep" />
 
             <ImageView
                 android:id="@+id/tab_iv"
@@ -63,6 +76,14 @@
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_vec_bolang" />
 
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_vec_back" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -77,6 +98,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="1" />
 
         <Button
@@ -84,6 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="2" />
 
         <Button
@@ -91,6 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="3" />
 
         <Button
@@ -98,6 +122,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="4" />
 
         <Button
@@ -105,6 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="5" />
 
         <Button
@@ -112,6 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="6" />
 
         <Button
@@ -119,6 +146,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano"
             android:text="7" />
     </LinearLayout>
 

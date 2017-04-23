@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="35dp"
-        android:layout_marginRight="27dp"
+        android:layout_marginBottom="56dp"
+        android:layout_marginRight="40dp"
         android:src="@drawable/ico_fab_ask_song"
         fab:backgroundTint="@color/colorPrimary" />
 </RelativeLayout>

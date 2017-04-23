@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
     ImageView enterIv;
     @BindView(R.id.bo_lang_iv)
     ImageView boLangIv;
+    @BindView(R.id.title_edt)
+    EditText titleEdt;
 
     private PianoPresenter presenter;
 
@@ -69,13 +72,6 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
         presenter = new PianoPresenter(this, this);
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.back_iv, R.id.tab_iv, R.id.enter_iv, R.id.bo_lang_iv, R.id.do_1, R.id.re_2, R.id.mi_3, R.id.fa_4, R.id.sol_5, R.id.la_6, R.id.xi_7})
     public void onViewClicked(View view) {
@@ -114,5 +110,12 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
                 contentTv.setText(presenter.sound(view.getId()));
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

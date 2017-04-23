@@ -97,10 +97,11 @@
         <activity
             android:name=".module.search.SearchMainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".module.piano.PianoActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity android:name=".module.home.net.banner.BannerActivity"></activity>
     </application>
 
 </manifest>

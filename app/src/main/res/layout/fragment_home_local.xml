@@ -25,16 +25,49 @@
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar" />
 
-    <!--这里是否可以设置style?-->
-    <com.example.q.pocketmusic.view.widget.net.FloatingDraftButton
-        android:id="@+id/add_local_fab"
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="35dp"
-        android:layout_marginRight="27dp"
-        android:src="@drawable/ico_fab_add_local"
-        fab:backgroundTint="@color/colorPrimary" />
+        android:layout_marginBottom="48dp"
+        android:layout_marginRight="32dp"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="@color/colorPrimary"
+        fab:menu_colorPressed="@color/colorPrimary"
+        fab:menu_colorRipple="#99FFFFFF"
+        fab:menu_icon="@drawable/fab_local_add"
+        fab:menu_openDirection="up"
+        fab:menu_shadowColor="#44000000"
+        fab:menu_shadowRadius="2dp"
+        fab:menu_shadowXOffset="1dp"
+        fab:menu_shadowYOffset="1dp"
+        fab:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_add_local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ico_fab_add_local"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_label="本地添加"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_piano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ico_fab_piano"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_label="电子钢琴"
+            fab:fab_size="mini" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

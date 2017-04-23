@@ -24,7 +24,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -32,11 +31,12 @@ import butterknife.Unbinder;
  */
 
 public class HomeProfileFragment extends AuthFragment implements HomeProfileFragmentPresenter.IView {
-
     @BindView(R.id.head_iv)
     ImageView headIv;
     @BindView(R.id.user_name_tv)
     TextView userNameTv;
+    @BindView(R.id.sign_in_btn)
+    Button signInBtn;
     @BindView(R.id.email_item)
     IcoTextItem emailItem;
     @BindView(R.id.instrument_item)
@@ -45,18 +45,10 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
     IcoTextItem contributionItem;
     @BindView(R.id.collection_item)
     IcoTextItem collectionItem;
-    @BindView(R.id.setting_item)
-    IcoTextItem settingItem;
-    @BindView(R.id.sign_in_btn)
-    Button signInBtn;
     @BindView(R.id.help_item)
     IcoTextItem helpItem;
-    Unbinder unbinder;
-    @BindView(R.id.bmob_info_tv)
-    TextView bmobInfoTv;
-    @BindView(R.id.piano_item)
-    IcoTextItem pianoItem;
-    Unbinder unbinder1;
+    @BindView(R.id.setting_item)
+    IcoTextItem settingItem;
     private ListDialog listDialog;
     private HomeProfileFragmentPresenter presenter;
     private AlertDialog signInDialog;
@@ -96,12 +88,11 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             instrumentItem.setSubText(user.getInstrument());
             //设置贡献值，数据更新有问题
 //            contributionItem.setSubText(String.valueOf(user.getContribution()) + " 点");
-            presenter.getBmobInfo();
         }
     }
 
 
-    @OnClick({R.id.piano_item, R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn, R.id.help_item})
+    @OnClick({ R.id.head_iv, R.id.instrument_item, R.id.setting_item, R.id.email_item, R.id.collection_item, R.id.contribution_item, R.id.sign_in_btn, R.id.help_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.head_iv://设置头像
@@ -127,9 +118,6 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
                 break;
             case R.id.help_item:
                 presenter.enterHelpActivity();
-                break;
-            case R.id.piano_item:
-                presenter.enterPianoActivity();
                 break;
         }
     }
@@ -160,12 +148,6 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
             }
         });
         signInDialog.show();
-    }
-
-    //小喇叭
-    @Override
-    public void setLaBaText(BmobInfo bmobInfo) {
-        bmobInfoTv.setText(bmobInfo.getContent());
     }
 
     //设置乐器
@@ -209,17 +191,4 @@ public class HomeProfileFragment extends AuthFragment implements HomeProfileFrag
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder1.unbind();
-    }
 }

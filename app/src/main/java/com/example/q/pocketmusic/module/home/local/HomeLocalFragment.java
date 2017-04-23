@@ -19,16 +19,16 @@ import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.home.local.localrecord.LocalRecordFragment;
 import com.example.q.pocketmusic.module.home.local.localsong.LocalSongFragment;
 import com.example.q.pocketmusic.module.lead.LeadSongActivity;
-import com.example.q.pocketmusic.view.dialog.EditDialog;
-import com.example.q.pocketmusic.view.widget.net.FloatingDraftButton;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -41,10 +41,15 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     AppBarLayout appBar;
     @BindView(R.id.local_view_pager)
     ViewPager localViewPager;
-    @BindView(R.id.add_local_fab)
-    FloatingDraftButton addLocalFab;
+    @BindView(R.id.menu_item_add_local)
+    FloatingActionButton menuItemAddLocal;
+    @BindView(R.id.menu_item_piano)
+    FloatingActionButton menuItemPiano;
+    @BindView(R.id.menu_fab)
+    FloatingActionMenu menuFab;
     @BindView(R.id.activity_audio_record)
     RelativeLayout activityAudioRecord;
+    Unbinder unbinder;
     private LocalFragmentPagerAdapter adapter;
     private FragmentManager fm;
     private List<String> tabs = new ArrayList<>();
@@ -101,11 +106,6 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         localTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorTitle));
     }
 
-    //setonClick之后，onTouchEvent就一定会返回true
-    @OnClick(R.id.add_local_fab)
-    public void onClick() {
-        presenter.enterLeadActivity();
-    }
 
     @Override
     public void finish() {
@@ -121,9 +121,9 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
     public void onPageSelected(int position) {
         //Floating的显示和隐藏
         if (position == 0) {
-            addLocalFab.show();
+            menuFab.showMenu(true);
         } else {
-            addLocalFab.hide();
+            menuFab.hideMenu(true);
         }
     }
 
@@ -137,6 +137,19 @@ public class HomeLocalFragment extends BaseFragment implements HomeLocalFragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LeadSongActivity.REQUEST_LEAD && resultCode == LeadSongActivity.RESULT_OK) {
             localSongFragment.onRefresh();
+        }
+    }
+
+
+    @OnClick({R.id.menu_item_add_local, R.id.menu_item_piano})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.menu_item_add_local:
+                presenter.enterLeadActivity();
+                break;
+            case R.id.menu_item_piano:
+                presenter.enterPianoActivity();
+                break;
         }
     }
 }

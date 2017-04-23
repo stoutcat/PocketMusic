@@ -5,21 +5,27 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.view.MotionEvent;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.q.pocketmusic.R;
+import com.example.q.pocketmusic.config.BmobInfo;
 import com.example.q.pocketmusic.module.common.BaseActivity;
-import com.example.q.pocketmusic.module.home.HomeActivity;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.List;
 
+import butterknife.BindView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, SplashPresenter.IView {
     private static final int ENTER_HOME_ACTIVITY = 1001;
+    @BindView(R.id.bmob_info_tv)
+    TextView bmobInfoTv;
+    @BindView(R.id.activity_splash)
+    RelativeLayout activitySplash;
     private boolean isEnter = false;
     private static final int REQUEST_STORAGE = 3001;//READ_EXTERNAL_STORAGE    ,    WRITE_EXTERNAL_STORAGE
     private static final int REQUEST_PHONE = 4001;//READ_PHONE_STATE
@@ -27,6 +33,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
     private static String[] requestPermissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
     };
+    private SplashPresenter presenter;
     public static final int REQUEST_PERMISSION = 1111;
     private Handler handler = new Handler() {
         @Override
@@ -35,7 +42,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
             switch (msg.what) {
                 case ENTER_HOME_ACTIVITY:
                     if (!isEnter) {
-                        enterHomeActivity();
+                        presenter.enterHomeActivity();
                     }
                     finish();
                     break;
@@ -56,12 +63,9 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
 
     @Override
     public void init() {
+        presenter = new SplashPresenter(this, this);
+        presenter.getBmobInfo();
         requestPermissions();
-    }
-
-    private void enterHomeActivity() {
-        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-        startActivity(intent);
     }
 
 
@@ -95,12 +99,12 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
         if (!EasyPermissions.hasPermissions(context, requestPermissions)) {
             EasyPermissions.requestPermissions(this, "必要的权限", REQUEST_PERMISSION, requestPermissions);
         } else {
-            enterHome();
+            sendEnterHomeMessage();
         }
     }
 
     @AfterPermissionGranted(REQUEST_PERMISSION)
-    public void enterHome() {
+    public void sendEnterHomeMessage() {
         handler.removeMessages(ENTER_HOME_ACTIVITY);
         handler.sendEmptyMessageDelayed(ENTER_HOME_ACTIVITY, 1200);
     }
@@ -110,8 +114,19 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             if (EasyPermissions.hasPermissions(context, requestPermissions)) {
-                enterHome();
+                sendEnterHomeMessage();
             }
         }
     }
+
+    @Override
+    public void showRefreshing(boolean isShow) {
+
+    }
+
+    @Override
+    public void setLaBaText(BmobInfo bmobInfo) {
+        bmobInfoTv.setText(bmobInfo.getContent());
+    }
+
 }

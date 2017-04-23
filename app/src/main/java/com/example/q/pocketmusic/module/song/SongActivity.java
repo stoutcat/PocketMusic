@@ -1,10 +1,9 @@
 package com.example.q.pocketmusic.module.song;
 
-import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -31,8 +30,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 //查看大图界面
@@ -41,6 +40,8 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
     @BindView(R.id.view_pager)
     HackyViewPager viewPager;
     @BindView(R.id.record_play_iv)
@@ -303,10 +304,11 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
         presenter.onStop();
     }
 
+    //一定要放在onDestroy之前
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.release();
+        super.onDestroy();
     }
 
 
@@ -327,5 +329,4 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
         MyToast.showToast(context, "录音权限被拒绝,如需录音请到设置中心--权限管理中修改");
         //presenter.enterSystemSetting();
     }
-
 }

@@ -13,6 +13,7 @@ import com.example.q.pocketmusic.model.db.LocalSongDao;
 import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.lead.LeadSongActivity;
+import com.example.q.pocketmusic.module.piano.PianoActivity;
 import com.example.q.pocketmusic.util.FileUtils;
 import com.example.q.pocketmusic.util.StringUtil;
 
@@ -42,7 +43,11 @@ public class HomeLocalFragmentPresenter extends BasePresenter {
 
     public void enterLeadActivity() {
         Intent intent = new Intent(context, LeadSongActivity.class);
-        ((BaseActivity)context).startActivityForResult(intent,LeadSongActivity.REQUEST_LEAD);
+        ((BaseActivity) context).startActivityForResult(intent, LeadSongActivity.REQUEST_LEAD);
+    }
+
+    public void enterPianoActivity() {
+        context.startActivity(new Intent(context, PianoActivity.class));
     }
 
 
