@@ -43,6 +43,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
                 case ENTER_HOME_ACTIVITY:
                     if (!isEnter) {
                         presenter.enterHomeActivity();
+                        isEnter = true;
                     }
                     finish();
                     break;
@@ -126,6 +127,9 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
 
     @Override
     public void setLaBaText(BmobInfo bmobInfo) {
+        if (isEnter) {
+            return;
+        }
         bmobInfoTv.setText(bmobInfo.getContent());
     }
 

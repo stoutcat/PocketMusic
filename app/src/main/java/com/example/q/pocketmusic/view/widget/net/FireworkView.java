@@ -20,6 +20,7 @@ import java.util.LinkedList;
 /**
  * Created by wayww on 2016/9/8.
  */
+//暂停使用
 public class FireworkView extends View {
     private TextWatcher mTextWatcher;
     private final String TAG = this.getClass().getSimpleName();
@@ -41,7 +42,7 @@ public class FireworkView extends View {
 
     public void bindEditText(EditText editText) {
 
-      //  this.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        //  this.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
 
         this.mEditText = editText;
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -57,8 +58,8 @@ public class FireworkView extends View {
                 i为EditText里的字符数，i1为减少的字符数，i2为增加的字符数。
                 关于launch的第三个参数，决定风的方向，1为吹向右边，-1为左边。
                  */
-                float [] coordinate = getCursorCoordinate();
-                launch(coordinate[0], coordinate[1], i1 ==0?-1:1);
+                float[] coordinate = getCursorCoordinate();
+                launch(coordinate[0], coordinate[1], i1 == 0 ? -1 : 1);
             }
 
             @Override
@@ -70,17 +71,17 @@ public class FireworkView extends View {
     }
 
 
-    public void removeBind(){
-             mEditText.removeTextChangedListener(mTextWatcher);
-             mEditText = null;
+    public void removeBind() {
+        mEditText.removeTextChangedListener(mTextWatcher);
+        mEditText = null;
 
-            }
+    }
 
 
     //~~~~~~~~~~~~~private method~~~~~~~~~~~~~~~~~~~
 
 
-    private void launch(float x, float y, int direction){
+    private void launch(float x, float y, int direction) {
         final Firework firework = new Firework(new Firework.Location(x, y), direction);
         firework.addAnimationEndListener(new Firework.AnimationEndListener() {
             @Override
@@ -98,7 +99,7 @@ public class FireworkView extends View {
     /**
      * @return the coordinate of cursor. x=float[0]; y=float[1];
      */
-    private float[] getCursorCoordinate (){
+    private float[] getCursorCoordinate() {
      /*
        *以下通过反射获取光标cursor的坐标。
        * 首先观察到TextView的invalidateCursorPath()方法，它是光标闪动时重绘的方法。
@@ -120,21 +121,21 @@ public class FireworkView extends View {
             editor.setAccessible(true);
             Object mEditor = editor.get(mEditText);
             Class<?> editorClazz = Class.forName("android.widget.Editor");
-            Field drawables = editorClazz.getDeclaredField("mCursorDrawable");
+            Field drawables = editorClazz.getDeclaredField("mCursorDrawable");//得到了一个大小为2的Drawable[];
             drawables.setAccessible(true);
-            Drawable[] drawable= (Drawable[]) drawables.get(mEditor);
+            Drawable[] drawable = (Drawable[]) drawables.get(mEditor);
 
-            Method getVerticalOffset = clazz.getDeclaredMethod("getVerticalOffset",boolean.class);
+            Method getVerticalOffset = clazz.getDeclaredMethod("getVerticalOffset", boolean.class);
             Method getCompoundPaddingLeft = clazz.getDeclaredMethod("getCompoundPaddingLeft");
             Method getExtendedPaddingTop = clazz.getDeclaredMethod("getExtendedPaddingTop");
             getVerticalOffset.setAccessible(true);
             getCompoundPaddingLeft.setAccessible(true);
             getExtendedPaddingTop.setAccessible(true);
-            if (drawable != null){
+            if (drawable != null && drawable.length >= 1) {
                 Rect bounds = drawable[0].getBounds();
-                Log.d(TAG,bounds.toString());
+                Log.d(TAG, bounds.toString());
                 xOffset = (int) getCompoundPaddingLeft.invoke(mEditText) + bounds.left;
-                yOffset = (int) getExtendedPaddingTop.invoke(mEditText) + (int)getVerticalOffset.invoke(mEditText, false)+bounds.bottom;
+                yOffset = (int) getExtendedPaddingTop.invoke(mEditText) + (int) getVerticalOffset.invoke(mEditText, false) + bounds.bottom;
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -150,7 +151,7 @@ public class FireworkView extends View {
         float x = mEditText.getX() + xOffset;
         float y = mEditText.getY() + yOffset;
 
-        return new float[]{ x , y};
+        return new float[]{x, y};
     }
 
     @Override
@@ -160,10 +161,10 @@ public class FireworkView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (int i =0 ; i<fireworks.size(); i++){
+        for (int i = 0; i < fireworks.size(); i++) {
             fireworks.get(i).draw(canvas);
         }
-        if (fireworks.size()>0)
+        if (fireworks.size() > 0)
             invalidate();
     }
 

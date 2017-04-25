@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.module.piano;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PianoActivity extends BaseActivity implements PianoPresenter.IView {
+public class PianoActivity extends BaseActivity implements PianoPresenter.IView, View.OnTouchListener {
     @BindView(R.id.content_tv)
     TextView contentTv;
     @BindView(R.id.do_1)
@@ -45,6 +46,8 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
     ImageView boLangIv;
     @BindView(R.id.title_edt)
     EditText titleEdt;
+    @BindView(R.id.keep_iv)
+    ImageView keepIv;
 
     private PianoPresenter presenter;
 
@@ -55,7 +58,7 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
 
     @Override
     public void setListener() {
-
+        backIv.setOnTouchListener(this);
     }
 
     //强制横屏
@@ -73,11 +76,15 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
     }
 
 
-    @OnClick({R.id.back_iv, R.id.tab_iv, R.id.enter_iv, R.id.bo_lang_iv, R.id.do_1, R.id.re_2, R.id.mi_3, R.id.fa_4, R.id.sol_5, R.id.la_6, R.id.xi_7})
+    @OnClick({R.id.back_iv, R.id.tab_iv, R.id.enter_iv, R.id.bo_lang_iv, R.id.do_1, R.id.re_2, R.id.mi_3, R.id.fa_4, R.id.sol_5, R.id.la_6, R.id.xi_7,R.id.keep_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.keep_iv://保存
+                String title=titleEdt.getText().toString();
+                presenter.keepPic(title);
+                break;
             case R.id.back_iv:
-                contentTv.setText(presenter.setBack());
+                back();
                 break;
             case R.id.tab_iv:
                 contentTv.setText(presenter.setTab());
@@ -113,9 +120,37 @@ public class PianoActivity extends BaseActivity implements PianoPresenter.IView 
     }
 
     @Override
+    public void back() {
+        contentTv.setText(presenter.setBack());
+    }
+
+
+    //快速删除
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.back_iv:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        presenter.openQuickBack();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        presenter.closeQuickBack();
+                        break;
+                }
+                break;
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.keep_iv)
+    public void onViewClicked() {
     }
 }

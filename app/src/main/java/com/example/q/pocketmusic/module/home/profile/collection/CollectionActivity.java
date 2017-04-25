@@ -1,7 +1,5 @@
 package com.example.q.pocketmusic.module.home.profile.collection;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +17,6 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Cloud on 2016/11/14.
@@ -69,6 +66,7 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
                     public void onBottomSheetItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete://删除收藏
+                                adapter.remove(adapter.getItem(position));
                                 presenter.deleteCollection(adapter.getItem(position));
                                 break;
                         }
@@ -84,10 +82,6 @@ public class CollectionActivity extends AuthActivity implements CollectionPresen
         adapter.addAll(list);
     }
 
-    @Override
-    public void deleteCollectionResult(CollectionSong item) {
-        adapter.remove(item);
-    }
 
     @Override
     public void onRefresh() {

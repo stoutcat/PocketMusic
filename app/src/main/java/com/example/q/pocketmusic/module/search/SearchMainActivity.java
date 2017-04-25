@@ -1,5 +1,6 @@
 package com.example.q.pocketmusic.module.search;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -10,21 +11,19 @@ import android.widget.ImageView;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.module.common.BaseActivity;
-import com.example.q.pocketmusic.view.widget.net.FireworkView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SearchMainActivity extends BaseActivity implements ISearchInfo, View.OnKeyListener, View.OnClickListener, SearchMainPresenter.IView, ViewPager.OnPageChangeListener {
+    @BindView(R.id.search_edt)
+    EditText searchEdt;
+    @BindView(R.id.search_iv)
+    ImageView searchIv;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.search_edt)
-    EditText searchEdt;
-    @BindView(R.id.fire_work)
-    FireworkView fireWork;
-    @BindView(R.id.search_iv)
-    ImageView searchIv;
     private SearchMainPresenter presenter;
     private SearchMainAdapter adapter;
 
@@ -44,7 +43,6 @@ public class SearchMainActivity extends BaseActivity implements ISearchInfo, Vie
     @Override
     public void init() {
         presenter = new SearchMainPresenter(this, this);
-        //fireWork.bindEditText(searchEdt);去掉后看是否会崩溃？
         adapter = new SearchMainAdapter(this, getSupportFragmentManager(), presenter.getTabsTxt(), presenter.getFragments());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

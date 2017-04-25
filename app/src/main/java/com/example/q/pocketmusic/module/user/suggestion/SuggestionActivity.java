@@ -70,7 +70,6 @@ public class SuggestionActivity extends AuthActivity implements SuggestionPresen
 
     @Override
     public void sendSuggestionResult(UserSuggestion userSuggestion) {
-        recycler.showRecycler();
         adapter.add(userSuggestion);
     }
 

@@ -100,9 +100,9 @@ public class HomeNetFragmentPresenter extends BasePresenter {
     }
 
     public void enterBannerActivity(int picPosition) {
-        Intent intent=new Intent(context,BannerActivity.class);
-        intent.putExtra(BannerActivity.PARAM_PIC_POSITION,picPosition);
-        context.startActivity(intent);
+//        Intent intent=new Intent(context,BannerActivity.class);
+//        intent.putExtra(BannerActivity.PARAM_PIC_POSITION,picPosition);
+//        context.startActivity(intent);
     }
 
     public void enterSearchMainActivity() {

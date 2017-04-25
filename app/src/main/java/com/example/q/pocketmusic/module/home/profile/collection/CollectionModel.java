@@ -1,19 +1,14 @@
 package com.example.q.pocketmusic.module.home.profile.collection;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
-import com.example.q.pocketmusic.config.Constant;
 import com.example.q.pocketmusic.model.bean.MyUser;
-import com.example.q.pocketmusic.model.bean.Song;
-import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.collection.CollectionPic;
 import com.example.q.pocketmusic.model.bean.collection.CollectionSong;
-import com.example.q.pocketmusic.module.song.SongActivity;
 import com.example.q.pocketmusic.util.BmobUtil;
 
 import java.util.ArrayList;
@@ -45,8 +40,11 @@ public class CollectionModel {
         bmobUtil.getMoreListWithRelated(CollectionSong.class, null, page, "collections", new BmobPointer(user), listener);
     }
 
+    //顺序
     public void querySong(CollectionSong collectionSong, ToastQueryListener<CollectionPic> listener) {
-        bmobUtil.getInitListWithEqual(CollectionPic.class, null, "collectionSong", new BmobPointer(collectionSong), listener);
+        BmobQuery<CollectionPic> queryComment = new BmobQuery<>();
+        queryComment.addWhereEqualTo("collectionSong", new BmobPointer(collectionSong));
+        queryComment.findObjects(listener);
     }
 
     public void deleteCollection(MyUser user, final CollectionSong collectionSong, final Context context, final IBaseList activity, final ToastUpdateListener listener) {

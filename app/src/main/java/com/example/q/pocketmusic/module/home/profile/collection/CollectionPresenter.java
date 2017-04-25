@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.q.pocketmusic.callback.IBaseList;
-import com.example.q.pocketmusic.callback.IBaseView;
-import com.example.q.pocketmusic.callback.ToastQueryListListener;
 import com.example.q.pocketmusic.callback.ToastQueryListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
 import com.example.q.pocketmusic.config.Constant;
@@ -15,18 +13,10 @@ import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.collection.CollectionPic;
 import com.example.q.pocketmusic.model.bean.collection.CollectionSong;
 import com.example.q.pocketmusic.module.song.SongActivity;
-import com.example.q.pocketmusic.util.BmobUtil;
+import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobBatch;
-import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BatchResult;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by Cloud on 2016/11/14.
@@ -50,6 +40,17 @@ public class CollectionPresenter {
     //获得收藏曲谱列表
     public void getCollectionList() {
         collectionModel.getInitCollectionList(user, new ToastQueryListener<CollectionSong>(context, activity) {
+            @Override
+            public void onSuccess(List<CollectionSong> list) {
+                activity.setCollectionList(list);
+            }
+        });
+    }
+
+    //加载更多
+    public void getMoreList() {
+        mPage++;
+        collectionModel.getMoreList(user, mPage, new ToastQueryListener<CollectionSong>(context, activity) {
             @Override
             public void onSuccess(List<CollectionSong> list) {
                 activity.setCollectionList(list);
@@ -83,12 +84,10 @@ public class CollectionPresenter {
 
     //删除收藏
     public void deleteCollection(final CollectionSong collectionSong) {
-        activity.showLoading(true);
         collectionModel.deleteCollection(user, collectionSong, context, activity, new ToastUpdateListener(context, activity) {
             @Override
             public void onSuccess() {
-                activity.showLoading(false);
-                activity.deleteCollectionResult(collectionSong);
+                MyToast.showToast(context, "已删除");
             }
         });
     }
@@ -97,22 +96,10 @@ public class CollectionPresenter {
         this.mPage = page;
     }
 
-    public void getMoreList() {
-        mPage++;
-        collectionModel.getMoreList(user, mPage, new ToastQueryListener<CollectionSong>(context, activity) {
-
-            @Override
-            public void onSuccess(List<CollectionSong> list) {
-                activity.setCollectionList(list);
-            }
-        });
-    }
-
 
     public interface IView extends IBaseList {
 
         void setCollectionList(List<CollectionSong> list);
 
-        void deleteCollectionResult(CollectionSong item);
     }
 }
