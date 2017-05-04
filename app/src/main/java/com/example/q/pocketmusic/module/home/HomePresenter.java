@@ -2,6 +2,7 @@ package com.example.q.pocketmusic.module.home;
 
 import android.content.Context;
 import android.content.pm.ProviderInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -31,7 +32,7 @@ import cn.bmob.v3.update.UpdateResponse;
  * Created by Cloud on 2016/11/22.
  */
 
-public class HomePresenter  extends BasePresenter {
+public class HomePresenter extends BasePresenter {
     private IView activity;
     private Context context;
     private List<Fragment> fragments;
@@ -85,7 +86,7 @@ public class HomePresenter  extends BasePresenter {
         }
     }
 
-    public void clickAsk(){
+    public void clickAsk() {
         if (FLAG != FLAG_SELECT_ASK) {
             FLAG = FLAG_SELECT_ASK;
             showFragment(fragments.get(2));
@@ -93,8 +94,8 @@ public class HomePresenter  extends BasePresenter {
         }
     }
 
-    public void clickProfile(){
-        if (FLAG != FLAG_SELECT_PROFILE){
+    public void clickProfile() {
+        if (FLAG != FLAG_SELECT_PROFILE) {
             FLAG = FLAG_SELECT_PROFILE;
             showFragment(fragments.get(3));
             activity.onSelectProfile();
@@ -120,7 +121,9 @@ public class HomePresenter  extends BasePresenter {
         BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
             @Override
             public void onUpdateReturned(int i, UpdateResponse updateResponse) {
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    MyToast.showToast(context, "在目前暂时不支持Android N 7.0 的自动更新，请到应用商店中下载");
+                }
             }
         });//更新监听
     }

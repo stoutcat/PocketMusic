@@ -1,11 +1,7 @@
 package com.example.q.pocketmusic.module.home.ask.list;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.q.pocketmusic.R;
 import com.example.q.pocketmusic.config.Constant;
@@ -20,7 +16,6 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

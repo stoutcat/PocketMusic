@@ -59,7 +59,6 @@ public class HomeNetFragment extends BaseFragment implements HomeNetFragmentPres
 
     //没有设置下拉刷新
     private void initView() {
-        //初始化Recycler
         recycler.setEmptyView(R.layout.view_not_found);
         initList();
         presenter.getCacheList();

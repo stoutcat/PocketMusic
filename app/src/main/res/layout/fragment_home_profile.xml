@@ -60,11 +60,11 @@
 
 
         <com.example.q.pocketmusic.view.widget.view.IcoTextItem
-            android:id="@+id/instrument_item"
+            android:id="@+id/post_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTitleIco="@drawable/ic_vec_profile_instrument"
-            app:itemTitleText="钟爱乐器" />
+            app:itemTitleIco="@drawable/ic_vec_profile_post"
+            app:itemTitleText="我的求谱" />
 
         <View style="@style/SettingDivider" />
 

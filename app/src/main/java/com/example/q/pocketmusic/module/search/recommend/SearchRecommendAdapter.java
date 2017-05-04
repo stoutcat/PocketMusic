@@ -17,18 +17,20 @@ import java.util.List;
  */
 
 public class SearchRecommendAdapter extends TagAdapter<Song> {
-    private List<Song> list;
-    private Context context;
     private LayoutInflater inflater;
 
     public SearchRecommendAdapter(List<Song> datas, Context context) {
         super(datas);
-        this.list = datas;
-        inflater = LayoutInflater.from(context);
+        if (context != null) {
+            inflater = LayoutInflater.from(context);
+        }
     }
 
     @Override
     public View getView(FlowLayout parent, int position, Song song) {
+        if (inflater == null) {
+            return null;
+        }
         TextView tagTv = (TextView) inflater.inflate(R.layout.item_recommend_tag, parent, false);
         tagTv.setText(song.getName());
         return tagTv;

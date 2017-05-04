@@ -63,6 +63,7 @@ public class AskSongCommentActivity extends AuthActivity implements AskSongComme
         adapter.setOnItemClickListener(this);
     }
 
+
     @Override
     public void initView() {
         final AskSongPost post = (AskSongPost) getIntent().getSerializableExtra(PARAM_POST);

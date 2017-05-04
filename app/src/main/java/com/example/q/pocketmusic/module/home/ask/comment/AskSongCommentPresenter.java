@@ -11,7 +11,6 @@ import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
-import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.Song;
 import com.example.q.pocketmusic.model.bean.SongObject;
 import com.example.q.pocketmusic.model.bean.ask.AskSongComment;
@@ -19,7 +18,6 @@ import com.example.q.pocketmusic.model.bean.ask.AskSongPic;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.song.SongActivity;
-import com.example.q.pocketmusic.util.BmobUtil;
 import com.example.q.pocketmusic.util.MyToast;
 
 import java.util.ArrayList;
@@ -27,11 +25,8 @@ import java.util.List;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.a.From;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -46,9 +41,9 @@ public class AskSongCommentPresenter extends BasePresenter {
     private Context context;
     private AskSongCommentModel model;
     private AskSongPost post;
-    private MyUser user;
+    private com.example.q.pocketmusic.model.bean.MyUser user;
 
-    public AskSongCommentPresenter(IView activity, Context context, MyUser user, AskSongPost post) {
+    public AskSongCommentPresenter(IView activity, Context context, com.example.q.pocketmusic.model.bean.MyUser user, AskSongPost post) {
         this.activity = activity;
         this.context = context;
         this.post = post;

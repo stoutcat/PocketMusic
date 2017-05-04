@@ -1,7 +1,5 @@
 package com.example.q.pocketmusic.model.bean.ask;
 
-import com.example.q.pocketmusic.model.bean.MyUser;
-
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -10,7 +8,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 
 public class AskSongComment extends BmobObject {
-    private MyUser user;//评论的用户，Pointer类型，一对一
+    private com.example.q.pocketmusic.model.bean.MyUser user;//评论的用户，Pointer类型，一对一
     private AskSongPost post;//一个评论属于一个帖子,一对多
     private BmobRelation agrees;//点赞的多个用户，多对多
     private Integer agreeNum;//点赞用户的数量
@@ -38,7 +36,7 @@ public class AskSongComment extends BmobObject {
     public AskSongComment() {
     }
 
-    public AskSongComment(MyUser user, AskSongPost post, String content, Boolean hasPic) {
+    public AskSongComment(com.example.q.pocketmusic.model.bean.MyUser user, AskSongPost post, String content, Boolean hasPic) {
         this.user = user;
         this.post = post;
         this.content = content;
@@ -63,11 +61,11 @@ public class AskSongComment extends BmobObject {
         this.content = content;
     }
 
-    public MyUser getUser() {
+    public com.example.q.pocketmusic.model.bean.MyUser getUser() {
         return user;
     }
 
-    public void setUser(MyUser user) {
+    public void setUser(com.example.q.pocketmusic.model.bean.MyUser user) {
         this.user = user;
     }
 

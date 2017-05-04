@@ -7,7 +7,6 @@ import com.example.q.pocketmusic.callback.IBaseList;
 import com.example.q.pocketmusic.callback.ToastUpdateListener;
 import com.example.q.pocketmusic.config.CommonString;
 import com.example.q.pocketmusic.config.Constant;
-import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.model.bean.ask.AskSongPost;
 import com.example.q.pocketmusic.callback.ToastSaveListener;
 import com.example.q.pocketmusic.module.common.BaseActivity;
@@ -29,7 +28,7 @@ public class AskSongPresenter extends BasePresenter {
 
     }
 
-    public void askForSong(String title, final String content, final MyUser user) {
+    public void askForSong(String title, final String content, final com.example.q.pocketmusic.model.bean.MyUser user) {
         if (TextUtils.isEmpty(content) || TextUtils.isEmpty(title)) {
             MyToast.showToast(context, CommonString.STR_COMPLETE_INFO);
             return;

@@ -86,6 +86,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
         //根据来自搜索和乐器类型，得到不同的song的IvUrls
         presenter = new SongActivityPresenter(this, this, getIntent());
         initToolbar(toolbar, presenter.getSong().getName());
+
         //是否隐藏录音栏
         if (presenter.getLoadingWay() == Constant.LOCAL) {
             recordRl.setVisibility(View.VISIBLE);
@@ -93,37 +94,11 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
             recordRl.setVisibility(View.GONE);
         }
         //查找图片
-        findPicsUrl();
+
+        presenter.loadPic();
     }
 
-
-    //根据from查找图片
-    private void findPicsUrl() {
-        switch (presenter.getIsFrom()) {
-            case Constant.FROM_LOCAL://来自本地
-                presenter.loadLocalPic();
-                break;
-            case Constant.FROM_SEARCH_NET:
-                presenter.loadSearchSongPic();//网络搜索
-                break;
-            case Constant.FROM_COLLECTION:
-                presenter.loadCollectionPic();//搜索Bmob
-                break;
-            case Constant.FROM_TYPE:
-                presenter.loadTypeSongPic();//乐器类型
-                break;
-            case Constant.FROM_RECOMMEND:
-                presenter.loadRecommendSongPic();//推荐
-                break;
-            case Constant.FROM_SHARE:
-                presenter.loadShareSongPic();//上传列表
-                break;
-            case Constant.FROM_ASK:
-                presenter.loadAskPic();//求谱评论
-                break;
-        }
-    }
-
+    //加载失败
     @Override
     public void loadFail() {
         MyToast.showToast(this, CommonString.STR_NOT_NET);
@@ -153,6 +128,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
     }
 
 
+    //下载结果
     @Override
     public void downloadResult(Integer result, String info) {
         if (result.equals(Constant.FAIL)) {
@@ -219,7 +195,7 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
 
     @Override
-    public void getResult(List<String> ivUrl, int from) {
+    public void setPicResult(List<String> ivUrl, int from) {
         //本地和网络加载图片的地址有所不同
         adapter = new SongActivityAdapter(this, ivUrl, from);
         final int page = ivUrl.size();
@@ -300,8 +276,9 @@ public class SongActivity extends BaseActivity implements SongActivityPresenter.
 
     @Override
     protected void onStop() {
-        super.onStop();
         presenter.onStop();
+        super.onStop();
+
     }
 
     //一定要放在onDestroy之前

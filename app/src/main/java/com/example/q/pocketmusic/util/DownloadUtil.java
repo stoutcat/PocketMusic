@@ -147,7 +147,16 @@ public class DownloadUtil {
             }
         }
         //截取格式
-        String type = URLConnection.guessContentTypeFromName(urls.get(0)).replaceAll("image/", "");
+        String urlType = URLConnection.guessContentTypeFromName(urls.get(0));
+
+        if (urlType == null) {
+            if (onDownloadListener != null) {
+                onDownloadListener.onFailed("图片格式错误");
+                return;
+            }
+        }
+
+        String type = urlType.replaceAll("image/", "");
         //建立歌曲名分包
         final String fileDir = Environment.getExternalStorageDirectory() + "/" + Constant.FILE_NAME + "/" + name + "/";
         for (int i = 0; i < urls.size(); i++) {//顺序下载

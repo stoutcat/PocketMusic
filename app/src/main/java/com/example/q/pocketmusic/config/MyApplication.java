@@ -10,8 +10,10 @@ import com.example.q.pocketmusic.util.MyToast;
 import com.example.q.pocketmusic.util.SharedPrefsUtil;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.statistics.AppStat;
 import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -34,18 +36,14 @@ public class MyApplication extends Application {
         //自动更新
         initAutoUpdate();
         //发布时，开启异常捕获器
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(this);
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
         initGalleryFinal();
     }
 
     private void initAutoUpdate() {
         BmobUpdateAgent.initAppVersion();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            MyToast.showToast(this, "在目前暂时不支持Android N 的自动更新，请到应用商店中下载");
-//        } else {
-//
-//        }
+
     }
 
 

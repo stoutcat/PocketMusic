@@ -10,13 +10,9 @@ import com.example.q.pocketmusic.module.common.BaseFragment;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.ask.comment.AskSongCommentActivity;
 import com.example.q.pocketmusic.module.home.ask.publish.AskSongActivity;
-import com.example.q.pocketmusic.util.ACacheUtil;
 import com.example.q.pocketmusic.util.BmobUtil;
 
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
 
 /**
  * Created by Cloud on 2017/1/26.
@@ -59,7 +55,7 @@ public class HomeAskListFragmentPresenter extends BasePresenter {
 
     //跳转到其他人的个人界面
     public void enterOtherProfileActivity(AskSongPost askSongPost) {
-//        MyUser other = askSongPost.getUser();
+//        AskSongPost other = askSongPost.getUser();
 //        Intent intent = new Intent(context, OtherProfileActivity.class);
 //        intent.putExtra(OtherProfileActivity.PARAM_USER, other);
 //        context.startActivity(intent);

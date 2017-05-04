@@ -33,15 +33,12 @@ import com.example.q.pocketmusic.model.bean.collection.CollectionSong;
 import com.example.q.pocketmusic.model.bean.local.Img;
 import com.example.q.pocketmusic.model.bean.local.LocalSong;
 import com.example.q.pocketmusic.model.bean.local.RecordAudio;
-import com.example.q.pocketmusic.model.bean.share.SharePic;
 import com.example.q.pocketmusic.model.bean.share.ShareSong;
 import com.example.q.pocketmusic.model.db.LocalSongDao;
 import com.example.q.pocketmusic.model.db.RecordAudioDao;
-import com.example.q.pocketmusic.model.net.LoadRecommendSongPic;
-import com.example.q.pocketmusic.model.net.LoadSearchSongPic;
-import com.example.q.pocketmusic.model.net.LoadTypeSongPic;
 import com.example.q.pocketmusic.module.common.BaseActivity;
 import com.example.q.pocketmusic.module.common.BasePresenter;
+import com.example.q.pocketmusic.module.song.state.SongController;
 import com.example.q.pocketmusic.util.CheckUserUtil;
 import com.example.q.pocketmusic.util.DownloadUtil;
 import com.example.q.pocketmusic.util.FileUtils;
@@ -72,21 +69,15 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
     private Context context;
     private IView activity;
     private Intent intent;
+    private SongController controller;//状态控制器,用于加载图片
     private int isFrom;//资源来自
     private Song song;
     private int showMenuFlag;
-    private int loadingWay;
-
-
-    private AskSongComment askSongComment;//如果来自评论的图片
-    private boolean isEnableAgree = true;
-
-    private ShareSong shareSong;
-
+    private int loadingWay;//加载方式
+    private boolean isEnableAgree = true;//是否能够点赞
 
     //显示文字状态
     private RECORD_STATUS status = RECORD_STATUS.STOP;
-
 
     public enum RECORD_STATUS {
         PLAY, STOP
@@ -122,20 +113,8 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
     };
 
 
-    public void setComment(AskSongComment extra) {
-        this.askSongComment = extra;
-    }
-
     public int getLoadingWay() {
         return loadingWay;
-    }
-
-    public void setShareSong(ShareSong extra) {
-        this.shareSong = extra;
-    }
-
-    public int getIsFrom() {
-        return isFrom;
     }
 
     public Song getSong() {
@@ -156,6 +135,18 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
         this.showMenuFlag = songObject.getShowMenu();
         this.loadingWay = songObject.getLoadingWay();
 
+        controller = SongController.getInstance(intent, context, activity);
+
+        if (controller == null) {
+            MyToast.showToast(context, "无法进入页面");
+            activity.finish();
+        }
+
+        //求谱，检测是否可以点赞,
+        if (isFrom == Constant.FROM_ASK) {
+            checkHasAgree();
+        }
+
         //本地可以录音
         if (loadingWay == Constant.LOCAL) {
             recordAudioDao = new RecordAudioDao(context);
@@ -166,126 +157,11 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
         }
     }
 
-    //加载乐器类型图片
-    public void loadTypeSongPic() {
-        new LoadTypeSongPic() {
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setLoadIntResult(integer);
-            }
-        }.execute(song);
+    //加载图片
+    public void loadPic() {
+        controller.loadPic();
     }
 
-    //加载搜索乐谱图片
-    public void loadSearchSongPic() {
-        new LoadSearchSongPic() {
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setLoadIntResult(integer);
-            }
-        }.execute(song);
-    }
-
-    //加载推荐乐谱图片
-    public void loadRecommendSongPic() {
-        new LoadRecommendSongPic() {
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-                setLoadIntResult(integer);
-            }
-        }.execute(song);
-    }
-
-    //不用加载直接添加
-    public void loadCollectionPic() {
-        loadPicture(getLoadingWay());
-    }
-
-    //不用加载直接添加
-    public void loadAskPic() {
-        setComment((AskSongComment) (intent.getSerializableExtra(SongActivity.ASK_COMMENT)));//设置AskComment
-        checkHasAgree();//验证是否可以点赞
-        loadPicture(getLoadingWay());
-    }
-
-    //不用加载直接添加
-    public void loadLocalPic() {
-        loadPicture(getLoadingWay());
-    }
-
-    //设置，查询，添加
-    public void loadShareSongPic() {
-        //setShareSong
-        setShareSong((ShareSong) (intent.getSerializableExtra(SongActivity.SHARE_SONG)));
-        //查询
-        BmobQuery<SharePic> query = new BmobQuery<>();
-        query.addWhereEqualTo("shareSong", new BmobPointer(shareSong));
-        query.findObjects(new ToastQueryListener<SharePic>(context, activity) {
-            @Override
-            public void onSuccess(List<SharePic> list) {
-                List<String> pics = new ArrayList<String>();
-                for (SharePic sharePic : list) {
-                    pics.add(sharePic.getUrl());
-                }
-                song.setIvUrl(pics);
-                loadPicture(getLoadingWay());
-            }
-        });
-
-    }
-
-    //来自网络和来自本地
-    public void loadPicture(int loadingWay) {
-        switch (loadingWay) {
-            case Constant.NET:
-                activity.getResult(song.getIvUrl(), loadingWay);
-                break;
-            case Constant.LOCAL:
-                ArrayList<String> imgUrls = getLocalImgs();
-                activity.getResult(imgUrls, loadingWay);
-                break;
-        }
-    }
-
-    @NonNull
-    private ArrayList<String> getLocalImgs() {
-        LocalSong localsong = (LocalSong) intent.getSerializableExtra(SongActivity.LOCAL_SONG);
-        LocalSongDao localSongDao = new LocalSongDao(context);
-        ArrayList<String> imgUrls = new ArrayList<>();
-        LocalSong localSong = localSongDao.findBySongId(localsong.getId());
-        if (localSong == null) {
-            MyToast.showToast(context, "曲谱消失在了异次元。");
-            activity.finish();
-            return new ArrayList<>();
-        }
-        ForeignCollection<Img> imgs = localSong.getImgs();
-        CloseableIterator<Img> iterator = imgs.closeableIterator();
-        try {
-            while (iterator.hasNext()) {
-                Img img = iterator.next();
-                imgUrls.add(img.getUrl());
-            }
-        } finally {
-            try {
-                iterator.close();
-            } catch (SQLException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return imgUrls;
-    }
-
-
-    private void setLoadIntResult(int result) {
-        if (result == Constant.FAIL) {
-            activity.loadFail();
-        } else {
-            loadPicture(getLoadingWay());
-        }
-    }
 
     //根据不同的from加载不同的menu;
     public void CreateMenuByFrom(Menu menu) {
@@ -343,6 +219,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
             return new DownloadInfo("本地已存在", false);
         }
 
+        //需要硬币
         if (song.isNeedGrade()) {
             MyUser user = CheckUserUtil.checkLocalUser((BaseActivity) context);
             //找不到用户
@@ -350,11 +227,12 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
                 activity.showLoading(false);
                 return new DownloadInfo("找不到用户", false);
             }
-            //贡献度是否足够
+            //硬币不足
             if (!CheckUserUtil.checkUserContribution(((BaseActivity) context), Constant.REDUCE_COIN_UPLOAD)) {
                 activity.showLoading(false);
                 return new DownloadInfo(CommonString.STR_NOT_ENOUGH_COIN, false);
             }
+            //扣除硬币
             user.increment("contribution", -Constant.REDUCE_COIN_UPLOAD);
             user.update(new ToastUpdateListener(context, activity) {
                 @Override
@@ -373,6 +251,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
             BmobRelation relation = new BmobRelation();
             final MyUser user = MyUser.getCurrentUser(MyUser.class);
             relation.add(user);
+            AskSongComment askSongComment = (AskSongComment) intent.getSerializableExtra(SongActivity.ASK_COMMENT);
             askSongComment.setAgrees(relation);
             askSongComment.increment("agreeNum");//原子操作，点赞数加一
             askSongComment.update(new ToastUpdateListener(context, activity) {
@@ -400,6 +279,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
     public void checkHasAgree() {
         BmobQuery<MyUser> query = new BmobQuery<>();
         final MyUser user = MyUser.getCurrentUser(MyUser.class);
+        AskSongComment askSongComment = (AskSongComment) intent.getSerializableExtra(SongActivity.ASK_COMMENT);
         query.addWhereRelatedTo("agrees", new BmobPointer(askSongComment));
         query.findObjects(new ToastQueryListener<MyUser>(context, activity) {
             @Override
@@ -534,6 +414,35 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
         }
     }
 
+    //得到本地图片
+    @NonNull
+    private ArrayList<String> getLocalImgs() {
+        LocalSong localsong = (LocalSong) intent.getSerializableExtra(SongActivity.LOCAL_SONG);
+        LocalSongDao localSongDao = new LocalSongDao(context);
+        ArrayList<String> imgUrls = new ArrayList<>();
+        LocalSong localSong = localSongDao.findBySongId(localsong.getId());
+        if (localSong == null) {
+            MyToast.showToast(context, "曲谱消失在了异次元。");
+            activity.finish();
+            return new ArrayList<>();
+        }
+        ForeignCollection<Img> imgs = localSong.getImgs();
+        CloseableIterator<Img> iterator = imgs.closeableIterator();
+        try {
+            while (iterator.hasNext()) {
+                Img img = iterator.next();
+                imgUrls.add(img.getUrl());
+            }
+        } finally {
+            try {
+                iterator.close();
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return imgUrls;
+    }
+
     //录音
     public void record() {
         //请求权限
@@ -663,7 +572,7 @@ public class SongActivityPresenter extends BasePresenter implements IBasePresent
 
         void dismissEditDialog();
 
-        void getResult(List<String> ivUrl, int from);
+        void setPicResult(List<String> ivUrl, int from);
 
         void setBtnStatus(SongActivityPresenter.RECORD_STATUS status);
 

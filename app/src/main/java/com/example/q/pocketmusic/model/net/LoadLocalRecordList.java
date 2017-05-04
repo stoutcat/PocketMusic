@@ -25,4 +25,6 @@ public class LoadLocalRecordList extends AsyncTask<Void, Void, List<RecordAudio>
     protected List<RecordAudio> doInBackground(Void... params) {
         return recordAudioDao.queryForAll();
     }
+
+
 }

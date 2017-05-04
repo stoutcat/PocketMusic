@@ -23,6 +23,10 @@ public class Song implements Parcelable,Serializable {
     private int searchFrom;//曲谱来自
     private boolean needGrade;//是否需要积分
 
+    public Song(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

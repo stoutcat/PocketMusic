@@ -10,9 +10,9 @@ import com.example.q.pocketmusic.model.bean.MyUser;
 import com.example.q.pocketmusic.module.common.BasePresenter;
 import com.example.q.pocketmusic.module.home.profile.collection.CollectionActivity;
 import com.example.q.pocketmusic.module.home.profile.contribution.ContributionActivity;
+import com.example.q.pocketmusic.module.home.profile.post.UserPostActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.SettingActivity;
 import com.example.q.pocketmusic.module.home.profile.setting.help.HelpActivity;
-import com.example.q.pocketmusic.module.piano.PianoActivity;
 import com.example.q.pocketmusic.module.user.suggestion.SuggestionActivity;
 import com.example.q.pocketmusic.util.MyToast;
 
@@ -89,16 +89,6 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
     }
 
-    //设置乐器
-    public void setInstrument(final String instrumentStr) {
-        user.setInstrument(instrumentStr);
-        user.update(new ToastUpdateListener(context, fragment) {
-            @Override
-            public void onSuccess() {
-                fragment.setInstrumentResult(instrumentStr);
-            }
-        });
-    }
 
     public void setUser(MyUser user) {
         this.user = user;
@@ -172,10 +162,8 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
         context.startActivity(new Intent(context, HelpActivity.class));
     }
 
-
-
-    public void enterPianoActivity() {
-        context.startActivity(new Intent(context, PianoActivity.class));
+    public void enterUserPostActivity() {
+        context.startActivity(new Intent(context, UserPostActivity.class));
     }
 
 
@@ -183,7 +171,6 @@ public class HomeProfileFragmentPresenter extends BasePresenter {
 
         void setHeadIvResult(String photoPath);
 
-        void setInstrumentResult(String instrumentStr);
 
         void alertSignInDialog();
 

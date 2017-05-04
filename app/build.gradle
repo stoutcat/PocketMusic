@@ -7,8 +7,8 @@ android {
         applicationId "com.example.q.pocketmusic"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 22
-        versionName "4.5"
+        versionCode 24
+        versionName "4.7"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -24,7 +24,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/BmobSDK_3.5.3_20161116.jar')
+    compile files('libs/BmobSDK_3.5.5_20170420.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:8.4.0'
